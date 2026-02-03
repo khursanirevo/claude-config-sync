@@ -132,6 +132,59 @@ if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
 
     [[ $pct -gt 100 ]] && pct=100
 
+    # Auto-handoff: trigger when context exceeds 70%
+    AUTO_HANDOFF_THRESHOLD=70
+    HANDOFF_FLAG_FILE="$HOME/.claude/.last_handoff"
+    HANDOFF_COOLDOWN=300  # 5 minutes cooldown between handoffs
+
+    if [[ $pct -gt $AUTO_HANDOFF_THRESHOLD ]]; then
+        # Check cooldown
+        if [[ -f "$HANDOFF_FLAG_FILE" ]]; then
+            last_handoff=$(cat "$HANDOFF_FLAG_FILE" 2>/dev/null || echo 0)
+            now=$(date +%s)
+            elapsed=$((now - last_handoff))
+        else
+            elapsed=999999
+        fi
+
+        # Trigger handoff if cooldown passed
+        if [[ $elapsed -gt $HANDOFF_COOLDOWN ]]; then
+            # Update flag file
+            date +%s > "$HANDOFF_FLAG_FILE"
+
+            # Log handoff event
+            {
+                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Auto-handoff triggered at ${pct}%"
+                echo "  Context: ${context_length} / ${max_context} tokens"
+                echo "  Transcript: $transcript_path"
+            } >> "$HOME/claude-config-sync/handoff.log" 2>/dev/null
+
+            # Trigger handoff asynchronously (don't block status line)
+            (
+                sleep 0.5  # Small delay to let status line display first
+                cat <<'HANDOFF_TRIGGER'
+
+<handle_action>
+<tools>
+None
+</tools>
+<execute>
+⚠️ **Context usage is at ${pct}%** - Initiating seamless context handoff...
+
+Please execute these steps in order:
+1. **Clear context** to free memory
+2. **Run handoff**: `/dx:gha handoff`
+3. **Read HANDOVER.md** for state continuity
+
+This preserves your work while continuing the conversation seamlessly.
+</execute>
+</handle_action>
+
+HANDOFF_TRIGGER
+            ) >/dev/null 2>&1 &
+        fi
+    fi
+
     bar=""
     for ((i=0; i<bar_width; i++)); do
         bar_start=$((i * 10))

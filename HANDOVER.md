@@ -54,6 +54,21 @@ git push -u origin main
 
 ## Recent Changes
 
+### 2026-02-03: Added Seamless Auto-Handoff for Unlimited Chat
+**Feature:** Automatic context handoff when usage exceeds 70%
+**How it works:**
+- Integrated into `context-bar.sh` - runs automatically on every message
+- Triggers at 70% context usage (configurable)
+- 5-minute cooldown prevents duplicate triggers
+- Asynchronous - doesn't block your conversation
+- Logs events to `handoff.log`
+**What happens:**
+1. Status line detects context > 70%
+2. Automatically triggers handoff workflow
+3. Clears context, runs `/dx:gha handoff`, reads HANDOVER.md
+4. Continues conversation seamlessly
+**Result:** Unlimited chat without manual context management
+
 ### 2026-02-03: Fixed Context Bar
 **Issue:** Status line showed `~10%` instead of actual usage
 **Cause:** Script picked last entry with `.message.usage`, but had 0 tokens
@@ -95,7 +110,8 @@ source ~/.zshrc
 ~/claude-config-sync/
 ├── settings.json           # Claude settings (symlinked to ~/.claude/)
 ├── scripts/                # Custom scripts
-│   └── context-bar.sh     # Status line (FIXED)
+│   ├── context-bar.sh     # Status line + AUTO-HANDOFF at 70%
+│   └── auto-handoff.sh    # Standalone handoff trigger
 ├── skills/                 # 57 skills (symlinked)
 ├── hooks/                  # Custom hooks
 ├── plugins.txt             # Plugin list
@@ -110,9 +126,14 @@ source ~/.zshrc
 ├── backup.sh               # Full backup
 ├── setup.sh                # Initial setup
 ├── push-to-github.sh       # Push helper
+├── check-context.sh        # Manual context check (cc-check alias)
 ├── pre-commit-hook         # Git hook (auto-runs sync before commit)
 ├── README.md               # Full documentation
 └── HANDOVER.md             # This file
+
+Logs:
+├── auto-sync.log           # Auto-sync activity
+└── handoff.log             # Auto-handoff events (70% trigger)
 ```
 
 ---
@@ -201,6 +222,12 @@ tail -f ~/claude-config-sync/auto-sync.log
 ### Context bar showing wrong percentage
 **Fixed:** This was fixed on 2026-02-03
 **If still wrong:** Check `scripts/context-bar.sh` line 113 for `input_tokens > 0` filter
+
+### Auto-handoff triggering too frequently
+**Cooldown:** Built-in 5-minute cooldown between triggers
+**Adjust:** Edit `HANDOFF_COOLDOWN` in `scripts/context-bar.sh` line ~128
+**Threshold:** Change `AUTO_HANDOFF_THRESHOLD` from 70 to desired percentage
+**Disable:** Comment out the auto-handoff section in `scripts/context-bar.sh`
 
 ---
 

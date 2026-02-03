@@ -75,6 +75,35 @@ git pull
 | `backup.sh` | Full backup (force copy all files) |
 | `install.sh` | Symlink config to ~/.claude |
 | `install-plugins.sh` | Install NPM plugins |
+| `enable-auto-sync.sh` | Enable automatic daily sync (cron) |
+| `disable-auto-sync.sh` | Disable automatic daily sync |
+
+## Automatic Daily Sync
+
+Set up automatic daily backups:
+
+```bash
+cd ~/claude-config-sync
+./enable-auto-sync.sh
+```
+
+**Default schedule:** 9:00 PM daily
+
+**To customize schedule:**
+```bash
+crontab -e
+# Change the time: 0 21 * * * → 0 12 * * * (for noon)
+```
+
+**View logs:**
+```bash
+tail -f ~/claude-config-sync/auto-sync.log
+```
+
+**Disable:**
+```bash
+./disable-auto-sync.sh
+```
 
 ## Shell Aliases
 

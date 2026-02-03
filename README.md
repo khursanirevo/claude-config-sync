@@ -6,8 +6,9 @@ Sync your Claude Code configuration across machines via Git.
 
 - `settings.json` - Main Claude Code settings (permissions, status line, etc.)
 - `scripts/` - Custom scripts (context-bar.sh, etc.)
-- `skills/` - Custom skills (not built-in plugins)
+- `skills/` - Custom skills (**incremental auto-detection**)
 - `hooks/` - Custom hooks
+- `plugins.txt` - Plugin list (auto-updated)
 - `.zshrc` additions - Shell aliases (c, ch, cs, --fs)
 
 ## What Doesn't Get Synced
@@ -33,20 +34,81 @@ Sync your Claude Code configuration across machines via Git.
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
 ./install.sh        # Symlink config files to ~/.claude
+./install-plugins.sh # Install NPM plugins
 ```
 
-## Updating
+## Daily Workflow
+
+### Quick Sync (Recommended)
+
+```bash
+cws     # Sync + commit + push in one command
+```
+
+### Manual Sync
 
 ```bash
 cd ~/claude-config-sync
-./backup.sh         # Pull latest changes from ~/.claude
-git commit -am "Update config"
+./sync.sh           # Detects new/changed skills automatically
+git add . && git commit -m "Update config"
 git push
 ```
 
-On other machines:
+### Auto-Sync on Commit
+
+A **pre-commit hook** is installed that auto-runs `./sync.sh` before every commit.
+
+### Pulling Changes (Other Machines)
+
 ```bash
 cd ~/claude-config-sync
 git pull
-./install.sh        # Re-symlink (or files update automatically)
+# Files update automatically (they're symlinks)
+```
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `sync.sh` | Incremental sync - detects new/changed skills |
+| `quick-sync.sh` | One-command sync + commit + push |
+| `backup.sh` | Full backup (force copy all files) |
+| `install.sh` | Symlink config to ~/.claude |
+| `install-plugins.sh` | Install NPM plugins |
+
+## Shell Aliases
+
+Add to `~/.zshrc` for quick access:
+
+```bash
+# Claude Config Sync
+alias cws='~/claude-config-sync/quick-sync.sh'
+alias ccs='cd ~/claude-config-sync && ./sync.sh'
+```
+
+## Skills Auto-Detection
+
+The `sync.sh` script automatically:
+- ✅ Detects **new skills** created by Claude/claudeception
+- ✅ Detects **updated skills**
+- ✅ Detects **deleted skills**
+- ✅ Syncs all changes to the repo
+
+No manual file management needed!
+
+## Example Workflow
+
+```bash
+# You create a new skill in Claude
+# Claude adds it to ~/.claude/skills/my-new-skill/
+
+# Run quick sync
+cws
+
+# Output:
+#   [NEW] skills/my-new-skill
+#   Total skills: 58
+# === Sync Complete! (1 change(s)) ===
+# === Committing & Pushing ===
+# === Done! ===
 ```

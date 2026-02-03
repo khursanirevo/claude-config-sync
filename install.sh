@@ -68,7 +68,32 @@ else
     echo "  ✗ hooks/ not found in repo"
 fi
 
-echo "[5/5] Installing shell aliases..."
+echo "[5/6] Installing git pre-commit hook..."
+mkdir -p .git/hooks
+if [[ -f pre-commit-hook ]]; then
+    cp pre-commit-hook .git/hooks/pre-commit
+    chmod +x .git/hooks/pre-commit
+    echo "  ✓ Installed pre-commit hook"
+else
+    echo "  ℹ No pre-commit-hook found (skipping)"
+fi
+
+echo "[6/6] Installing sync aliases to .zshrc..."
+if ! grep -q "Claude Config Sync" ~/.zshrc 2>/dev/null; then
+    cat >> ~/.zshrc << 'EOF'
+
+# Claude Config Sync aliases
+alias cws='~/claude-config-sync/quick-sync.sh'
+alias ccs='cd ~/claude-config-sync && ./sync.sh'
+EOF
+    echo "  ✓ Added sync aliases to .zshrc"
+    echo "    Run 'source ~/.zshrc' to apply"
+else
+    echo "  ✓ Sync aliases already exist in .zshrc"
+fi
+
+echo ""
+echo "=== Install Complete! ==="
 if [[ -f zshrc-aliases.txt ]]; then
     # Check if aliases already exist in .zshrc
     if ! grep -q "# Claude Code aliases" ~/.zshrc 2>/dev/null; then

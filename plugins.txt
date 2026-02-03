@@ -1,0 +1,7 @@
+# Claude Code Plugins
+# Add one plugin per line
+# Format: <plugin-name>@<scope>
+# Example: dx@ykdojo
+
+# Development tools
+dx@ykdojo

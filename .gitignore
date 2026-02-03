@@ -1,0 +1,24 @@
+# Machine-specific settings
+settings.local.json
+
+# Session data (don't sync)
+projects/
+history.jsonl
+debug/
+file-history/
+session-env/
+shell-snapshots/
+paste-cache/
+plans/
+tasks/
+todos/
+statsig/
+ide/
+stats-cache.json
+
+# Built-in plugins (install via npm)
+plugins/
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+# Claude Code aliases
+alias c='claude'
+alias ch='claude --chrome'
+alias cs='claude --dangerously-skip-permissions'
+
+# Claude --fs shortcut
+claude() {
+    if [[ "$1" == "--fs" ]]; then
+        command claude --fork-session "${@:2}"
+    else
+        command claude "$@"
+    fi
+}

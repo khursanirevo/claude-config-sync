@@ -1,0 +1,45 @@
+[2026-02-03 12:07:24] Auto-handoff triggered at 85%
+  Context: 171240 / 200000 tokens
+  Transcript: /home/sani/.claude/projects/-mnt-data-work-ChatterBox/aa27a067-4bd6-44c1-90fc-84f755ef5b2a.jsonl
+[2026-02-03 12:14:20] Handoff state restored
+  Previous context:  /  tokens (%)
+[2026-02-03 12:14:39] Handoff state restored
+  Previous context: 150000 / 200000 tokens (75%)
+[2026-02-03 12:14:43] Handoff state restored
+  Previous context: 150000 / 200000 tokens (75%)
+[2026-02-03 12:16:31] Handoff state restored
+  Previous context: 160000 / 200000 tokens (80%)
+[2026-02-03 13:56:07] Auto-handoff triggered at 86%
+  Context: 172365 / 200000 tokens
+  Transcript: /home/sani/.claude/projects/-mnt-data-work-ChatterBox/1598194c-d681-4262-ba31-c8571512f3e9.jsonl
+[2026-02-03 13:59:40] Handoff state restored
+  Previous context: 150000 / 200000 tokens (75%)
+[2026-02-03 15:22:07] Auto-handoff state saved at 83%
+  Context: 166426 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 15:27:26] Auto-handoff state saved at 83%
+  Context: 166426 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 16:46:05] Auto-handoff state saved at 85%
+  Context: 171918 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 16:51:09] Auto-handoff state saved at 85%
+  Context: 171918 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 18:11:52] Auto-handoff state saved at 87%
+  Context: 174130 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 19:23:26] Auto-handoff state saved at 58%
+  Context: 116278 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 19:30:13] Auto-handoff state saved at 58%
+  Context: 116278 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 19:36:15] Auto-handoff state saved at 58%
+  Context: 116278 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 19:46:19] Auto-handoff state saved at 58%
+  Context: 116278 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 19:51:09] Handoff state restored
+  Previous context: 116278 / 200000 tokens (58%)

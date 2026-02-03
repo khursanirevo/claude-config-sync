@@ -132,10 +132,11 @@ if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
 
     [[ $pct -gt 100 ]] && pct=100
 
-    # Auto-handoff: trigger when context exceeds 70%
-    AUTO_HANDOFF_THRESHOLD=70
+    # Auto-handoff: trigger when context exceeds 45%
+    AUTO_HANDOFF_THRESHOLD=45
     HANDOFF_FLAG_FILE="$HOME/.claude/.last_handoff"
     HANDOFF_COOLDOWN=300  # 5 minutes cooldown between handoffs
+    HANDOFF_STATE="$HOME/claude-config-sync/.handoff_state.json"
 
     if [[ $pct -gt $AUTO_HANDOFF_THRESHOLD ]]; then
         # Check cooldown
@@ -152,36 +153,69 @@ if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
             # Update flag file
             date +%s > "$HANDOFF_FLAG_FILE"
 
-            # Log handoff event
+            # Gather state for resume
+            handoff_branch=""
+            if [[ -n "$cwd" && -d "$cwd" ]]; then
+                handoff_branch=$(git -C "$cwd" branch --show-current 2>/dev/null || echo "")
+            fi
+
+            # Get last 3 user messages for context
+            last_context=$(jq -rs '
+                [.[] | select(.type == "user") |
+                 select(.message.content | type == "string" or
+                        (type == "array" and any(.[]; .type == "text")))] |
+                reverse |
+                map(.message.content |
+                    if type == "string" then .
+                    else [.[] | select(.type == "text") | .text] | join(" ") end |
+                    gsub("\n"; " ") | gsub("  +"; " ")) |
+                .[0:3]
+            ' < "$transcript_path" 2>/dev/null || echo "[]")
+
+            # Get recent files
+            recent_files=$(jq -rs '
+                [.[] | select(.type == "assistant" and .message.content != null)] |
+                reverse |
+                map(.message.content |
+                    if type == "array" then
+                        [.[] | select(.tool_use != null) | .tool_use |
+                         select(.name == "Read") | .input.file_path // empty]
+                    else empty end) |
+                flatten | unique | .[0:10]
+            ' < "$transcript_path" 2>/dev/null || echo "[]")
+
+            # Save state as JSON for the hook to read
+            jq -n \
+                --arg pct "$pct" \
+                --arg context "$context_length" \
+                --arg max_ctx "$max_context" \
+                --arg cwd "$cwd" \
+                --arg dir "$dir" \
+                --arg branch "$handoff_branch" \
+                --argjson last_context "$last_context" \
+                --argjson recent_files "$recent_files" \
+                --arg timestamp "$(date -Iseconds)" \
+                '{
+                    pct: $pct,
+                    context: $context,
+                    max_context: $max_ctx,
+                    cwd: $cwd,
+                    dir: $dir,
+                    branch: $branch,
+                    last_context: $last_context,
+                    recent_files: $recent_files,
+                    timestamp: $timestamp
+                }' > "$HANDOFF_STATE"
+
+            # Log the handoff
             {
-                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Auto-handoff triggered at ${pct}%"
+                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Auto-handoff state saved at ${pct}%"
                 echo "  Context: ${context_length} / ${max_context} tokens"
-                echo "  Transcript: $transcript_path"
+                echo "  Location: $cwd"
             } >> "$HOME/claude-config-sync/handoff.log" 2>/dev/null
 
-            # Trigger handoff asynchronously (don't block status line)
-            (
-                sleep 0.5  # Small delay to let status line display first
-                cat <<'HANDOFF_TRIGGER'
-
-<handle_action>
-<tools>
-None
-</tools>
-<execute>
-⚠️ **Context usage is at ${pct}%** - Initiating seamless context handoff...
-
-Please execute these steps in order:
-1. **Clear context** to free memory
-2. **Run handoff**: `/dx:gha handoff`
-3. **Read HANDOVER.md** for state continuity
-
-This preserves your work while continuing the conversation seamlessly.
-</execute>
-</handle_action>
-
-HANDOFF_TRIGGER
-            ) >/dev/null 2>&1 &
+            # Add visual indicator to status line
+            model="${C_ACCENT}[HANDOFF]${C_RESET} ${model}"
         fi
     fi
 

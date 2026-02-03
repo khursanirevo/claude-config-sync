@@ -68,6 +68,12 @@ else
     echo "  ✗ hooks/ not found in repo"
 fi
 
+# Auto-handoff hook lives in scripts/, create symlink separately
+if [[ -f "$SYNC_DIR/scripts/auto-handoff-hook.sh" ]]; then
+    ln -sf "$SYNC_DIR/scripts/auto-handoff-hook.sh" "$CLAUDE_DIR/hooks/auto-handoff.sh"
+    echo "  ✓ Linked auto-handoff hook"
+fi
+
 echo "[5/6] Installing git pre-commit hook..."
 mkdir -p .git/hooks
 if [[ -f pre-commit-hook ]]; then

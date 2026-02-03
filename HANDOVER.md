@@ -57,17 +57,22 @@ git push -u origin main
 ### 2026-02-03: Added Seamless Auto-Handoff for Unlimited Chat
 **Feature:** Automatic context handoff when usage exceeds 70%
 **How it works:**
-- Integrated into `context-bar.sh` - runs automatically on every message
-- Triggers at 70% context usage (configurable)
+- **Status bar** (`context-bar.sh`) detects context > 70% and saves state to `.handoff_state.json`
+- **Hook** (`auto-handoff-hook.sh`) automatically restores saved state on next message after context clear
 - 5-minute cooldown prevents duplicate triggers
-- Asynchronous - doesn't block your conversation
+- No manual intervention required
 - Logs events to `handoff.log`
 **What happens:**
-1. Status line detects context > 70%
-2. Automatically triggers handoff workflow
-3. Clears context, runs `/dx:gha handoff`, reads HANDOVER.md
-4. Continues conversation seamlessly
+1. Status line detects context > 70% → saves conversation state, adds [HANDOFF] badge
+2. You type `clear` to free memory
+3. Next message, hook auto-injects saved state (location, recent files, task context)
+4. Continue seamlessly where you left off
 **Result:** Unlimited chat without manual context management
+
+**Files:**
+- `scripts/context-bar.sh` - Detects high context, saves state
+- `scripts/auto-handoff-hook.sh` - Restores state after clear
+- `settings.json` - Hook registered under `hooks.UserPromptSubmit`
 
 ### 2026-02-03: Fixed Context Bar
 **Issue:** Status line showed `~10%` instead of actual usage
@@ -223,11 +228,17 @@ tail -f ~/claude-config-sync/auto-sync.log
 **Fixed:** This was fixed on 2026-02-03
 **If still wrong:** Check `scripts/context-bar.sh` line 113 for `input_tokens > 0` filter
 
+### Auto-handoff not restoring state after clear
+**Check:** `ls -la ~/.claude/hooks/auto-handoff.sh` should be a symlink to the repo
+**Check:** `cat ~/.claude/settings.json | grep auto-handoff` should show the hook is registered
+**Test:** Manually create state file: `echo '{"pct":"75","context":"150000","max_context":"200000","cwd":"/tmp","dir":"tmp","branch":"","last_context":[],"recent_files":[],"timestamp":"2026-02-03T12:00:00"}' > ~/claude-config-sync/.handoff_state.json` then send a message
+**Disable:** Remove the hook from `settings.json` or delete the symlink
+
 ### Auto-handoff triggering too frequently
 **Cooldown:** Built-in 5-minute cooldown between triggers
-**Adjust:** Edit `HANDOFF_COOLDOWN` in `scripts/context-bar.sh` line ~128
+**Adjust:** Edit `HANDOFF_COOLDOWN` in `scripts/context-bar.sh` (~300 seconds)
 **Threshold:** Change `AUTO_HANDOFF_THRESHOLD` from 70 to desired percentage
-**Disable:** Comment out the auto-handoff section in `scripts/context-bar.sh`
+**Disable:** Remove the handoff detection block from `scripts/context-bar.sh` (lines ~135-195)
 
 ---
 

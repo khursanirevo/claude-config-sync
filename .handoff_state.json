@@ -1,0 +1,15 @@
+{
+  "pct": "46",
+  "context": "92658",
+  "max_context": "200000",
+  "cwd": "/mnt/data/work/ChatterBox",
+  "dir": "ChatterBox",
+  "branch": "main",
+  "last_context": [
+    "fix this a bug, the normalized text should not have digit? ```ChatterBox TTS - INFOMode: Normal TTSSpeaker: anwar.wavPreset: neutralQuality: Good QualityQuality Metrics: MOS: 3.80/5.0 STOI: 0.991 PESQ: 3.68Input Text:Saya ada 45 biji epal.Normalized Text:Saya ada 45 biji epal.```",
+    "[Request interrupted by user for tool use]",
+    "is this a bug? ```ChatterBox TTS - INFOMode: Normal TTSSpeaker: anwar.wavPreset: neutralQuality: Good QualityQuality Metrics: MOS: 3.80/5.0 STOI: 0.991 PESQ: 3.68Input Text:Saya ada 45 biji epal.Normalized Text:Saya ada 45 biji epal.```"
+  ],
+  "recent_files": [],
+  "timestamp": "2026-02-04T20:54:38+08:00"
+}

@@ -43,3 +43,89 @@
   Location: /mnt/data/work/ChatterBox
 [2026-02-03 19:51:09] Handoff state restored
   Previous context: 116278 / 200000 tokens (58%)
+[2026-02-03 21:05:47] Auto-handoff state saved at 85%
+  Context: 170794 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-03 21:08:20] Handoff state restored
+  Previous context: 170794 / 200000 tokens (85%)
+[2026-02-03 21:10:51] Auto-handoff state saved at 85%
+  Context: 170794 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/revo-norm
+[2026-02-03 21:11:44] Handoff state restored
+  Previous context: 170794 / 200000 tokens (85%)
+[2026-02-04 08:24:20] Auto-handoff state saved at 85%
+  Context: 171738 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/notebooks
+[2026-02-04 08:27:11] Handoff state restored
+  Previous context: 171738 / 200000 tokens (85%)
+[2026-02-04 10:10:50] Auto-handoff state saved at 85%
+  Context: 170959 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/revo-norm
+[2026-02-04 10:11:29] Handoff state restored
+  Previous context: 170959 / 200000 tokens (85%)
+[2026-02-04 10:19:29] Auto-handoff state saved at 85%
+  Context: 170959 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 10:19:30] Handoff state restored
+  Previous context: 170959 / 200000 tokens (85%)
+[2026-02-04 10:24:43] Auto-handoff state saved at 85%
+  Context: 170959 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 10:25:50] Handoff state restored
+  Previous context: 170959 / 200000 tokens (85%)
+[2026-02-04 13:23:13] Auto-handoff state saved at 85%
+  Context: 171027 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 13:24:53] Handoff state restored
+  Previous context: 171027 / 200000 tokens (85%)
+[2026-02-04 14:53:56] Auto-handoff state saved at 85%
+  Context: 170868 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/revo-norm
+[2026-02-04 14:56:58] Handoff state restored
+  Previous context: 170868 / 200000 tokens (85%)
+[2026-02-04 14:59:22] Auto-handoff state saved at 85%
+  Context: 170868 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/revo-norm
+[2026-02-04 15:04:56] Auto-handoff state saved at 85%
+  Context: 170868 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 15:05:14] Handoff state restored
+  Previous context: 170868 / 200000 tokens (85%)
+[2026-02-04 16:29:51] Auto-handoff state saved at 46%
+  Context: 92644 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 16:30:27] Handoff state restored
+  Previous context: 92644 / 200000 tokens (46%)
+[2026-02-04 17:13:30] Auto-handoff state saved at 47%
+  Context: 95021 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 17:34:45] Handoff state restored
+  Previous context: 95021 / 200000 tokens (47%)
+[2026-02-04 20:05:05] Auto-handoff state saved at 50%
+  Context: 101817 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 20:06:35] Handoff state restored
+  Previous context: 101817 / 200000 tokens (50%)
+[2026-02-04 20:10:07] Auto-handoff state saved at 57%
+  Context: 114638 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 20:13:47] Handoff state restored
+  Previous context: 114638 / 200000 tokens (57%)
+[2026-02-04 20:15:25] Auto-handoff state saved at 63%
+  Context: 127879 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 20:17:15] Handoff state restored
+  Previous context: 127879 / 200000 tokens (63%)
+[2026-02-04 20:21:01] Auto-handoff state saved at 72%
+  Context: 145217 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 20:21:04] Handoff state restored
+  Previous context: 145217 / 200000 tokens (72%)
+[2026-02-04 20:26:04] Auto-handoff state saved at 81%
+  Context: 162276 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-04 20:26:04] Handoff state restored
+  Previous context: 162276 / 200000 tokens (81%)
+[2026-02-04 20:54:38] Auto-handoff state saved at 46%
+  Context: 92658 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox

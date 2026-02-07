@@ -1075,3 +1075,335 @@
   Location: /mnt/data/work/ChatterBox
 [2026-02-06 20:55:58] Handoff state restored
   Previous context: 133012 / 200000 tokens (66%)
+[2026-02-06 21:00:08] Auto-handoff state saved at 76%
+  Context: 152831 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:03:02] Handoff state restored
+  Previous context: 152831 / 200000 tokens (76%)
+[2026-02-06 21:16:26] Auto-handoff state saved at 79%
+  Context: 158041 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:19:26] Handoff state restored
+  Previous context: 158041 / 200000 tokens (79%)
+[2026-02-06 21:34:48] Auto-handoff state saved at 48%
+  Context: 97897 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:39:48] Handoff state restored
+  Previous context: 97897 / 200000 tokens (48%)
+[2026-02-06 21:39:55] Auto-handoff state saved at 51%
+  Context: 103263 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:42:20] Handoff state restored
+  Previous context: 103263 / 200000 tokens (51%)
+[2026-02-06 21:44:58] Auto-handoff state saved at 52%
+  Context: 104798 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:47:18] Handoff state restored
+  Previous context: 104798 / 200000 tokens (52%)
+[2026-02-06 21:50:22] Auto-handoff state saved at 59%
+  Context: 119299 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 21:56:55] Auto-handoff state saved at 61%
+  Context: 122558 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:01:02] Handoff state restored
+  Previous context: 122558 / 200000 tokens (61%)
+[2026-02-06 22:02:00] Auto-handoff state saved at 66%
+  Context: 133229 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:04:30] Handoff state restored
+  Previous context: 133229 / 200000 tokens (66%)
+[2026-02-06 22:07:16] Auto-handoff state saved at 71%
+  Context: 143152 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:08:12] Handoff state restored
+  Previous context: 143152 / 200000 tokens (71%)
+[2026-02-06 22:12:27] Auto-handoff state saved at 77%
+  Context: 155516 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:16:26] Handoff state restored
+  Previous context: 155516 / 200000 tokens (77%)
+[2026-02-06 22:17:35] Auto-handoff state saved at 68%
+  Context: 137504 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:19:43] Handoff state restored
+  Previous context: 137504 / 200000 tokens (68%)
+[2026-02-06 22:30:33] Auto-handoff state saved at 46%
+  Context: 93283 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:32:25] Handoff state restored
+  Previous context: 93283 / 200000 tokens (46%)
+[2026-02-06 22:36:39] Auto-handoff state saved at 53%
+  Context: 106511 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:41:53] Auto-handoff state saved at 62%
+  Context: 125548 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:45:12] Handoff state restored
+  Previous context: 125548 / 200000 tokens (62%)
+[2026-02-06 22:52:37] Auto-handoff state saved at 68%
+  Context: 136768 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 22:52:39] Handoff state restored
+  Previous context: 136768 / 200000 tokens (68%)
+[2026-02-06 23:11:25] Auto-handoff state saved at 46%
+  Context: 93787 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 23:14:19] Handoff state restored
+  Previous context: 93787 / 200000 tokens (46%)
+[2026-02-06 23:16:30] Auto-handoff state saved at 59%
+  Context: 118203 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 23:21:42] Auto-handoff state saved at 62%
+  Context: 124372 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 23:25:20] Handoff state restored
+  Previous context: 124372 / 200000 tokens (62%)
+[2026-02-06 23:26:53] Auto-handoff state saved at 70%
+  Context: 140555 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 23:32:46] Handoff state restored
+  Previous context: 140555 / 200000 tokens (70%)
+[2026-02-06 23:32:51] Auto-handoff state saved at 77%
+  Context: 155449 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-06 23:38:52] Auto-handoff state saved at 76%
+  Context: 152855 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/vllm_test
+[2026-02-06 23:39:40] Handoff state restored
+  Previous context: 152855 / 200000 tokens (76%)
+[2026-02-06 23:48:02] Auto-handoff state saved at 58%
+  Context: 116104 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox/vllm_test
+[2026-02-07 06:22:46] Handoff state restored
+  Previous context: 116104 / 200000 tokens (58%)
+[2026-02-07 06:43:06] Auto-handoff state saved at 46%
+  Context: 92103 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 06:46:14] Handoff state restored
+  Previous context: 92103 / 200000 tokens (46%)
+[2026-02-07 06:48:11] Auto-handoff state saved at 54%
+  Context: 108929 / 200000 tokens
+  Location: /mnt/data/work/convo
+[2026-02-07 06:50:08] Handoff state restored
+  Previous context: 108929 / 200000 tokens (54%)
+[2026-02-07 06:53:41] Auto-handoff state saved at 73%
+  Context: 146130 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 06:55:20] Handoff state restored
+  Previous context: 146130 / 200000 tokens (73%)
+[2026-02-07 07:02:22] Auto-handoff state saved at 46%
+  Context: 92053 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 07:09:14] Handoff state restored
+  Previous context: 92053 / 200000 tokens (46%)
+[2026-02-07 07:09:21] Auto-handoff state saved at 50%
+  Context: 100541 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 07:12:26] Handoff state restored
+  Previous context: 100541 / 200000 tokens (50%)
+[2026-02-07 07:17:09] Auto-handoff state saved at 55%
+  Context: 110727 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 07:17:57] Handoff state restored
+  Previous context: 110727 / 200000 tokens (55%)
+[2026-02-07 07:22:19] Auto-handoff state saved at 58%
+  Context: 116339 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 07:22:28] Handoff state restored
+  Previous context: 116339 / 200000 tokens (58%)
+[2026-02-07 08:17:15] Auto-handoff state saved at 46%
+  Context: 92083 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 08:18:14] Handoff state restored
+  Previous context: 92083 / 200000 tokens (46%)
+[2026-02-07 08:26:56] Auto-handoff state saved at 46%
+  Context: 93308 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 08:28:00] Handoff state restored
+  Previous context: 93308 / 200000 tokens (46%)
+[2026-02-07 08:32:08] Auto-handoff state saved at 50%
+  Context: 100167 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 08:32:09] Handoff state restored
+  Previous context: 100167 / 200000 tokens (50%)
+[2026-02-07 08:42:49] Auto-handoff state saved at 53%
+  Context: 106008 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 08:43:03] Handoff state restored
+  Previous context: 106008 / 200000 tokens (53%)
+[2026-02-07 09:03:37] Auto-handoff state saved at 59%
+  Context: 118230 / 200000 tokens
+  Location: /mnt/data/work/convo
+[2026-02-07 09:03:53] Handoff state restored
+  Previous context: 118230 / 200000 tokens (59%)
+[2026-02-07 09:30:28] Auto-handoff state saved at 58%
+  Context: 117630 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 09:36:31] Handoff state restored
+  Previous context: 117630 / 200000 tokens (58%)
+[2026-02-07 09:36:46] Auto-handoff state saved at 59%
+  Context: 118382 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 09:43:16] Auto-handoff state saved at 53%
+  Context: 106060 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 09:43:45] Handoff state restored
+  Previous context: 106060 / 200000 tokens (53%)
+[2026-02-07 10:37:16] Auto-handoff state saved at 46%
+  Context: 92095 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 10:40:43] Handoff state restored
+  Previous context: 92095 / 200000 tokens (46%)
+[2026-02-07 10:42:20] Auto-handoff state saved at 60%
+  Context: 120588 / 200000 tokens
+  Location: /mnt/data/work/convo/malay_conversations
+[2026-02-07 10:42:43] Handoff state restored
+  Previous context: 120588 / 200000 tokens (60%)
+[2026-02-07 10:47:27] Auto-handoff state saved at 54%
+  Context: 108975 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 10:47:36] Handoff state restored
+  Previous context: 108975 / 200000 tokens (54%)
+[2026-02-07 17:02:08] Auto-handoff state saved at 56%
+  Context: 112584 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:02:10] Handoff state restored
+  Previous context: 112584 / 200000 tokens (56%)
+[2026-02-07 17:07:11] Auto-handoff state saved at 64%
+  Context: 129769 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:12:25] Handoff state restored
+  Previous context: 129769 / 200000 tokens (64%)
+[2026-02-07 17:18:11] Auto-handoff state saved at 68%
+  Context: 136429 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:18:24] Handoff state restored
+  Previous context: 136429 / 200000 tokens (68%)
+[2026-02-07 17:25:22] Auto-handoff state saved at 74%
+  Context: 148864 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:27:29] Handoff state restored
+  Previous context: 148864 / 200000 tokens (74%)
+[2026-02-07 17:45:16] Auto-handoff state saved at 46%
+  Context: 92730 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:52:33] Auto-handoff state saved at 48%
+  Context: 97461 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 17:58:56] Auto-handoff state saved at 56%
+  Context: 113041 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:05:46] Auto-handoff state saved at 57%
+  Context: 114549 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:08:19] Handoff state restored
+  Previous context: 114549 / 200000 tokens (57%)
+[2026-02-07 18:13:15] Auto-handoff state saved at 62%
+  Context: 124431 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:14:01] Handoff state restored
+  Previous context: 124431 / 200000 tokens (62%)
+[2026-02-07 18:18:41] Auto-handoff state saved at 71%
+  Context: 143894 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:21:09] Handoff state restored
+  Previous context: 143894 / 200000 tokens (71%)
+[2026-02-07 18:23:56] Auto-handoff state saved at 80%
+  Context: 161515 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:29:22] Handoff state restored
+  Previous context: 161515 / 200000 tokens (80%)
+[2026-02-07 18:29:31] Auto-handoff state saved at 74%
+  Context: 149258 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:31:29] Handoff state restored
+  Previous context: 149258 / 200000 tokens (74%)
+[2026-02-07 18:34:43] Auto-handoff state saved at 81%
+  Context: 162516 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:40:56] Handoff state restored
+  Previous context: 162516 / 200000 tokens (81%)
+[2026-02-07 18:41:04] Auto-handoff state saved at 86%
+  Context: 173639 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 18:43:01] Handoff state restored
+  Previous context: 173639 / 200000 tokens (86%)
+[2026-02-07 18:52:39] Auto-handoff state saved at 88%
+  Context: 176266 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:02:35] Handoff state restored
+  Previous context: 176266 / 200000 tokens (88%)
+[2026-02-07 19:21:05] Auto-handoff state saved at 46%
+  Context: 93003 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:21:22] Handoff state restored
+  Previous context: 93003 / 200000 tokens (46%)
+[2026-02-07 19:27:28] Auto-handoff state saved at 58%
+  Context: 116991 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:27:36] Handoff state restored
+  Previous context: 116991 / 200000 tokens (58%)
+[2026-02-07 19:32:30] Auto-handoff state saved at 59%
+  Context: 119422 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:32:33] Handoff state restored
+  Previous context: 119422 / 200000 tokens (59%)
+[2026-02-07 19:39:56] Auto-handoff state saved at 59%
+  Context: 119422 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:39:58] Handoff state restored
+  Previous context: 119422 / 200000 tokens (59%)
+[2026-02-07 19:45:54] Auto-handoff state saved at 63%
+  Context: 126699 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:50:52] Handoff state restored
+  Previous context: 126699 / 200000 tokens (63%)
+[2026-02-07 19:50:58] Auto-handoff state saved at 66%
+  Context: 133269 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:53:20] Handoff state restored
+  Previous context: 133269 / 200000 tokens (66%)
+[2026-02-07 19:56:03] Auto-handoff state saved at 70%
+  Context: 141931 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 19:57:17] Handoff state restored
+  Previous context: 141931 / 200000 tokens (70%)
+[2026-02-07 20:03:57] Auto-handoff state saved at 72%
+  Context: 144499 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 20:13:42] Handoff state restored
+  Previous context: 144499 / 200000 tokens (72%)
+[2026-02-07 20:13:55] Auto-handoff state saved at 77%
+  Context: 154773 / 200000 tokens
+  Location: /mnt/data/work/ChatterBox
+[2026-02-07 20:16:37] Handoff state restored
+  Previous context: 154773 / 200000 tokens (77%)
+[2026-02-07 20:18:58] Auto-handoff state saved at 56%
+  Context: 112948 / 200000 tokens
+  Location: /mnt/data/work/icefall/egs/librispeech/ASR
+[2026-02-07 20:19:11] Handoff state restored
+  Previous context: 112948 / 200000 tokens (56%)
+[2026-02-07 20:25:05] Auto-handoff state saved at 59%
+  Context: 119007 / 200000 tokens
+  Location: /mnt/data/work/icefall/egs/librispeech/ASR/download/LibriSpeech
+[2026-02-07 20:34:16] Handoff state restored
+  Previous context: 119007 / 200000 tokens (59%)
+[2026-02-07 20:34:30] Auto-handoff state saved at 60%
+  Context: 120048 / 200000 tokens
+  Location: /mnt/data/work/icefall/egs/librispeech/ASR/download/LibriSpeech
+[2026-02-07 20:36:16] Handoff state restored
+  Previous context: 120048 / 200000 tokens (60%)
+[2026-02-07 20:39:33] Auto-handoff state saved at 64%
+  Context: 129547 / 200000 tokens
+  Location: /mnt/data/work/icefall
+[2026-02-07 20:44:56] Auto-handoff state saved at 69%
+  Context: 138217 / 200000 tokens
+  Location: /mnt/data/work/icefall
+[2026-02-07 20:45:21] Handoff state restored
+  Previous context: 138217 / 200000 tokens (69%)
+[2026-02-07 20:50:26] Auto-handoff state saved at 72%
+  Context: 145387 / 200000 tokens
+  Location: /mnt/data/work/icefall
+[2026-02-07 20:51:27] Handoff state restored
+  Previous context: 145387 / 200000 tokens (72%)

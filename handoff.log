@@ -2374,3 +2374,298 @@
 [2026-02-11 20:57:53] Auto-handoff state saved at 48%
   Context: 96034 / 200000 tokens
   Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:04:02] Auto-handoff state saved at 55%
+  Context: 111588 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:09:31] Handoff state restored
+  Previous context: 111588 / 200000 tokens (55%)
+[2026-02-11 21:09:31] Auto-handoff state saved at 57%
+  Context: 114552 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:15:21] Auto-handoff state saved at 62%
+  Context: 124908 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:21:05] Auto-handoff state saved at 62%
+  Context: 125824 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:21:36] Handoff state restored
+  Previous context: 125824 / 200000 tokens (62%)
+[2026-02-11 21:27:02] Auto-handoff state saved at 66%
+  Context: 132999 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:33:44] Auto-handoff state saved at 66%
+  Context: 133631 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:39:05] Auto-handoff state saved at 66%
+  Context: 133836 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:44:48] Auto-handoff state saved at 67%
+  Context: 134158 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:52:55] Auto-handoff state saved at 67%
+  Context: 135818 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 21:56:00] Handoff state restored
+  Previous context: 135818 / 200000 tokens (67%)
+[2026-02-11 21:58:46] Auto-handoff state saved at 73%
+  Context: 147116 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:04:36] Auto-handoff state saved at 73%
+  Context: 147392 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:11:35] Auto-handoff state saved at 73%
+  Context: 147720 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:17:37] Auto-handoff state saved at 83%
+  Context: 167738 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:18:40] Handoff state restored
+  Previous context: 167738 / 200000 tokens (83%)
+[2026-02-11 22:22:57] Auto-handoff state saved at 87%
+  Context: 174610 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:27:23] Handoff state restored
+  Previous context: 174610 / 200000 tokens (87%)
+[2026-02-11 22:30:58] Auto-handoff state saved at 87%
+  Context: 175864 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/data/malaysian_multispeaker
+[2026-02-11 22:33:56] Handoff state restored
+  Previous context: 175864 / 200000 tokens (87%)
+[2026-02-11 23:14:49] Auto-handoff state saved at 46%
+  Context: 92202 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-11 23:18:25] Handoff state restored
+  Previous context: 92202 / 200000 tokens (46%)
+[2026-02-11 23:20:18] Auto-handoff state saved at 99%
+  Context: 199704 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-11 23:20:24] Handoff state restored
+  Previous context: 199704 / 200000 tokens (99%)
+[2026-02-12 03:02:50] Auto-handoff state saved at 99%
+  Context: 199704 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 03:02:53] Handoff state restored
+  Previous context: 199704 / 200000 tokens (99%)
+[2026-02-12 06:55:31] Auto-handoff state saved at 46%
+  Context: 92503 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 07:13:03] Handoff state restored
+  Previous context: 92503 / 200000 tokens (46%)
+[2026-02-12 07:13:06] Auto-handoff state saved at 46%
+  Context: 93663 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 07:20:50] Handoff state restored
+  Previous context: 93663 / 200000 tokens (46%)
+[2026-02-12 07:20:54] Auto-handoff state saved at 49%
+  Context: 98966 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 08:17:43] Handoff state restored
+  Previous context: 98966 / 200000 tokens (49%)
+[2026-02-12 08:17:50] Auto-handoff state saved at 51%
+  Context: 103063 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 08:23:10] Handoff state restored
+  Previous context: 103063 / 200000 tokens (51%)
+[2026-02-12 08:23:31] Auto-handoff state saved at 54%
+  Context: 108250 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 08:34:01] Auto-handoff state saved at 67%
+  Context: 135311 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 08:38:02] Handoff state restored
+  Previous context: 135311 / 200000 tokens (67%)
+[2026-02-12 08:39:02] Auto-handoff state saved at 70%
+  Context: 141476 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice
+[2026-02-12 08:43:24] Handoff state restored
+  Previous context: 141476 / 200000 tokens (70%)
+[2026-02-12 08:44:07] Auto-handoff state saved at 78%
+  Context: 156728 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice
+[2026-02-12 08:46:29] Handoff state restored
+  Previous context: 156728 / 200000 tokens (78%)
+[2026-02-12 08:49:25] Auto-handoff state saved at 75%
+  Context: 151268 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 08:53:25] Handoff state restored
+  Previous context: 151268 / 200000 tokens (75%)
+[2026-02-12 09:00:57] Auto-handoff state saved at 47%
+  Context: 94557 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:06:22] Handoff state restored
+  Previous context: 94557 / 200000 tokens (47%)
+[2026-02-12 09:06:36] Auto-handoff state saved at 57%
+  Context: 114524 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:11:44] Auto-handoff state saved at 59%
+  Context: 118338 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:12:29] Handoff state restored
+  Previous context: 118338 / 200000 tokens (59%)
+[2026-02-12 09:16:50] Auto-handoff state saved at 59%
+  Context: 119785 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:17:48] Handoff state restored
+  Previous context: 119785 / 200000 tokens (59%)
+[2026-02-12 09:22:33] Auto-handoff state saved at 60%
+  Context: 121793 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:22:40] Handoff state restored
+  Previous context: 121793 / 200000 tokens (60%)
+[2026-02-12 09:27:42] Auto-handoff state saved at 67%
+  Context: 134872 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:31:21] Handoff state restored
+  Previous context: 134872 / 200000 tokens (67%)
+[2026-02-12 09:33:12] Auto-handoff state saved at 76%
+  Context: 153110 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:34:46] Handoff state restored
+  Previous context: 153110 / 200000 tokens (76%)
+[2026-02-12 09:40:31] Auto-handoff state saved at 47%
+  Context: 95195 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:45:37] Auto-handoff state saved at 68%
+  Context: 136156 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 09:49:19] Handoff state restored
+  Previous context: 136156 / 200000 tokens (68%)
+[2026-02-12 09:50:43] Auto-handoff state saved at 73%
+  Context: 146617 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3
+[2026-02-12 09:50:44] Handoff state restored
+  Previous context: 146617 / 200000 tokens (73%)
+[2026-02-12 10:16:27] Auto-handoff state saved at 46%
+  Context: 93550 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:18:36] Handoff state restored
+  Previous context: 93550 / 200000 tokens (46%)
+[2026-02-12 10:21:34] Auto-handoff state saved at 53%
+  Context: 107349 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:23:55] Handoff state restored
+  Previous context: 107349 / 200000 tokens (53%)
+[2026-02-12 10:26:54] Auto-handoff state saved at 59%
+  Context: 118106 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:26:57] Handoff state restored
+  Previous context: 118106 / 200000 tokens (59%)
+[2026-02-12 10:32:10] Auto-handoff state saved at 65%
+  Context: 130258 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:34:13] Handoff state restored
+  Previous context: 130258 / 200000 tokens (65%)
+[2026-02-12 10:38:31] Auto-handoff state saved at 69%
+  Context: 138874 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:40:45] Handoff state restored
+  Previous context: 138874 / 200000 tokens (69%)
+[2026-02-12 10:44:26] Auto-handoff state saved at 47%
+  Context: 95493 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 10:52:27] Handoff state restored
+  Previous context: 95493 / 200000 tokens (47%)
+[2026-02-12 10:52:46] Auto-handoff state saved at 71%
+  Context: 143039 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 10:53:36] Handoff state restored
+  Previous context: 143039 / 200000 tokens (71%)
+[2026-02-12 10:59:53] Auto-handoff state saved at 79%
+  Context: 159215 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 11:05:01] Auto-handoff state saved at 68%
+  Context: 137182 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 11:05:36] Handoff state restored
+  Previous context: 137182 / 200000 tokens (68%)
+[2026-02-12 11:10:03] Auto-handoff state saved at 71%
+  Context: 142403 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 11:12:51] Handoff state restored
+  Previous context: 142403 / 200000 tokens (71%)
+[2026-02-12 11:16:07] Auto-handoff state saved at 71%
+  Context: 143092 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 11:16:59] Handoff state restored
+  Previous context: 143092 / 200000 tokens (71%)
+[2026-02-12 11:21:25] Auto-handoff state saved at 52%
+  Context: 105912 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 11:26:05] Handoff state restored
+  Previous context: 105912 / 200000 tokens (52%)
+[2026-02-12 11:26:56] Auto-handoff state saved at 65%
+  Context: 130277 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 11:28:33] Handoff state restored
+  Previous context: 130277 / 200000 tokens (65%)
+[2026-02-12 11:32:38] Auto-handoff state saved at 69%
+  Context: 139638 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 11:33:40] Handoff state restored
+  Previous context: 139638 / 200000 tokens (69%)
+[2026-02-12 11:39:29] Auto-handoff state saved at 81%
+  Context: 162526 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 11:43:15] Handoff state restored
+  Previous context: 162526 / 200000 tokens (81%)
+[2026-02-12 13:15:50] Auto-handoff state saved at 47%
+  Context: 94526 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/exp/malaysian_llm
+[2026-02-12 13:16:03] Handoff state restored
+  Previous context: 94526 / 200000 tokens (47%)
+[2026-02-12 14:05:42] Auto-handoff state saved at 50%
+  Context: 100775 / 200000 tokens
+  Location: /mnt/data/work/mych/CosyVoice/examples/libritts/cosyvoice3/exp/malaysian_llm
+[2026-02-12 14:11:24] Handoff state restored
+  Previous context: 100775 / 200000 tokens (50%)
+[2026-02-12 14:15:53] Auto-handoff state saved at 46%
+  Context: 92063 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 14:43:43] Handoff state restored
+  Previous context: 92063 / 200000 tokens (46%)
+[2026-02-12 14:43:44] Auto-handoff state saved at 50%
+  Context: 101796 / 200000 tokens
+  Location: /mnt/data/work/Qwen3-TTS
+[2026-02-12 14:45:25] Handoff state restored
+  Previous context: 101796 / 200000 tokens (50%)
+[2026-02-12 14:48:46] Auto-handoff state saved at 55%
+  Context: 111963 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 14:49:01] Handoff state restored
+  Previous context: 111963 / 200000 tokens (55%)
+[2026-02-12 14:59:11] Auto-handoff state saved at 57%
+  Context: 114863 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 15:06:01] Handoff state restored
+  Previous context: 114863 / 200000 tokens (57%)
+[2026-02-12 15:06:01] Auto-handoff state saved at 61%
+  Context: 123175 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 15:14:36] Handoff state restored
+  Previous context: 123175 / 200000 tokens (61%)
+[2026-02-12 15:17:58] Auto-handoff state saved at 80%
+  Context: 160062 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 15:28:35] Handoff state restored
+  Previous context: 160062 / 200000 tokens (80%)
+[2026-02-12 15:28:35] Auto-handoff state saved at 88%
+  Context: 177896 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 15:36:23] Auto-handoff state saved at 89%
+  Context: 178848 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 16:49:49] Handoff state restored
+  Previous context: 178848 / 200000 tokens (89%)
+[2026-02-12 16:55:17] Auto-handoff state saved at 89%
+  Context: 178848 / 200000 tokens
+  Location: /mnt/data/work/mych
+[2026-02-12 18:14:56] Handoff state restored
+  Previous context: 178848 / 200000 tokens (89%)
+[2026-02-12 20:48:55] Auto-handoff state saved at 46%
+  Context: 93834 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-12 20:51:34] Handoff state restored
+  Previous context: 93834 / 200000 tokens (46%)
+[2026-02-12 20:58:37] Auto-handoff state saved at 47%
+  Context: 94680 / 200000 tokens
+  Location: /mnt/data/work/autok

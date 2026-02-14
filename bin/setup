@@ -1,0 +1,244 @@
+#!/bin/bash
+# Initial setup script - run on first machine to create the git repo
+
+set -e
+
+# Get the script root directory
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found"
+    exit 1
+fi
+
+cs_cd_root
+
+CLAUDE_DIR="$HOME/.claude"
+
+echo -e "${CS_COLOR_BLUE}Claude Code Config Sync - Initial Setup${CS_COLOR_RESET}"
+echo "=============================================="
+echo ""
+
+# Check for jq
+if ! cs_check_jq; then
+    exit 1
+fi
+
+# Check if this is first run
+if [[ -f .git/config ]]; then
+    echo -e "${CS_COLOR_YELLOW}[Git]${CS_COLOR_RESET} Repo already exists. Skipping init."
+else
+    echo -e "${CS_COLOR_BLUE}[1/6]${CS_COLOR_RESET} Initializing git repo..."
+    git init
+    git branch -M main
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Git repository initialized"
+fi
+
+echo ""
+echo -e "${CS_COLOR_BLUE}[2/6]${CS_COLOR_RESET} Creating directory structure..."
+mkdir -p "$CS_ROOT"/{bin,lib,config,content,automation,logs,docs}
+mkdir -p "$CS_ROOT/content"/{scripts,skills,hooks}
+mkdir -p "$CS_ROOT/automation/git-hooks"
+mkdir -p "$CS_LOG_DIR"
+echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Directories created"
+
+echo ""
+echo -e "${CS_COLOR_BLUE}[3/6]${CS_COLOR_RESET} Backing up configuration files..."
+
+# Copy settings.json
+if [[ -f "$CLAUDE_DIR/settings.json" ]]; then
+    cp "$CLAUDE_DIR/settings.json" "$CS_ROOT/config/settings.json"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} settings.json"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} settings.json not found (will be created)"
+fi
+
+# Copy scripts
+if [[ -d "$CLAUDE_DIR/scripts" ]]; then
+    cp -r "$CLAUDE_DIR/scripts/"* "$CS_ROOT/content/scripts/" 2>/dev/null || true
+    script_count=$(ls -1 "$CS_ROOT/content/scripts/" 2>/dev/null | wc -l)
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} scripts/ ($script_count files)"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} scripts/ not found"
+fi
+
+# Copy .claude.json (MCP servers, plugins)
+if [[ -f "$HOME/.claude.json" ]]; then
+    cp "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} .claude.json (MCP servers)"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} .claude.json not found"
+fi
+
+# Copy skills (excluding symlinks to .agents)
+if [[ -d "$CLAUDE_DIR/skills" ]]; then
+    # Copy only actual skill directories, not symlinks
+    for skill in "$CLAUDE_DIR/skills"/*/; do
+        if [[ -d "$skill" && ! -L "$skill" ]]; then
+            cp -r "$skill" "$CS_ROOT/content/skills/$(basename "$skill")"
+        fi
+    done
+    skill_count=$(ls -1 "$CS_ROOT/content/skills/" | wc -l)
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} skills/ ($skill_count skills)"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} skills/ not found"
+fi
+
+# Copy hooks
+if [[ -d "$CLAUDE_DIR/hooks" ]]; then
+    cp -r "$CLAUDE_DIR/hooks/"* "$CS_ROOT/content/hooks/" 2>/dev/null || true
+    hook_count=$(ls -1 "$CS_ROOT/content/hooks/" 2>/dev/null | wc -l)
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} hooks/ ($hook_count files)"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} hooks/ not found"
+fi
+
+# Extract plugin list
+if [[ -f "$CLAUDE_DIR/plugins/installed_plugins.json" ]] && command -v jq &>/dev/null; then
+    jq -r '.plugins | to_entries[] | "\(.key)@\(.value[0].scope // "user")' \
+        "$CLAUDE_DIR/plugins/installed_plugins.json" 2>/dev/null > "$CS_ROOT/config/plugins.txt" || true
+    if [[ -s "$CS_ROOT/config/plugins.txt" ]]; then
+        echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} plugins.txt"
+    fi
+fi
+
+# Extract .zshrc additions (claude aliases)
+SHELL_RC=$(cs_detect_shell_rc)
+if grep -q "c=claude" "$SHELL_RC" 2>/dev/null; then
+    echo ""
+    echo -e "${CS_COLOR_BLUE}[4/6]${CS_COLOR_RESET} Extracting shell aliases..."
+    # Extract the Claude Code section from shell config
+    if [[ "$SHELL_RC" == *".zshrc" ]]; then
+        sed -n '/# Claude Code aliases/,/^$/p' "$SHELL_RC" > "$CS_ROOT/config/zshrc-aliases.txt" 2>/dev/null || true
+    else
+        sed -n '/# Claude Code aliases/,/^$/p' "$SHELL_RC" > "$CS_ROOT/config/zshrc-aliases.txt" 2>/dev/null || true
+    fi
+    if [[ -s "$CS_ROOT/config/zshrc-aliases.txt" ]]; then
+        echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} zshrc-aliases.txt"
+    fi
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} No Claude aliases found in $SHELL_RC"
+fi
+
+echo ""
+echo -e "${CS_COLOR_BLUE}[5/6]${CS_COLOR_RESET} Creating .gitignore..."
+
+if [[ -f "$CS_ROOT/.gitignore" ]]; then
+    echo -e "  ${CS_COLOR_YELLOW}ℹ${CS_COLOR_RESET} .gitignore already exists"
+else
+    cat > "$CS_ROOT/.gitignore" << 'GITIGNORE'
+# Machine-specific settings
+config/settings.local.json
+
+# Logs
+logs/
+*.log
+
+# Session data (don't sync)
+projects/
+history.jsonl
+debug/
+file-history/
+session-env/
+shell-snapshots/
+paste-cache/
+plans/
+tasks/
+todos/
+statsig/
+ide/
+stats-cache.json
+
+# Built-in plugins (install via npm)
+plugins/
+
+# Slack webhook config (contains sensitive URL)
+.slack-config
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Config examples (use actual files in config/)
+config/*.json.example
+config/*.example
+GITIGNORE
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} .gitignore created"
+fi
+
+echo ""
+echo -e "${CS_COLOR_BLUE}[6/6]${CS_COLOR_RESET} Installing shell aliases..."
+
+CS_ALIASES_MARKER="# Claude Config Sync aliases"
+CS_FS_MARKER="# Claude --fs shortcut"
+
+# Add to shell config
+if ! grep -q "$CS_ALIASES_MARKER" "$SHELL_RC" 2>/dev/null; then
+    cat >> "$SHELL_RC" << 'EOF'
+
+# Claude Config Sync aliases
+alias cs-sync='$HOME/claude-config-sync/bin/claude-sync sync'
+alias cs-quick='$HOME/claude-config-sync/bin/claude-sync quick'
+alias cs-reinstall='$HOME/claude-config-sync/bin/claude-sync reinstall'
+alias cs-status='$HOME/claude-config-sync/bin/claude-sync status'
+alias cs='$HOME/claude-config-sync/bin/claude-sync'
+EOF
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Aliases added to $SHELL_RC"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} Aliases already exist in $SHELL_RC"
+fi
+
+# Fork session shortcut
+if ! grep -q "$CS_FS_MARKER" "$SHELL_RC" 2>/dev/null; then
+    cat >> "$SHELL_RC" << 'EOF'
+
+# Claude --fs shortcut (expands to --fork-session)
+claude() {
+  local args=()
+  for arg in "$@"; do
+    if [[ "$arg" == "--fs" ]]; then
+      args+=("--fork-session")
+    else
+      args+=("$arg")
+    fi
+  done
+  command claude "${args[@]}"
+}
+EOF
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Fork shortcut added to $SHELL_RC"
+else
+    echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} Fork shortcut already exists in $SHELL_RC"
+fi
+
+echo ""
+echo -e "${CS_COLOR_GREEN}==============================================${CS_COLOR_RESET}"
+echo -e "${CS_COLOR_GREEN}Setup Complete!${CS_COLOR_RESET}"
+echo -e "${CS_COLOR_GREEN}==============================================${CS_COLOR_RESET}"
+echo ""
+echo "Next steps:"
+echo "  1. Review the files in $CS_ROOT"
+echo "  2. git add . && git commit -m 'Initial Claude Code config backup'"
+echo "  3. Create a GitHub/GitLab repo and run:"
+echo "     git remote add origin <your-repo-url>"
+echo "     git push -u origin main"
+echo ""
+echo -e "${CS_COLOR_YELLOW}Quick aliases:${CS_COLOR_RESET}"
+echo "  cs-sync            - Sync changes"
+echo "  cs-quick           - Sync + commit + push"
+echo "  cs-reinstall       - Clean reinstall symlinks"
+echo "  cs-status          - Show status"
+echo "  cs                 - Show help"
+echo ""
+echo -e "${CS_COLOR_YELLOW}Fork shortcut:${CS_COLOR_RESET}"
+echo "  claude -c --fs     - Same as: claude -c --fork-session"
+echo ""
+if ! grep -q "$CS_ALIASES_MARKER" "$SHELL_RC" 2>/dev/null || ! grep -q "$CS_FS_MARKER" "$SHELL_RC" 2>/dev/null; then
+    echo -e "${CS_COLOR_YELLOW}Run this to apply shell changes:${CS_COLOR_RESET}"
+    echo "  source $SHELL_RC"
+    echo ""
+fi
+echo "On new machines, clone and run: ./bin/install"

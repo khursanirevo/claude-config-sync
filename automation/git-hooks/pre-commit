@@ -1,13 +1,27 @@
 #!/bin/bash
 # Git pre-commit hook - auto-sync before committing
 
+# Get the script root directory
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found" >&2
+    exit 1
+fi
+
 # Skip if SKIP_SYNC is set
 if [[ -n "$SKIP_SYNC" ]]; then
     exit 0
 fi
 
+cs_cd_root
+
 echo "Running pre-commit sync..."
-./sync.sh
+bash "$CS_LIB_DIR/sync.sh"
 
 # Only proceed if there are changes to commit
 if git diff-index --quiet HEAD -- 2>/dev/null; then

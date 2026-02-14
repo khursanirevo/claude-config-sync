@@ -1,5 +1,9 @@
 # Machine-specific settings
-settings.local.json
+config/settings.local.json
+
+# Logs
+logs/
+*.log
 
 # Session data (don't sync)
 projects/
@@ -19,8 +23,13 @@ stats-cache.json
 # Built-in plugins (install via npm)
 plugins/
 
-# NOTE: .claude.json is synced (contains MCP servers, plugins)
+# Slack webhook config (contains sensitive URL)
+.slack-config
 
 # OS files
 .DS_Store
 Thumbs.db
+
+# Config examples (use actual files in config/)
+config/*.json.example
+config/*.example

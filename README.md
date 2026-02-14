@@ -8,16 +8,16 @@ Sync your Claude Code configuration across machines via Git.
 - `scripts/` - Custom scripts (context-bar.sh, etc.)
 - `skills/` - Custom skills (**incremental auto-detection**)
 - `hooks/` - Custom hooks
-- `plugins.txt` - Plugin list (auto-updated)
-- `.zshrc` additions - Shell aliases (c, ch, cs, --fs)
+- `plugins.txt` - Plugin list for Claude Code plugin marketplace
 
 ## What Doesn't Get Synced
 
 - `settings.local.json` - Machine-specific settings (API tokens, etc.)
 - `projects/` - Session history
 - `history.jsonl` - Command history
-- `plugins/` - NPM-installed plugins (use install script)
 - Session data, todos, tasks, etc.
+
+**Note:** Claude Code plugins installed via marketplace (`claude plugin install`) are stored globally in `~/.claude.json` and don't need to be synced separately. MCP servers are also configured globally.
 
 ## Setup
 
@@ -34,7 +34,7 @@ Sync your Claude Code configuration across machines via Git.
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
 ./install.sh        # Symlink config files to ~/.claude
-./install-plugins.sh # Install NPM plugins
+./install-plugins.sh # Install plugins from plugins.txt
 ```
 
 ## Daily Workflow
@@ -74,7 +74,7 @@ git pull
 | `quick-sync.sh` | One-command sync + commit + push |
 | `backup.sh` | Full backup (force copy all files) |
 | `install.sh` | Symlink config to ~/.claude |
-| `install-plugins.sh` | Install NPM plugins |
+| `install-plugins.sh` | Install plugins from plugins.txt (marketplace plugins) |
 | `enable-auto-sync.sh` | Enable automatic daily sync (cron) |
 | `disable-auto-sync.sh` | Disable automatic daily sync |
 

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Install NPM plugins on new machine
+# Install Claude Code plugins on new machine
 
 set -e
 
@@ -25,7 +25,7 @@ while IFS= read -r plugin; do
     [[ -z "$plugin" ]] && continue
 
     echo "Installing: $plugin"
-    claude mcp add -s user "$plugin" || echo "  ✗ Failed to install $plugin"
+    claude plugin install "$plugin" || echo "  ✗ Failed to install $plugin"
 done < "$PLUGINS_FILE"
 
 echo ""

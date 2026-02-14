@@ -107,7 +107,6 @@ max_k=$((max_context / 1000))
 if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
     context_length=$(jq -s '
         map(select(.message.usage and .isSidechain != true and .isApiErrorMessage != true)) |
-        map(select(.message.usage.input_tokens > 0)) |
         last |
         if . then
             (.message.usage.input_tokens // 0) +
@@ -131,93 +130,6 @@ if [[ -n "$transcript_path" && -f "$transcript_path" ]]; then
     fi
 
     [[ $pct -gt 100 ]] && pct=100
-
-    # Auto-handoff: trigger when context exceeds 45%
-    AUTO_HANDOFF_THRESHOLD=45
-    HANDOFF_FLAG_FILE="$HOME/.claude/.last_handoff"
-    HANDOFF_COOLDOWN=300  # 5 minutes cooldown between handoffs
-    HANDOFF_STATE="$HOME/claude-config-sync/.handoff_state.json"
-
-    if [[ $pct -gt $AUTO_HANDOFF_THRESHOLD ]]; then
-        # Check cooldown
-        if [[ -f "$HANDOFF_FLAG_FILE" ]]; then
-            last_handoff=$(cat "$HANDOFF_FLAG_FILE" 2>/dev/null || echo 0)
-            now=$(date +%s)
-            elapsed=$((now - last_handoff))
-        else
-            elapsed=999999
-        fi
-
-        # Trigger handoff if cooldown passed
-        if [[ $elapsed -gt $HANDOFF_COOLDOWN ]]; then
-            # Update flag file
-            date +%s > "$HANDOFF_FLAG_FILE"
-
-            # Gather state for resume
-            handoff_branch=""
-            if [[ -n "$cwd" && -d "$cwd" ]]; then
-                handoff_branch=$(git -C "$cwd" branch --show-current 2>/dev/null || echo "")
-            fi
-
-            # Get last 3 user messages for context
-            last_context=$(jq -rs '
-                [.[] | select(.type == "user") |
-                 select(.message.content | type == "string" or
-                        (type == "array" and any(.[]; .type == "text")))] |
-                reverse |
-                map(.message.content |
-                    if type == "string" then .
-                    else [.[] | select(.type == "text") | .text] | join(" ") end |
-                    gsub("\n"; " ") | gsub("  +"; " ")) |
-                .[0:3]
-            ' < "$transcript_path" 2>/dev/null || echo "[]")
-
-            # Get recent files
-            recent_files=$(jq -rs '
-                [.[] | select(.type == "assistant" and .message.content != null)] |
-                reverse |
-                map(.message.content |
-                    if type == "array" then
-                        [.[] | select(.tool_use != null) | .tool_use |
-                         select(.name == "Read") | .input.file_path // empty]
-                    else empty end) |
-                flatten | unique | .[0:10]
-            ' < "$transcript_path" 2>/dev/null || echo "[]")
-
-            # Save state as JSON for the hook to read
-            jq -n \
-                --arg pct "$pct" \
-                --arg context "$context_length" \
-                --arg max_ctx "$max_context" \
-                --arg cwd "$cwd" \
-                --arg dir "$dir" \
-                --arg branch "$handoff_branch" \
-                --argjson last_context "$last_context" \
-                --argjson recent_files "$recent_files" \
-                --arg timestamp "$(date -Iseconds)" \
-                '{
-                    pct: $pct,
-                    context: $context,
-                    max_context: $max_ctx,
-                    cwd: $cwd,
-                    dir: $dir,
-                    branch: $branch,
-                    last_context: $last_context,
-                    recent_files: $recent_files,
-                    timestamp: $timestamp
-                }' > "$HANDOFF_STATE"
-
-            # Log the handoff
-            {
-                echo "[$(date '+%Y-%m-%d %H:%M:%S')] Auto-handoff state saved at ${pct}%"
-                echo "  Context: ${context_length} / ${max_context} tokens"
-                echo "  Location: $cwd"
-            } >> "$HOME/claude-config-sync/handoff.log" 2>/dev/null
-
-            # Add visual indicator to status line
-            model="${C_ACCENT}[HANDOFF]${C_RESET} ${model}"
-        fi
-    fi
 
     bar=""
     for ((i=0; i<bar_width; i++)); do

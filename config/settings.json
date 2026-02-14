@@ -7,13 +7,9 @@
     "DISABLE_AUTOUPDATER": "1",
     "ENABLE_TOOL_SEARCH": "true"
   },
-  "enabledPlugins": {
-    "glm-plan-usage@zai-coding-plugins": true,
-    "dx@ykdojo": true
-  },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/scripts/context-bar.sh"
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
   "permissions": {
     "allow": [
@@ -21,8 +17,12 @@
       "Read(//tmp/**)"
     ]
   },
-  "attribution": {
-    "commit": "",
-    "pr": ""
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/context-bar.sh"
+  },
+  "enabledPlugins": {
+    "glm-plan-usage@zai-coding-plugins": true,
+    "dx@ykdojo": true
   }
 }

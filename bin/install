@@ -98,12 +98,6 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} hooks/ (not found in repo)"
 fi
 
-# Auto-handoff hook lives in scripts/, create symlink separately
-if [[ -f "$CS_ROOT/content/scripts/auto-handoff-hook.sh" ]]; then
-    ln -sf "$CS_ROOT/content/scripts/auto-handoff-hook.sh" "$CLAUDE_DIR/hooks/auto-handoff.sh"
-    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} auto-handoff hook"
-fi
-
 # [5/6] Install .claude.json
 if is_symlinked "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"; then
     echo -e "${CS_COLOR_GREEN}[Already linked]${CS_COLOR_RESET} .claude.json"

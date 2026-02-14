@@ -19,6 +19,8 @@ stats-cache.json
 # Built-in plugins (install via npm)
 plugins/
 
+# NOTE: .claude.json is synced (contains MCP servers, plugins)
+
 # OS files
 .DS_Store
 Thumbs.db

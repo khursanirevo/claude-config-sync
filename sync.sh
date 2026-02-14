@@ -92,7 +92,7 @@ if [[ -d "$CLAUDE_DIR/skills" ]]; then
     echo "  Total skills: $(ls -1 skills/ | wc -l)"
 fi
 
-echo "[4/6] Checking hooks..."
+echo "[4/7] Checking hooks..."
 mkdir -p hooks
 if [[ -d "$CLAUDE_DIR/hooks" ]]; then
     for hook in "$CLAUDE_DIR/hooks"/*; do
@@ -102,7 +102,10 @@ if [[ -d "$CLAUDE_DIR/hooks" ]]; then
     done
 fi
 
-echo "[5/6] Checking plugins..."
+echo "[5/7] Checking .claude.json (MCP servers, plugins)..."
+backup_if_changed "$HOME/.claude.json" ".claude.json" ".claude.json"
+
+echo "[6/7] Checking plugins..."
 if [[ -f "$CLAUDE_DIR/plugins/installed_plugins.json" ]]; then
     # Extract plugin list and update plugins.txt
     jq -r '.plugins | to_entries[] | "\(.key)@\(.value[0].scope // "user")' \
@@ -119,7 +122,7 @@ if [[ -f "$CLAUDE_DIR/plugins/installed_plugins.json" ]]; then
     fi
 fi
 
-echo "[6/6] Checking shell aliases..."
+echo "[7/7] Checking shell aliases..."
 # Extract and backup zshrc aliases
 if grep -q "c=claude" ~/.zshrc 2>/dev/null; then
     sed -n '/# Claude Code aliases/,/^$/p' ~/.zshrc > zshrc-aliases.txt 2>/dev/null || true

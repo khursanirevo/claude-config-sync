@@ -39,6 +39,14 @@ else
     echo "  ✗ scripts/ not found"
 fi
 
+# Copy .claude.json (MCP servers, plugins)
+if [[ -f "$HOME/.claude.json" ]]; then
+    cp "$HOME/.claude.json" .claude.json
+    echo "  ✓ .claude.json (MCP servers)"
+else
+    echo "  ✗ .claude.json not found"
+fi
+
 # Copy skills (excluding symlinks to .agents)
 mkdir -p skills
 if [[ -d "$CLAUDE_DIR/skills" ]]; then

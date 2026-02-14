@@ -1,0 +1,15 @@
+{
+  "pct": "54",
+  "context": "109170",
+  "max_context": "200000",
+  "cwd": "/mnt/data/work/autok",
+  "dir": "autok",
+  "branch": "main",
+  "last_context": [
+    "let's use 16D",
+    "neucodec use how many 4d latent space?",
+    "wait why batch 256? i thought before this you found 1024 better?"
+  ],
+  "recent_files": [],
+  "timestamp": "2026-02-13T22:34:19+08:00"
+}

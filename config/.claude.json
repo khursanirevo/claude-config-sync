@@ -1,12 +1,12 @@
 {
-  "numStartups": 48,
+  "numStartups": 57,
   "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "new-user-warmup": 8,
     "plan-mode-for-complex-tasks": 38,
-    "terminal-setup": 42,
-    "shift-enter-setup": 43,
+    "terminal-setup": 56,
+    "shift-enter-setup": 56,
     "memory-command": 48,
     "theme-command": 43,
     "status-line": 28,
@@ -24,15 +24,16 @@
     "config-thinking-mode": 25,
     "ultrathink-keyword": 46,
     "btw-side-question": 33,
-    "web-app": 34,
-    "mobile-app": 34,
+    "web-app": 49,
+    "mobile-app": 49,
     "default-permission-mode-config": 46,
-    "custom-agents": 37,
-    "permissions": 41,
+    "custom-agents": 55,
+    "permissions": 55,
     "rename-conversation": 42,
-    "custom-commands": 42
+    "custom-commands": 42,
+    "git-worktrees": 55
   },
-  "promptQueueUseCount": 87,
+  "promptQueueUseCount": 98,
   "showExpandedTodos": true,
   "cachedStatsigGates": {
     "tengu_prompt_suggestion": false,
@@ -530,37 +531,37 @@
       "projectOnboardingSeenCount": 0,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 3.5762057999999994,
-      "lastAPIDuration": 720013,
-      "lastAPIDurationWithoutRetries": 719975,
-      "lastToolDuration": 382353,
-      "lastDuration": 4963392,
-      "lastLinesAdded": 2231,
-      "lastLinesRemoved": 12,
-      "lastTotalInputTokens": 265667,
-      "lastTotalOutputTokens": 49334,
+      "lastCost": 0.49712110000000004,
+      "lastAPIDuration": 30707,
+      "lastAPIDurationWithoutRetries": 30705,
+      "lastToolDuration": 8,
+      "lastDuration": 313479,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 146386,
+      "lastTotalOutputTokens": 528,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 7067299,
+      "lastTotalCacheReadInputTokens": 181275,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 52293,
-          "outputTokens": 4437,
-          "cacheReadInputTokens": 119331,
+          "inputTokens": 2,
+          "outputTokens": 113,
+          "cacheReadInputTokens": 16027,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.08641109999999999
+          "costUSD": 0.0021696999999999997
         },
         "claude-sonnet-4-5-20250929": {
-          "inputTokens": 213374,
-          "outputTokens": 44897,
-          "cacheReadInputTokens": 6947968,
+          "inputTokens": 146384,
+          "outputTokens": 415,
+          "cacheReadInputTokens": 165248,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 3.4897946999999996
+          "costUSD": 0.49495140000000004
         }
       },
-      "lastSessionId": "741e3da1-63ee-4bda-8a8f-f292c6167774",
+      "lastSessionId": "b0335404-75d9-4ffc-8cfd-c17ab4958aca",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -593,8 +594,8 @@
       "lastUsedAt": 1770815728756
     },
     "handoff": {
-      "usageCount": 1,
-      "lastUsedAt": 1771084686506
+      "usageCount": 6,
+      "lastUsedAt": 1771110830152
     }
   },
   "mcpServers": {

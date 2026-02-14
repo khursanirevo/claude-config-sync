@@ -26,12 +26,12 @@
     "dx@ykdojo": true
   },
   "hooks": {
-    "PreCompact": [
+    "UserPromptSubmit": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "/home/sani/claude-config-sync/content/hooks/auto-handoff-precompact.sh"
+            "command": "/home/sani/claude-config-sync/content/hooks/auto-handoff-context-check.sh"
           }
         ]
       }

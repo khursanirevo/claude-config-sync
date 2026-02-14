@@ -1,5 +1,6 @@
 {
-  "numStartups": 46,
+  "numStartups": 47,
+  "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "new-user-warmup": 8,
@@ -21,7 +22,7 @@
     "shift-tab": 46,
     "image-paste": 43,
     "config-thinking-mode": 25,
-    "ultrathink-keyword": 36,
+    "ultrathink-keyword": 46,
     "btw-side-question": 33,
     "web-app": 34,
     "mobile-app": 34,
@@ -468,37 +469,37 @@
         "packageManager": null
       },
       "exampleFilesGeneratedAt": 1771028539699,
-      "lastCost": 0.058797600000000005,
-      "lastAPIDuration": 10940,
-      "lastAPIDurationWithoutRetries": 10937,
-      "lastToolDuration": 0,
-      "lastDuration": 64492,
+      "lastCost": 2.105145,
+      "lastAPIDuration": 350524,
+      "lastAPIDurationWithoutRetries": 350505,
+      "lastToolDuration": 10520,
+      "lastDuration": 444769,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 21224,
-      "lastTotalOutputTokens": 418,
+      "lastTotalInputTokens": 272395,
+      "lastTotalOutputTokens": 8926,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 29404,
+      "lastTotalCacheReadInputTokens": 4255124,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 6524,
-          "outputTokens": 160,
-          "cacheReadInputTokens": 26588,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.0099828
-        },
         "claude-sonnet-4-5-20250929": {
-          "inputTokens": 14700,
-          "outputTokens": 258,
-          "cacheReadInputTokens": 2816,
+          "inputTokens": 241185,
+          "outputTokens": 3938,
+          "cacheReadInputTokens": 4204288,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.0488148
+          "costUSD": 2.0439113999999994
+        },
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 31210,
+          "outputTokens": 4988,
+          "cacheReadInputTokens": 50836,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.06123359999999998
         }
       },
-      "lastSessionId": "1c9ed438-cdcd-422e-8666-d00c1577d363"
+      "lastSessionId": "05853cfc-071e-42ad-8f89-8d5eff2d2ace"
     },
     "/home/sani/work/clef": {
       "allowedTools": [],
@@ -541,6 +542,10 @@
     "init": {
       "usageCount": 1,
       "lastUsedAt": 1770815728756
+    },
+    "handoff": {
+      "usageCount": 1,
+      "lastUsedAt": 1771084686506
     }
   },
   "mcpServers": {

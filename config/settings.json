@@ -24,5 +24,17 @@
   "enabledPlugins": {
     "glm-plan-usage@zai-coding-plugins": true,
     "dx@ykdojo": true
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/sani/claude-config-sync/content/hooks/auto-handoff-precompact.sh"
+          }
+        ]
+      }
+    ]
   }
 }

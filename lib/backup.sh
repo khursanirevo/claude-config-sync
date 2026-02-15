@@ -1,6 +1,9 @@
 #!/bin/bash
 # Backup functions for claude-config-sync (force full backup)
 
+# Exit on error, unset variables, and pipe failures
+set -euo pipefail
+
 # Source common utilities
 # shellcheck source=lib/common.sh
 if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
@@ -31,9 +34,20 @@ cs_backup_scripts() {
         if [[ -L "$CS_CLAUDE_DIR/scripts" ]]; then
             echo "  ℹ scripts/ is a symlink (skipping - already synced)"
         else
-            rm -rf "$CS_CONTENT_DIR/scripts/"
-            cp -r "$CS_CLAUDE_DIR/scripts/"* "$CS_CONTENT_DIR/scripts/" 2>/dev/null || true
-            echo "  ✓ Updated scripts/"
+            # Use temp directory for safety
+            local temp_dir
+            temp_dir=$(mktemp -d)
+            # Copy to temp first
+            if cp -r "$CS_CLAUDE_DIR/scripts/"* "$temp_dir/" 2>/dev/null; then
+                # Only remove old content if copy succeeded
+                rm -rf "$CS_CONTENT_DIR/scripts/"
+                mv "$temp_dir" "$CS_CONTENT_DIR/scripts/"
+                echo "  ✓ Updated scripts/"
+            else
+                rm -rf "$temp_dir"
+                echo "  ✗ Failed to copy scripts/"
+                return 1
+            fi
         fi
     else
         echo "  ✗ scripts/ not found"
@@ -72,9 +86,20 @@ cs_backup_hooks() {
         if [[ -L "$CS_CLAUDE_DIR/hooks" ]]; then
             echo "  ℹ hooks/ is a symlink (skipping - already synced)"
         else
-            rm -rf "$CS_CONTENT_DIR/hooks/"
-            cp -r "$CS_CLAUDE_DIR/hooks/"* "$CS_CONTENT_DIR/hooks/" 2>/dev/null || true
-            echo "  ✓ Updated hooks/"
+            # Use temp directory for safety
+            local temp_dir
+            temp_dir=$(mktemp -d)
+            # Copy to temp first
+            if cp -r "$CS_CLAUDE_DIR/hooks/"* "$temp_dir/" 2>/dev/null; then
+                # Only remove old content if copy succeeded
+                rm -rf "$CS_CONTENT_DIR/hooks/"
+                mv "$temp_dir" "$CS_CONTENT_DIR/hooks/"
+                echo "  ✓ Updated hooks/"
+            else
+                rm -rf "$temp_dir"
+                echo "  ✗ Failed to copy hooks/"
+                return 1
+            fi
         fi
     else
         echo "  ✗ hooks/ not found"
@@ -114,3 +139,8 @@ export -f cs_backup_scripts
 export -f cs_backup_skills
 export -f cs_backup_hooks
 export -f cs_backup
+
+# Run backup if script is executed directly (not sourced)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    cs_backup
+fi

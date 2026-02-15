@@ -1,6 +1,9 @@
 # Machine-specific settings
 config/settings.local.json
 
+# Sync lock file
+.sync.lock
+
 # Logs
 logs/
 *.log

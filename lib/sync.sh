@@ -1,6 +1,9 @@
 #!/bin/bash
 # Core sync logic for claude-config-sync
 
+# Exit on error, unset variables, and pipe failures
+set -euo pipefail
+
 # Source common utilities
 # shellcheck source=lib/common.sh
 if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
@@ -9,6 +12,9 @@ else
     echo "Error: lib/common.sh not found"
     exit 1
 fi
+
+# Trap to ensure lock file is released on exit
+trap 'cs_release_lock' EXIT
 
 # Change counter for tracking sync changes
 CS_CHANGE_COUNT=0
@@ -190,6 +196,11 @@ cs_sync_plugins() {
 
 # Main sync function - runs all sync operations
 cs_sync() {
+    # Acquire lock to prevent concurrent syncs
+    if ! cs_acquire_lock; then
+        return 1
+    fi
+
     cs_ensure_logs
     cs_cd_root
 

@@ -1,7 +1,8 @@
 #!/bin/bash
 # Install Claude Code plugins from synced manifests
 
-set -e
+# Exit on error, unset variables, and pipe failures
+set -euo pipefail
 
 # Get the script root directory
 CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
@@ -15,6 +16,11 @@ else
     echo "Please run this from $CS_ROOT or ensure CS_ROOT is set correctly"
     exit 1
 fi
+
+# Track installation results
+declare -i INSTALLED_COUNT=0
+declare -i FAILED_COUNT=0
+declare -a FAILED_PLUGINS=()
 
 cs_cd_root
 
@@ -87,24 +93,50 @@ echo ""
 cs_step "[2/2] Installing plugins..."
 
 # Extract plugin names and versions
-jq -r '.plugins | to_entries[] | "\(.key)@\(.value[0].scope // "user")"' "$INSTALLED_PLUGINS" 2>/dev/null | while read -r plugin_spec; do
+while IFS= read -r plugin_spec; do
     if [[ -n "$plugin_spec" ]]; then
         # Extract plugin name (before @)
         plugin_name=$(echo "$plugin_spec" | cut -d'@' -f1)
 
+        # Validate plugin name (prevent injection)
+        if [[ ! "$plugin_name" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "  ✗ Invalid plugin name: $plugin_name (skipping)"
+            ((FAILED_COUNT++))
+            continue
+        fi
+
         echo "  Installing: $plugin_name"
 
         # Try to install the plugin
-        if claude plugin install "$plugin_name" &>/dev/null; then
+        if claude plugin install "$plugin_name" >/dev/null 2>&1; then
             echo "    ✓ Installed successfully"
+            ((INSTALLED_COUNT++))
         else
-            echo "    ⚠ Failed to install (may already be installed)"
+            echo "    ✗ Failed to install"
+            ((FAILED_COUNT++))
+            FAILED_PLUGINS+=("$plugin_name")
         fi
     fi
-done
+done < <(jq -r '.plugins | to_entries[] | "\(.key)@\(.value[0].scope // "user")"' "$INSTALLED_PLUGINS" 2>/dev/null)
 
 echo ""
-cs_success "Plugin installation complete!"
+echo "Installation Summary:"
+echo "  ✓ Successfully installed: $INSTALLED_COUNT"
+echo "  ✗ Failed: $FAILED_COUNT"
+
+if [[ $FAILED_COUNT -gt 0 ]]; then
+    echo ""
+    echo "Failed plugins:"
+    for plugin in "${FAILED_PLUGINS[@]}"; do
+        echo "  - $plugin"
+    done
+    echo ""
+    echo "These plugins may already be installed or may not be available."
+    echo "Check with: claude plugin list"
+    exit 1
+fi
+
 echo ""
-echo "Note: Some plugins may have failed if they were already installed."
-echo "      Check with: claude plugin list"
+cs_success "All plugins installed successfully!"
+echo ""
+echo "Verify with: claude plugin list"

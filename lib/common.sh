@@ -21,19 +21,6 @@ export CS_COLOR_BLUE='\033[0;34m'
 export CS_COLOR_GRAY='\033[0;90m'
 export CS_COLOR_RESET='\033[0m'
 
-# Check for jq dependency
-cs_check_jq() {
-    if ! command -v jq &>/dev/null; then
-        cs_error "jq is required but not installed"
-        echo "Install it with:"
-        echo "  macOS:   brew install jq"
-        echo "  Ubuntu:  sudo apt install jq"
-        echo "  Fedora:  sudo dnf install jq"
-        return 1
-    fi
-    return 0
-}
-
 # Detect shell config file
 cs_detect_shell_rc() {
     if [[ -n "$ZSH_VERSION" ]] || [[ "$SHELL" == *"zsh"* ]]; then
@@ -147,5 +134,55 @@ cs_check_jq() {
         cs_warn "               brew install jq  # macOS"
         return 1
     fi
+    return 0
+}
+
+# Lock file management
+export CS_LOCK_FILE="$CS_ROOT/.sync.lock"
+
+# Acquire lock file
+cs_acquire_lock() {
+    if [[ -f "$CS_LOCK_FILE" ]]; then
+        # Check if lock is stale (older than 1 hour)
+        local lock_age
+        lock_age=$(($(date +%s) - $(stat -c %Y "$CS_LOCK_FILE" 2>/dev/null || echo "0")))
+
+        if [[ $lock_age -gt 3600 ]]; then
+            cs_warn "Removing stale lock file (older than 1 hour)"
+            rm -f "$CS_LOCK_FILE"
+        else
+            cs_error "Sync already in progress"
+            cs_error "If this is incorrect, remove: $CS_LOCK_FILE"
+            return 1
+        fi
+    fi
+
+    # Create lock file with PID
+    echo $$ > "$CS_LOCK_FILE"
+    return 0
+}
+
+# Release lock file
+cs_release_lock() {
+    rm -f "$CS_LOCK_FILE" 2>/dev/null || true
+}
+
+# Validate path to prevent directory traversal
+cs_validate_path() {
+    local path="$1"
+    local name="${2:-path}"
+
+    # Check for directory traversal
+    if [[ "$path" == *".."* ]] || [[ "$path" == *"/"*"*" ]]; then
+        cs_error "Invalid $name: contains dangerous characters"
+        return 1
+    fi
+
+    # Check if path is absolute (for security)
+    if [[ ! "$path" =~ ^/ ]] && [[ ! "$path" =~ ^~ ]]; then
+        cs_error "Invalid $name: must be absolute path"
+        return 1
+    fi
+
     return 0
 }

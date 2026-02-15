@@ -123,6 +123,20 @@ cs_cmd_status() {
     echo "  Hooks:    $(ls -1 "$CS_CONTENT_DIR/hooks/" 2>/dev/null | wc -l)"
     echo ""
 
+    # Show plugin info
+    echo "Plugins:"
+    if [[ -f "$CS_ROOT/plugins/manifests/installed_plugins.json" ]]; then
+        echo "  Installed: $(jq -r '.plugins | length' "$CS_ROOT/plugins/manifests/installed_plugins.json" 2>/dev/null || echo "0")"
+    else
+        echo "  Installed: 0 (no manifest found)"
+    fi
+    if [[ -d "$CS_ROOT/plugins/marketplaces" ]]; then
+        echo "  Marketplaces: $(ls -1 "$CS_ROOT/plugins/marketplaces/" 2>/dev/null | wc -l)"
+    else
+        echo "  Marketplaces: 0"
+    fi
+    echo ""
+
     # Show git status
     echo "Git status:"
     if git rev-parse --git-dir > /dev/null 2>&1; then

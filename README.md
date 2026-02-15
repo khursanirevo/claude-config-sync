@@ -10,6 +10,10 @@ Sync your Claude Code configuration across machines via Git.
 - `content/scripts/` - Custom scripts (context-bar.sh, etc.)
 - `content/skills/` - Custom skills (**incremental auto-detection**)
 - `content/hooks/` - Custom hooks
+- `plugins/manifests/` - Plugin installation manifests (**NEW**)
+  - `installed_plugins.json` - List of installed plugins with versions
+  - `known_marketplaces.json` - Registered plugin marketplaces
+- `plugins/marketplaces/` - Plugin marketplace registries (**NEW**)
 
 ## What Doesn't Get Synced
 
@@ -17,8 +21,7 @@ Sync your Claude Code configuration across machines via Git.
 - `projects/` - Session history
 - `history.jsonl` - Command history
 - Session data, todos, tasks, logs, etc.
-
-**Note:** Claude Code plugins installed via marketplace (`claude plugin install`) are stored globally in `~/.claude.json` and don't need to be synced separately.
+- Plugin cache files (`~/.claude/plugins/cache/`) - Can be re-downloaded
 
 ## Quick Start
 
@@ -37,6 +40,8 @@ git push -u origin main
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
 ./bin/install        # Symlink config files to ~/.claude
+./bin/install-plugins  # Restore plugin marketplaces and plugins (optional)
+source ~/.zshrc       # or source ~/.bashrc
 ```
 
 ## Daily Workflow

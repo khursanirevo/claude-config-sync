@@ -197,3 +197,9 @@ if ! grep -q "$CS_ALIASES_MARKER" "$SHELL_RC" 2>/dev/null || ! grep -q "$CS_FS_M
 fi
 echo "Note: These are SYMLINKS. Editing files in $CS_ROOT"
 echo "      will automatically update ~/.claude"
+echo ""
+echo "Plugin Installation:"
+echo "  If you have plugins in the repo, install them with:"
+echo "  $ $CS_ROOT/bin/install-plugins"
+echo ""
+echo "  This will restore marketplaces and install plugins from the synced manifests."

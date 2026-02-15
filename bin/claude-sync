@@ -130,11 +130,6 @@ cs_cmd_status() {
     else
         echo "  Installed: 0 (no manifest found)"
     fi
-    if [[ -d "$CS_ROOT/plugins/marketplaces" ]]; then
-        echo "  Marketplaces: $(ls -1 "$CS_ROOT/plugins/marketplaces/" 2>/dev/null | wc -l)"
-    else
-        echo "  Marketplaces: 0"
-    fi
     echo ""
 
     # Show git status

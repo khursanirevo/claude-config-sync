@@ -13,7 +13,7 @@ Sync your Claude Code configuration across machines via Git.
 - `plugins/manifests/` - Plugin installation manifests (**NEW**)
   - `installed_plugins.json` - List of installed plugins with versions
   - `known_marketplaces.json` - Registered plugin marketplaces
-- `plugins/marketplaces/` - Plugin marketplace registries (**NEW**)
+  - Marketplaces and plugins can be restored on new machines using `bin/install-plugins`
 
 ## What Doesn't Get Synced
 
@@ -22,6 +22,7 @@ Sync your Claude Code configuration across machines via Git.
 - `history.jsonl` - Command history
 - Session data, todos, tasks, logs, etc.
 - Plugin cache files (`~/.claude/plugins/cache/`) - Can be re-downloaded
+- Marketplace repos (`~/.claude/plugins/marketplaces/`) - Can be re-registered from manifests
 
 ## Quick Start
 

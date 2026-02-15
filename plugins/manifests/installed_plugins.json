@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "plugins": {
+    "glm-plan-usage@zai-coding-plugins": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/zai-coding-plugins/glm-plan-usage/0.0.1",
+        "version": "0.0.1",
+        "installedAt": "2026-01-10T02:24:29.344Z",
+        "lastUpdated": "2026-01-10T02:24:29.344Z"
+      }
+    ],
+    "dx@ykdojo": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/ykdojo/dx/0.14.6",
+        "version": "0.14.6",
+        "installedAt": "2026-02-14T15:49:17.701Z",
+        "lastUpdated": "2026-02-14T15:49:17.701Z"
+      }
+    ],
+    "superpowers@superpowers-marketplace": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/superpowers-marketplace/superpowers/4.3.0",
+        "version": "4.3.0",
+        "installedAt": "2026-02-15T10:30:50.473Z",
+        "lastUpdated": "2026-02-15T10:30:50.473Z",
+        "gitCommitSha": "e16d611eee14ac4c3253b4bf4c55a98d905c2e64"
+      }
+    ]
+  }
+}

@@ -7,8 +7,8 @@
 # This replaces the PreCompact approach since PreCompact only fires
 # when auto-compact is enabled.
 
-# Threshold percentage - trigger handoff when context exceeds this
-THRESHOLD=45
+# Threshold percentage - trigger half-clone when context exceeds this
+THRESHOLD=65
 
 # Read hook input (JSON)
 input=$(cat)
@@ -43,21 +43,21 @@ fi
 # Calculate percentage
 pct=$((context_length * 100 / max_context))
 
-# Trigger handoff if above threshold
+# Trigger half-clone if above threshold
 if [[ $pct -ge $THRESHOLD ]]; then
     cat << EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🔄 AUTO-HANDOFF TRIGGERED (Context at ${pct}%)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CRITICAL: Context at ${pct}%. You MUST immediately run the handoff
-skill BEFORE responding to the user's message.
+CRITICAL: Context at ${pct}%. You MUST immediately run half-clone
+to reduce context by 50% before continuing.
 
-IMMEDIATE ACTION REQUIRED: /handoff
+IMMEDIATE ACTION REQUIRED: /half-clone
 
-Do NOT respond to the user until handoff completes.
+Do NOT respond to the user until half-clone completes.
 
-This preserves all context better than auto-compact would.
+This preserves actual messages (unlike auto-compact summarization).
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF

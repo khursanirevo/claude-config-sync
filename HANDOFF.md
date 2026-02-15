@@ -1,11 +1,42 @@
 # Claude Config Sync - Project Handoff
 
 ## Goal
-Restructure the claude-config-sync repository for better organization and maintainability.
+Implement auto-handoff hook to replace Claude Code's auto-compact feature for better context preservation.
 
 ## Current Progress
 
-### ✅ Completed (2025-02-14)
+### ✅ Most Recent Work (2026-02-15)
+
+**Implementing Auto-Handoff Hook (Commit: 23127ae)**
+
+Successfully created an automatic handoff system that triggers when context reaches threshold:
+
+**What Works:**
+- ✅ **UserPromptSubmit event** - Hook fires BEFORE message processing, allowing Claude to execute commands
+- ✅ **Context detection** - Accurately calculates context usage from transcript
+- ✅ **Automatic execution** - Hook successfully triggers `/handoff` skill when context ≥45%
+- ✅ **Hook execution confirmed** - Just triggered at 49% context and invoked handoff skill
+
+**What Didn't Work:**
+- ❌ **PreCompact event** - Only fires when auto-compact is enabled (useless since we disable it)
+- ❌ **Stop event** - Fires AFTER Claude responds, too late to execute commands
+- ❌ **Initial threshold (65%)** - Too high for practical testing, lowered to 45%
+
+**Current Configuration:**
+- **Hook file**: `content/hooks/auto-handoff-context-check.sh`
+- **Threshold**: 45% (for debugging, will raise to 65% after testing)
+- **Event**: UserPromptSubmit (fires before message processing)
+- **Registered in**: `~/.claude/settings.json`
+
+**How It Works:**
+1. User sends message when context ≥45%
+2. UserPromptSubmit hook fires before message is processed
+3. Hook outputs: "IMMEDIATE ACTION REQUIRED: /handoff"
+4. Claude reads and executes `/handoff` skill
+5. Handoff creates HANDOFF.md with conversation state
+6. User then runs `/clear` and starts fresh with `@HANDOFF.md`
+
+### Previously Completed (2025-02-14)
 
 #### 1. Repository Restructure (Commit: 0867f82)
 - Reorganized from flat structure to professional layout
@@ -42,7 +73,7 @@ Restructure the claude-config-sync repository for better organization and mainta
   - `review-claudemd` - Review conversations for CLAUDE.md improvements
 
 #### 6. Cleanup
-- Removed failed auto-handoff feature (Commit: f270677)
+- Removed failed auto-handoff feature (Commit: f270677) - OLD version
 - Removed all 57 old skills (Commit: 210baaa)
 - Added 6 new skills from ykdojo (Commit: ee5502e)
 
@@ -59,13 +90,13 @@ claude-config-sync/
 │   ├── sync.sh              # Sync functions
 │   └── backup.sh            # Backup functions
 ├── config/                  # Configuration files
-│   ├── settings.json        # Main settings
+│   ├── settings.json        # Main settings (with hooks.Stop registration)
 │   ├── .claude.json         # Global Claude config (MCP, plugins)
 │   └── plugins.txt          # Plugin list
 ├── content/                 # User content to sync
 │   ├── skills/              # 6 skills (from ykdojo)
 │   ├── scripts/             # 1 script (context-bar.sh)
-│   └── hooks/               # 1 disabled hook
+│   └── hooks/               # 2 hooks (auto-handoff + claudeception.disabled)
 ├── automation/              # Automation scripts
 │   ├── auto-sync.sh         # Daily cron job
 │   └── git-hooks/
@@ -79,23 +110,48 @@ claude-config-sync/
 ```
 
 ## What Worked
-- **Modular design**: Separating `lib/` for core logic from `bin/` for user commands
-- **Unified CLI**: Single `claude-sync` command with subcommands is much cleaner than multiple scripts
-- **Color-coded output**: Better UX with status indicators
-- **Symlink strategy**: Content is symlinked from `content/` to `~/.claude/` for automatic syncing
+
+### Auto-Handoff Implementation
+- ✅ **UserPromptSubmit event** - Correct event for executing commands before processing
+- ✅ **Symlink management** - Repo properly syncs hooks via `bin/install` and `lib/sync.sh`
+- ✅ **Context calculation** - Accurate token counting from transcript using jq
+- ✅ **Hook message format** - Direct imperative instructions work best
+
+### Previous Successes
+- ✅ **Modular design**: Separating `lib/` for core logic from `bin/` for user commands
+- ✅ **Unified CLI**: Single `claude-sync` command with subcommands
+- ✅ **Color-coded output**: Better UX with status indicators
+- ✅ **Symlink strategy**: Content is symlinked from `content/` to `~/.claude/`
 
 ## What Didn't Work
-- **Auto-handoff feature**: Failed to work reliably, removed completely (Commit: f270677)
-- **Old skills collection**: 57 skills were bloated and not useful, cleaned to slate and rebuilt with 6 quality skills
+
+### Auto-Handoff Attempts
+- ❌ **PreCompact event** - Only fires with auto-compact enabled (commit 34477e8)
+- ❌ **Stop event** - Fires after Claude responds (commit 10944d5)
+- ❌ **Initial message format** - "Execute: /handoff" wasn't direct enough
+- ❌ **Threshold at 65%** - Too high for easy testing
+
+### Previous Failures
+- ❌ **Old auto-handoff feature** - Different approach, failed (commit f270677)
+- ❌ **57 old skills** - Bloated, not useful, removed (commit 210baaa)
 
 ## Next Steps
 
+### Immediate
+1. **Test auto-handoff thoroughly** - Verify it works consistently at 45%
+2. **Raise threshold back to 65%** - After confirming it works
+3. **Update documentation** - Add auto-handoff section to README.md and FOLDER.md
+
+### Documentation Updates Needed
+- README.md: Add section explaining auto-handoff feature
+- FOLDER.md: Document hooks/ directory and Stop event usage
+- Explain relationship between auto-compact and auto-handoff
+
 ### Potential Future Enhancements
-1. **Plugin management**: Consider adding plugin installation/sync features
-2. **More skills**: Curate additional useful skills as needed
-3. **Better MCP sync**: Currently syncs .claude.json, could be more granular
-4. **Skill discovery**: Add search/browsing for skills from the CLI
-5. **Backup strategies**: Consider timestamped backups for rollback capability
+1. **Configurable threshold** - Make THRESHOLD variable configurable via settings
+2. **Smart threshold** - Adjust based on model context window size
+3. **Auto-clear after handoff** - Explore if we can automate /clear step
+4. **Multiple handoff files** - Rotate HANDOFF.md.1, HANDOFF.md.2 for history
 
 ### Commands Reference
 ```bash
@@ -110,20 +166,25 @@ claude-sync backup   # Force full backup
 
 # Automation
 claude-sync auto-enable   # Enable daily auto-sync (9 PM)
-claude-sync auto-disable  # Disable auto-sync
+claude-sync auto-disable  # Disable daily auto-sync
+
+# Auto-handoff workflow (when context ≥45%)
+/handoff             # Creates HANDOFF.md (auto-triggered by hook)
+/clear               # Clear context
+@HANDOFF.md          # Start fresh conversation
 ```
 
 ### Recent Commits (for context)
 ```
-23784b0 Auto-sync: 2026-02-13 21:00
-ee5502e Add 6 skills from ykdojo/claude-code-tips
-210baaa Clean slate: Remove all 57 skills to start fresh
-f270677 Remove failed auto-handoff feature
-0867f82 Restructure: professional layout with improved CLI
+23127ae Fix auto-handoff: switch to UserPromptSubmit event
+f89f735 Lower auto-handoff threshold to 45% for debugging
+81a7c42 Switch to UserPromptSubmit hook for auto-handoff
+63a79b6 Auto-sync: 2026-02-15 07:17
+34477e8 Add auto-handoff PreCompact hook to replace auto-compact
 ```
 
 ## Repository Info
 - **Path**: `/home/sani/claude-config-sync`
 - **Remote**: https://github.com/khursanirevo/claude-config-sync.git
 - **Branch**: main
-- **Last sync**: 2025-02-14
+- **Last handoff**: 2026-02-15 (context at 49%, auto-handoff successfully triggered)

@@ -54,13 +54,13 @@ backup_if_changed() {
 
 # Sync settings.json
 cs_sync_settings() {
-    cs_step "[1/6] Checking settings.json..."
+    cs_step "[1/7] Checking settings.json..."
     backup_if_changed "$CS_CLAUDE_DIR/settings.json" "$CS_ROOT/config/settings.json" "settings.json"
 }
 
 # Sync scripts
 cs_sync_scripts() {
-    cs_step "[2/6] Checking scripts..."
+    cs_step "[2/7] Checking scripts..."
     mkdir -p "$CS_CONTENT_DIR/scripts"
 
     if [[ -d "$CS_CLAUDE_DIR/scripts" ]]; then
@@ -82,7 +82,7 @@ cs_sync_scripts() {
 
 # Sync skills
 cs_sync_skills() {
-    cs_step "[3/6] Checking skills..."
+    cs_step "[3/7] Checking skills..."
     mkdir -p "$CS_CONTENT_DIR/skills"
 
     if [[ -d "$CS_CLAUDE_DIR/skills" ]]; then
@@ -106,7 +106,7 @@ cs_sync_skills() {
 
 # Sync hooks
 cs_sync_hooks() {
-    cs_step "[4/6] Checking hooks..."
+    cs_step "[4/7] Checking hooks..."
     mkdir -p "$CS_CONTENT_DIR/hooks"
 
     if [[ -d "$CS_CLAUDE_DIR/hooks" ]]; then
@@ -120,13 +120,12 @@ cs_sync_hooks() {
 
 # Sync .claude.json (MCP servers, plugins)
 cs_sync_claude_json() {
-    cs_step "[5/6] Checking .claude.json (MCP servers, plugins)..."
+    cs_step "[5/7] Checking .claude.json (MCP servers, plugins)..."
     backup_if_changed "$HOME/.claude.json" "$CS_ROOT/config/.claude.json" ".claude.json"
 }
 
-# Sync plugins.txt
-cs_sync_plugins() {
-    cs_step "[6/6] Checking plugins..."
+# Sync plugins.txt (for backward compatibility)
+cs_sync_plugins_txt() {
     if [[ -f "$CS_CLAUDE_DIR/plugins/installed_plugins.json" ]]; then
         # Extract plugin list and update plugins.txt
         if command -v jq &>/dev/null; then
@@ -144,6 +143,65 @@ cs_sync_plugins() {
             fi
         fi
     fi
+}
+
+# Sync plugin manifests
+cs_sync_plugin_manifests() {
+    cs_step "[6/7] Checking plugin manifests..."
+
+    mkdir -p "$CS_ROOT/plugins/manifests"
+
+    # Sync installed_plugins.json
+    if [[ -f "$CS_CLAUDE_DIR/plugins/installed_plugins.json" ]]; then
+        backup_if_changed "$CS_CLAUDE_DIR/plugins/installed_plugins.json" \
+            "$CS_ROOT/plugins/manifests/installed_plugins.json" "plugins/manifests/installed_plugins.json"
+    fi
+
+    # Sync known_marketplaces.json
+    if [[ -f "$CS_CLAUDE_DIR/plugins/known_marketplaces.json" ]]; then
+        backup_if_changed "$CS_CLAUDE_DIR/plugins/known_marketplaces.json" \
+            "$CS_ROOT/plugins/manifests/known_marketplaces.json" "plugins/manifests/known_marketplaces.json"
+    fi
+
+    echo "  Total plugins: $(jq -r '.plugins | length' "$CS_CLAUDE_DIR/plugins/installed_plugins.json" 2>/dev/null || echo "0")"
+}
+
+# Sync plugin marketplaces
+cs_sync_plugin_marketplaces() {
+    cs_step "[7/7] Checking plugin marketplaces..."
+
+    local SOURCE_DIR="$CS_CLAUDE_DIR/plugins/marketplaces"
+    local DEST_DIR="$CS_ROOT/plugins/marketplaces"
+
+    mkdir -p "$DEST_DIR"
+
+    if [[ -d "$SOURCE_DIR" ]]; then
+        for marketplace in "$SOURCE_DIR"/*/; do
+            if [[ -d "$marketplace" && ! -L "$marketplace" ]]; then
+                marketplace_name="$(basename "$marketplace")"
+                # Sync the marketplace (these are git repos, so we sync the contents)
+                backup_if_changed "$marketplace" "$DEST_DIR/$marketplace_name" "plugins/marketplaces/$marketplace_name"
+            fi
+        done
+
+        # Check for deleted marketplaces
+        for marketplace in "$DEST_DIR"/*/; do
+            if [[ -d "$marketplace" ]] && [[ ! -d "$SOURCE_DIR/$(basename "$marketplace")" ]]; then
+                rm -rf "$marketplace"
+                echo "  [DELETED] plugins/marketplaces/$(basename "$marketplace")"
+                ((CS_CHANGE_COUNT++))
+            fi
+        done
+
+        echo "  Total marketplaces: $(ls -1 "$DEST_DIR/" | wc -l)"
+    fi
+}
+
+# Combined plugin sync (for backward compatibility)
+cs_sync_plugins() {
+    cs_sync_plugin_manifests
+    cs_sync_plugin_marketplaces
+    cs_sync_plugins_txt
 }
 
 # Main sync function - runs all sync operations
@@ -187,5 +245,13 @@ export -f cs_sync_scripts
 export -f cs_sync_skills
 export -f cs_sync_hooks
 export -f cs_sync_claude_json
+export -f cs_sync_plugins_txt
+export -f cs_sync_plugin_manifests
+export -f cs_sync_plugin_marketplaces
 export -f cs_sync_plugins
 export -f cs_sync
+
+# Run sync if script is executed directly (not sourced)
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    cs_sync
+fi

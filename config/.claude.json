@@ -1,39 +1,39 @@
 {
-  "numStartups": 57,
+  "numStartups": 69,
   "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "new-user-warmup": 8,
     "plan-mode-for-complex-tasks": 38,
-    "terminal-setup": 56,
-    "shift-enter-setup": 56,
-    "memory-command": 48,
-    "theme-command": 43,
+    "terminal-setup": 66,
+    "shift-enter-setup": 66,
+    "memory-command": 65,
+    "theme-command": 63,
     "status-line": 28,
-    "stickers-command": 43,
+    "stickers-command": 63,
     "prompt-queue": 3,
-    "enter-to-steer-in-relatime": 43,
-    "todo-list": 43,
+    "enter-to-steer-in-relatime": 63,
+    "todo-list": 63,
     "install-github-app": 57,
     "install-slack-app": 57,
     "drag-and-drop-images": 57,
     "double-esc-code-restore": 57,
     "continue": 57,
     "shift-tab": 57,
-    "image-paste": 43,
+    "image-paste": 63,
     "config-thinking-mode": 25,
     "ultrathink-keyword": 57,
     "btw-side-question": 33,
-    "web-app": 49,
-    "mobile-app": 49,
+    "web-app": 65,
+    "mobile-app": 65,
     "default-permission-mode-config": 57,
     "custom-agents": 55,
-    "permissions": 55,
+    "permissions": 65,
     "rename-conversation": 57,
     "custom-commands": 57,
-    "git-worktrees": 55
+    "git-worktrees": 65
   },
-  "promptQueueUseCount": 100,
+  "promptQueueUseCount": 127,
   "showExpandedTodos": true,
   "cachedStatsigGates": {
     "tengu_prompt_suggestion": false,
@@ -470,37 +470,38 @@
         "packageManager": null
       },
       "exampleFilesGeneratedAt": 1771028539699,
-      "lastCost": 2.105145,
-      "lastAPIDuration": 350524,
-      "lastAPIDurationWithoutRetries": 350505,
-      "lastToolDuration": 10520,
-      "lastDuration": 444769,
+      "lastCost": 0.11029810000000001,
+      "lastAPIDuration": 14792,
+      "lastAPIDurationWithoutRetries": 14784,
+      "lastToolDuration": 1505,
+      "lastDuration": 9967,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 272395,
-      "lastTotalOutputTokens": 8926,
+      "lastTotalInputTokens": 44954,
+      "lastTotalOutputTokens": 527,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 4255124,
+      "lastTotalCacheReadInputTokens": 3427,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 241185,
-          "outputTokens": 3938,
-          "cacheReadInputTokens": 4204288,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 2.0439113999999994
-        },
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 31210,
-          "outputTokens": 4988,
-          "cacheReadInputTokens": 50836,
+          "inputTokens": 16073,
+          "outputTokens": 128,
+          "cacheReadInputTokens": 355,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.06123359999999998
+          "costUSD": 0.0167485
+        },
+        "claude-sonnet-4-5-20250929": {
+          "inputTokens": 28881,
+          "outputTokens": 399,
+          "cacheReadInputTokens": 3072,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.09354960000000001
         }
       },
-      "lastSessionId": "05853cfc-071e-42ad-8f89-8d5eff2d2ace"
+      "lastSessionId": "4ae1bd2a-e2d1-48e4-92d1-5ba4f3f72e23",
+      "hasCompletedProjectOnboarding": true
     },
     "/home/sani/work/clef": {
       "allowedTools": [],
@@ -531,37 +532,37 @@
       "projectOnboardingSeenCount": 0,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 0.49712110000000004,
-      "lastAPIDuration": 30707,
-      "lastAPIDurationWithoutRetries": 30705,
-      "lastToolDuration": 8,
-      "lastDuration": 313479,
+      "lastCost": 0.0077818,
+      "lastAPIDuration": 3127,
+      "lastAPIDurationWithoutRetries": 3124,
+      "lastToolDuration": 0,
+      "lastDuration": 3356,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 146386,
-      "lastTotalOutputTokens": 528,
+      "lastTotalInputTokens": 2550,
+      "lastTotalOutputTokens": 102,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 181275,
+      "lastTotalCacheReadInputTokens": 1806,
       "lastTotalWebSearchRequests": 0,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 2,
-          "outputTokens": 113,
-          "cacheReadInputTokens": 16027,
+          "inputTokens": 718,
+          "outputTokens": 45,
+          "cacheReadInputTokens": 270,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.0021696999999999997
+          "costUSD": 0.0009699999999999999
         },
         "claude-sonnet-4-5-20250929": {
-          "inputTokens": 146384,
-          "outputTokens": 415,
-          "cacheReadInputTokens": 165248,
+          "inputTokens": 1832,
+          "outputTokens": 57,
+          "cacheReadInputTokens": 1536,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.49495140000000004
+          "costUSD": 0.0068118
         }
       },
-      "lastSessionId": "b0335404-75d9-4ffc-8cfd-c17ab4958aca",
+      "lastSessionId": "8b75e54d-1dbc-4220-8415-9b57f4fdbc58",
       "reactVulnerabilityCache": {
         "detected": false,
         "package": null,
@@ -586,16 +587,23 @@
     ],
     "khursanirevo/claude-config-sync": [
       "/home/sani/claude-config-sync"
+    ],
+    "khursanirevo/eedi": [
+      "/home/sani/work/eedi"
     ]
   },
   "skillUsage": {
     "init": {
-      "usageCount": 1,
-      "lastUsedAt": 1770815728756
+      "usageCount": 2,
+      "lastUsedAt": 1771151246019
     },
     "handoff": {
-      "usageCount": 7,
-      "lastUsedAt": 1771116449588
+      "usageCount": 8,
+      "lastUsedAt": 1771133083659
+    },
+    "half-clone": {
+      "usageCount": 1,
+      "lastUsedAt": 1771131553887
     }
   },
   "mcpServers": {

@@ -17,14 +17,6 @@
       "Read(//tmp/**)"
     ]
   },
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/scripts/context-bar.sh"
-  },
-  "enabledPlugins": {
-    "glm-plan-usage@zai-coding-plugins": true,
-    "dx@ykdojo": true
-  },
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -36,5 +28,14 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/scripts/context-bar.sh"
+  },
+  "enabledPlugins": {
+    "glm-plan-usage@zai-coding-plugins": true,
+    "dx@ykdojo": true,
+    "superpowers@superpowers-marketplace": true
   }
 }

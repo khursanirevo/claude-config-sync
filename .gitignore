@@ -21,8 +21,9 @@ ide/
 stats-cache.json
 
 # Built-in plugins (install via npm)
-# Note: We now sync plugin manifests and marketplaces
-# Only exclude the cache which can be re-downloaded
+# Note: We now sync plugin manifests only
+# Exclude marketplace repos (can be re-registered) and cache (can be re-downloaded)
+plugins/marketplaces/
 plugins/cache/
 
 # Slack webhook config (contains sensitive URL)

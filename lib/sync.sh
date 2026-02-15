@@ -170,30 +170,14 @@ cs_sync_plugin_manifests() {
 cs_sync_plugin_marketplaces() {
     cs_step "[7/7] Checking plugin marketplaces..."
 
-    local SOURCE_DIR="$CS_CLAUDE_DIR/plugins/marketplaces"
-    local DEST_DIR="$CS_ROOT/plugins/marketplaces"
+    # Note: We don't sync the actual marketplace git repos since they can be re-cloned
+    # The known_marketplaces.json contains all the info needed to restore them
 
-    mkdir -p "$DEST_DIR"
+    local SOURCE_DIR="$CS_CLAUDE_DIR/plugins/marketplaces"
 
     if [[ -d "$SOURCE_DIR" ]]; then
-        for marketplace in "$SOURCE_DIR"/*/; do
-            if [[ -d "$marketplace" && ! -L "$marketplace" ]]; then
-                marketplace_name="$(basename "$marketplace")"
-                # Sync the marketplace (these are git repos, so we sync the contents)
-                backup_if_changed "$marketplace" "$DEST_DIR/$marketplace_name" "plugins/marketplaces/$marketplace_name"
-            fi
-        done
-
-        # Check for deleted marketplaces
-        for marketplace in "$DEST_DIR"/*/; do
-            if [[ -d "$marketplace" ]] && [[ ! -d "$SOURCE_DIR/$(basename "$marketplace")" ]]; then
-                rm -rf "$marketplace"
-                echo "  [DELETED] plugins/marketplaces/$(basename "$marketplace")"
-                ((CS_CHANGE_COUNT++))
-            fi
-        done
-
-        echo "  Total marketplaces: $(ls -1 "$DEST_DIR/" | wc -l)"
+        echo "  Total marketplaces: $(ls -1 "$SOURCE_DIR/" | wc -l)"
+        echo "  (Marketplace repos are not synced - they can be re-registered from manifests)"
     fi
 }
 

@@ -50,15 +50,12 @@ if [[ $pct -ge $THRESHOLD ]]; then
 🔄 AUTO-HANDOFF TRIGGERED (Context at ${pct}%)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CRITICAL: Context usage is at ${pct}%. Before continuing with any
-further work, you MUST run the handoff skill to preserve the
-conversation state.
+CRITICAL: Context at ${pct}%. You MUST immediately run the handoff
+skill BEFORE responding to the user's message.
 
-ACTION: Run /handoff NOW
+IMMEDIATE ACTION REQUIRED: /handoff
 
-After the handoff completes, tell the user:
-1. Run: /clear
-2. Start fresh conversation with: @HANDOFF.md
+Do NOT respond to the user until handoff completes.
 
 This preserves all context better than auto-compact would.
 

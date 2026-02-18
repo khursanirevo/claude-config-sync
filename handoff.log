@@ -3158,3 +3158,114 @@
 [2026-02-13 22:34:19] Auto-handoff state saved at 54%
   Context: 109170 / 200000 tokens
   Location: /mnt/data/work/autok
+[2026-02-18 17:43:30] Auto-handoff state saved at 59%
+  Context: 119654 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 17:43:32] Handoff state restored
+  Previous context: 119654 / 200000 tokens (59%)
+[2026-02-18 17:48:37] Auto-handoff state saved at 56%
+  Context: 112264 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 17:50:35] Handoff state restored
+  Previous context: 112264 / 200000 tokens (56%)
+[2026-02-18 17:54:18] Auto-handoff state saved at 60%
+  Context: 120102 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 17:57:56] Handoff state restored
+  Previous context: 120102 / 200000 tokens (60%)
+[2026-02-18 17:59:38] Auto-handoff state saved at 66%
+  Context: 133727 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:00:00] Handoff state restored
+  Previous context: 133727 / 200000 tokens (66%)
+[2026-02-18 18:07:50] Auto-handoff state saved at 67%
+  Context: 134918 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:08:06] Handoff state restored
+  Previous context: 134918 / 200000 tokens (67%)
+[2026-02-18 18:14:23] Auto-handoff state saved at 69%
+  Context: 139700 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:18:05] Handoff state restored
+  Previous context: 139700 / 200000 tokens (69%)
+[2026-02-18 18:19:24] Auto-handoff state saved at 76%
+  Context: 153437 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:21:51] Handoff state restored
+  Previous context: 153437 / 200000 tokens (76%)
+[2026-02-18 18:24:25] Auto-handoff state saved at 83%
+  Context: 166718 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:26:27] Handoff state restored
+  Previous context: 166718 / 200000 tokens (83%)
+[2026-02-18 18:39:04] Auto-handoff state saved at 46%
+  Context: 93282 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:39:29] Handoff state restored
+  Previous context: 93282 / 200000 tokens (46%)
+[2026-02-18 18:44:58] Auto-handoff state saved at 51%
+  Context: 102769 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:46:33] Handoff state restored
+  Previous context: 102769 / 200000 tokens (51%)
+[2026-02-18 18:50:15] Auto-handoff state saved at 55%
+  Context: 111835 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:52:32] Handoff state restored
+  Previous context: 111835 / 200000 tokens (55%)
+[2026-02-18 18:56:03] Auto-handoff state saved at 62%
+  Context: 124070 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 18:56:03] Handoff state restored
+  Previous context: 124070 / 200000 tokens (62%)
+[2026-02-18 19:01:51] Auto-handoff state saved at 68%
+  Context: 137951 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 19:01:52] Handoff state restored
+  Previous context: 137951 / 200000 tokens (68%)
+[2026-02-18 19:07:18] Auto-handoff state saved at 77%
+  Context: 154604 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 19:08:07] Handoff state restored
+  Previous context: 154604 / 200000 tokens (77%)
+[2026-02-18 19:12:39] Auto-handoff state saved at 81%
+  Context: 162249 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 19:14:36] Handoff state restored
+  Previous context: 162249 / 200000 tokens (81%)
+[2026-02-18 20:09:50] Auto-handoff state saved at 47%
+  Context: 94601 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:14:32] Handoff state restored
+  Previous context: 94601 / 200000 tokens (47%)
+[2026-02-18 20:14:59] Auto-handoff state saved at 54%
+  Context: 109379 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:25:54] Handoff state restored
+  Previous context: 109379 / 200000 tokens (54%)
+[2026-02-18 20:26:06] Auto-handoff state saved at 48%
+  Context: 96257 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:29:08] Handoff state restored
+  Previous context: 96257 / 200000 tokens (48%)
+[2026-02-18 20:31:07] Auto-handoff state saved at 51%
+  Context: 102997 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:38:58] Auto-handoff state saved at 52%
+  Context: 104212 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:38:59] Handoff state restored
+  Previous context: 104212 / 200000 tokens (52%)
+[2026-02-18 20:44:59] Auto-handoff state saved at 56%
+  Context: 112039 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:47:14] Handoff state restored
+  Previous context: 112039 / 200000 tokens (56%)
+[2026-02-18 20:50:35] Auto-handoff state saved at 65%
+  Context: 130346 / 200000 tokens
+  Location: /mnt/data/work/autok
+[2026-02-18 20:50:36] Handoff state restored
+  Previous context: 130346 / 200000 tokens (65%)
+[2026-02-18 20:55:40] Auto-handoff state saved at 69%
+  Context: 139873 / 200000 tokens
+  Location: /mnt/data/work/autok

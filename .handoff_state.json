@@ -1,15 +1,15 @@
 {
-  "pct": "54",
-  "context": "109170",
+  "pct": "69",
+  "context": "139873",
   "max_context": "200000",
   "cwd": "/mnt/data/work/autok",
   "dir": "autok",
   "branch": "main",
   "last_context": [
-    "let's use 16D",
-    "neucodec use how many 4d latent space?",
-    "wait why batch 256? i thought before this you found 1024 better?"
+    "1",
+    "why val not use all? Running validation... Evaluating: 0%| | 0/6704 [00:00<?, ?it/s] Evaluating: 0%| | 1/6704 [00:00<22:08, 5.05it/s] Evaluating: 0%| | 2/6704 [00:00<24:24, 4.58it/s] Evaluating: 0%| | 3/6704 [00:00<21:59, 5.08it/s] Evaluating: 0%| | 4/6704 [00:00<19:22, 5.76it/s] Evaluating: 0%| | 5/6704 [00:00<19:50, 5.63it/s] Evaluating: 0%| | 6/6704 [00:01<22:24, 4.98it/s] Evaluating: 0%| | 7/6704 [00:01<22:02, 5.06it/s] Evaluating: 0%| | 9/6704 [00:01<18:39, 5.98it/s] Evaluating: 0%| | 10/6704 [00:01<20:03, 5.56it/s] Evaluating: 0%| | 11/6704 [00:02<21:05, 5.29it/s] Evaluating: 0%| | 12/6704 [00:02<21:47, 5.12it/s] Evaluating: 0%| | 13/6704 [00:02<22:12, 5.02it/s] Evaluating: 0%| | 14/6704 [00:02<21:56, 5.08it/s] Evaluating: 0%| | 15/6704 [00:02<22:40, 4.92it/s] Evaluating: 0%| | 16/6704 [00:03<21:10, 5.27it/s] Evaluating: 0%| | 17/6704 [00:03<19:45, 5.64it/s] Evaluating: 0%| | 18/6704 [00:03<21:40, 5.14it/s] Evaluating: 0%| | 19/6704 [00:03<18:58, 5.87it/s] Evaluating: 0%| | 20/6704 [00:03<20:04, 5.55it/s] Evaluating: 0%| | 22/6704 [00:03<16:35, 6.71it/s] Evaluating: 0%| | 24/6704 [00:04<16:57, 6.57it/s] Evaluating: 0%| | 26/6704 [00:04<15:25, 7.21it/s] Evaluating: 0%| | 27/6704 [00:04<17:05, 6.51it/s] Evaluating: 0%| | 28/6704 [00:04<18:06, 6.15it/s] Evaluating: 0%| | 29/6704 [00:05<19:53, 5.59it/s] Evaluating: 0%| | 30/6704 [00:05<21:19, 5.22it/s] Evaluating: 0%| | 31/6704 [00:05<19:39, 5.66it/s] Evaluating: 0%| | 33/6704 [00:05<17:03, 6.52it/s] Evaluating: 1%| | 34/6704 [00:05<17:59, 6.18it/s] Evaluating: 1%| | 36/6704 [00:06<16:57, 6.55it/s] Evaluating: 1%| | 38/6704 [00:06<16:33, 6.71it/s] Evaluating: 1%| | 39/6704 [00:06<17:55, 6.20it/s] Evaluating: 1%| | 41/6704 [00:07<17:48, 6.23it/s] Evaluating: 1%| | 43/6704 [00:07<15:51, 7.00it/s] Evaluating: 1%| | 44/6704 [00:07<16:52, 6.58it/s] Evaluating: 1%| | 46/6704 [00:07<16:15, 6.83it/s] Evaluating: 1%| | 49/6704 [00:07<11:47, 9.40it/s] Epoch 1: Train Loss: 0.4726 (recon: 0.3706) Val Loss: 0.1652 Train Token Rate: 2.8 fps × 4D = 11.4 tok/sec Val Token Rate Stats (tok/sec): Min: 10.0 Max: 11.7 Mean: 10.4 Median: 10.4 Val mel_loss: 0.1652 Saved checkpoint: checkpoints/best.pt New best model: mel_loss=0.1652",
+    "Epoch 0: 100%|█████████▉| 862/864 [00:52<00:00, 23.12it/s, loss=0.4807, recon=0.3771, percep=0.0629, multires=0.0389, rms=0.0010, lr=9.60e-05, grad=4.28] Epoch 0: 100%|██████████| 864/864 [00:52<00:00, 16.50it/s, loss=0.4807, recon=0.3771, percep=0.0629, multires=0.0389, rms=0.0010, lr=9.60e-05, grad=4.28] Running validation... Evaluating: 0it [00:00, ?it/s] Epoch 0: Train Loss: 0.6544 (recon: 0.5323) Val Loss: inf Train Token Rate: 3.0 fps × 4D = 11.8 tok/sec Val mel_loss: inf Saved checkpoint: checkpoints/best.pt New best model: mel_loss=inf "
   ],
   "recent_files": [],
-  "timestamp": "2026-02-13T22:34:19+08:00"
+  "timestamp": "2026-02-18T20:55:40+08:00"
 }

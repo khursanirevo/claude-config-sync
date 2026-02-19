@@ -1,0 +1,142 @@
+#!/bin/bash
+# Install Claude Code plugins from synced manifests
+
+# Exit on error, unset variables, and pipe failures
+set -euo pipefail
+
+# Get the script root directory
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found"
+    echo "Please run this from $CS_ROOT or ensure CS_ROOT is set correctly"
+    exit 1
+fi
+
+# Track installation results
+declare -i INSTALLED_COUNT=0
+declare -i FAILED_COUNT=0
+declare -a FAILED_PLUGINS=()
+
+cs_cd_root
+
+# Check if plugin manifests exist
+if [[ ! -d "$CS_ROOT/plugins/manifests" ]]; then
+    cs_error "No plugin manifests found in $CS_ROOT/plugins/manifests"
+    cs_info "Run sync first to backup your plugins"
+    exit 1
+fi
+
+echo "=== Installing Claude Code Plugins ==="
+echo ""
+
+# Get the manifests directory
+MANIFESTS_DIR="$CS_ROOT/plugins/manifests"
+INSTALLED_PLUGINS="$MANIFESTS_DIR/installed_plugins.json"
+KNOWN_MARKETPLACES="$MANIFESTS_DIR/known_marketplaces.json"
+
+# Check if files exist
+if [[ ! -f "$INSTALLED_PLUGINS" ]]; then
+    cs_warn "No installed_plugins.json found. Nothing to restore."
+    exit 0
+fi
+
+# Get plugin count
+PLUGIN_COUNT=$(jq -r '.plugins | length' "$INSTALLED_PLUGINS" 2>/dev/null || echo "0")
+
+if [[ "$PLUGIN_COUNT" -eq 0 ]]; then
+    cs_info "No plugins to install."
+    exit 0
+fi
+
+echo "Found $PLUGIN_COUNT plugin(s) to install"
+echo ""
+
+# Step 1: Register marketplaces
+cs_step "[1/2] Registering marketplaces..."
+
+if [[ -f "$KNOWN_MARKETPLACES" ]]; then
+    # Extract marketplace names and register them
+    # The known_marketplaces.json contains marketplace registry info
+    # We need to extract the marketplace names and register them
+
+    # Get unique marketplace names from installed plugins
+    MARKETPLACES=$(jq -r '.plugins | to_entries[] | (.key | split("@")[1]) // empty' "$INSTALLED_PLUGINS" 2>/dev/null | sort -u || true)
+
+    if [[ -n "$MARKETPLACES" ]]; then
+        while IFS= read -r marketplace; do
+            if [[ -n "$marketplace" ]]; then
+                echo "  Registering marketplace: $marketplace"
+                # Check if marketplace directory exists in sync
+                if [[ -d "$CS_ROOT/plugins/marketplaces/$marketplace" ]]; then
+                    # The marketplace is already synced, we can add it from there
+                    # For now, just try to register it
+                    claude plugin marketplace add "$marketplace" 2>/dev/null || echo "    (Already registered or unavailable)"
+                else
+                    # Try to register from remote
+                    claude plugin marketplace add "$marketplace" 2>/dev/null || echo "    (Already registered or unavailable)"
+                fi
+            fi
+        done <<< "$MARKETPLACES"
+    fi
+else
+    cs_warn "No known_marketplaces.json found. Skipping marketplace registration."
+fi
+
+echo ""
+
+# Step 2: Install plugins
+cs_step "[2/2] Installing plugins..."
+
+# Extract plugin names and versions
+while IFS= read -r plugin_spec; do
+    if [[ -n "$plugin_spec" ]]; then
+        # Extract plugin name (before @)
+        plugin_name=$(echo "$plugin_spec" | cut -d'@' -f1)
+
+        # Validate plugin name (prevent injection)
+        if [[ ! "$plugin_name" =~ ^[a-zA-Z0-9_-]+$ ]]; then
+            echo "  ✗ Invalid plugin name: $plugin_name (skipping)"
+            ((FAILED_COUNT++))
+            continue
+        fi
+
+        echo "  Installing: $plugin_name"
+
+        # Try to install the plugin
+        if claude plugin install "$plugin_name" >/dev/null 2>&1; then
+            echo "    ✓ Installed successfully"
+            ((INSTALLED_COUNT++))
+        else
+            echo "    ✗ Failed to install"
+            ((FAILED_COUNT++))
+            FAILED_PLUGINS+=("$plugin_name")
+        fi
+    fi
+done < <(jq -r '.plugins | to_entries[] | "\(.key)@\(.value[0].scope // "user")"' "$INSTALLED_PLUGINS" 2>/dev/null)
+
+echo ""
+echo "Installation Summary:"
+echo "  ✓ Successfully installed: $INSTALLED_COUNT"
+echo "  ✗ Failed: $FAILED_COUNT"
+
+if [[ $FAILED_COUNT -gt 0 ]]; then
+    echo ""
+    echo "Failed plugins:"
+    for plugin in "${FAILED_PLUGINS[@]}"; do
+        echo "  - $plugin"
+    done
+    echo ""
+    echo "These plugins may already be installed or may not be available."
+    echo "Check with: claude plugin list"
+    exit 1
+fi
+
+echo ""
+cs_success "All plugins installed successfully!"
+echo ""
+echo "Verify with: claude plugin list"

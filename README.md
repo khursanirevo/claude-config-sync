@@ -4,28 +4,35 @@ Sync your Claude Code configuration across machines via Git.
 
 ## What Gets Synced
 
-- `settings.json` - Main Claude Code settings (permissions, status line, etc.)
-- `scripts/` - Custom scripts (context-bar.sh, etc.)
-- `skills/` - Custom skills (**incremental auto-detection**)
-- `hooks/` - Custom hooks
-- `plugins.txt` - Plugin list (auto-updated)
-- `.zshrc` additions - Shell aliases (c, ch, cs, --fs)
+- `config/settings.json` - Main Claude Code settings (permissions, status line, etc.)
+- `config/.claude.json` - Global Claude config (MCP servers, plugins)
+- `config/plugins.txt` - Plugin list for Claude Code plugin marketplace
+- `content/scripts/` - Custom scripts (context-bar.sh, etc.)
+- `content/skills/` - Custom skills (**incremental auto-detection**)
+- `content/hooks/` - Custom hooks
+- `plugins/manifests/` - Plugin installation manifests (**NEW**)
+  - `installed_plugins.json` - List of installed plugins with versions
+  - `known_marketplaces.json` - Registered plugin marketplaces
+  - Marketplaces and plugins can be restored on new machines using `bin/install-plugins`
 
 ## What Doesn't Get Synced
 
-- `settings.local.json` - Machine-specific settings (API tokens, etc.)
+- `config/settings.local.json` - Machine-specific settings (API tokens, etc.)
 - `projects/` - Session history
 - `history.jsonl` - Command history
-- `plugins/` - NPM-installed plugins (use install script)
-- Session data, todos, tasks, etc.
+- Session data, todos, tasks, logs, etc.
+- Plugin cache files (`~/.claude/plugins/cache/`) - Can be re-downloaded
+- Marketplace repos (`~/.claude/plugins/marketplaces/`) - Can be re-registered from manifests
 
-## Setup
+## Quick Start
 
 ### First Machine (Initial Setup)
 
 ```bash
-./setup.sh          # Backup current config and create git repo
-./push-to-github.sh # (Optional) Push to GitHub/GitLab
+./bin/setup          # Backup current config and create git repo
+git add . && git commit -m "Initial Claude Code config backup"
+git remote add origin <your-repo-url>
+git push -u origin main
 ```
 
 ### New Machine (Restore)
@@ -33,50 +40,52 @@ Sync your Claude Code configuration across machines via Git.
 ```bash
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
-./install.sh        # Symlink config files to ~/.claude
-./install-plugins.sh # Install NPM plugins
+./bin/install        # Symlink config files to ~/.claude
+./bin/install-plugins  # Restore plugin marketplaces and plugins (optional)
+source ~/.zshrc       # or source ~/.bashrc
 ```
 
 ## Daily Workflow
 
-### Quick Sync (Recommended)
+The new `claude-sync` CLI provides all functionality:
 
 ```bash
-cws     # Sync + commit + push in one command
+# Quick sync (recommended)
+cs-quick              # Sync + commit + push in one command
+
+# Or use the full command
+claude-sync quick     # Same as above
+
+# Other commands
+cs-sync              # Incremental sync only
+cs-status            # Show sync status
+cs                   # Show all available commands
 ```
 
-### Manual Sync
+## CLI Commands
+
+| Command | Description |
+|---------|-------------|
+| `claude-sync sync` | Incremental sync - detects new/changed skills |
+| `claude-sync quick` | Sync + commit + push in one command |
+| `claude-sync backup` | Force full backup (copy all files) |
+| `claude-sync status` | Show current sync status |
+| `claude-sync auto-enable` | Enable daily auto-sync (cron) |
+| `claude-sync auto-disable` | Disable daily auto-sync |
+| `claude-sync help` | Show help message |
+
+## Shell Aliases
+
+After running `./bin/install`, these aliases are available:
 
 ```bash
-cd ~/claude-config-sync
-./sync.sh           # Detects new/changed skills automatically
-git add . && git commit -m "Update config"
-git push
+cs                   # Show help
+cs-sync             # Sync changes
+cs-quick            # Sync + commit + push
+cs-status           # Show status
 ```
 
-### Auto-Sync on Commit
-
-A **pre-commit hook** is installed that auto-runs `./sync.sh` before every commit.
-
-### Pulling Changes (Other Machines)
-
-```bash
-cd ~/claude-config-sync
-git pull
-# Files update automatically (they're symlinks)
-```
-
-## Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `sync.sh` | Incremental sync - detects new/changed skills |
-| `quick-sync.sh` | One-command sync + commit + push |
-| `backup.sh` | Full backup (force copy all files) |
-| `install.sh` | Symlink config to ~/.claude |
-| `install-plugins.sh` | Install NPM plugins |
-| `enable-auto-sync.sh` | Enable automatic daily sync (cron) |
-| `disable-auto-sync.sh` | Disable automatic daily sync |
+To apply aliases immediately: `source ~/.zshrc` or `source ~/.bashrc`
 
 ## Automatic Daily Sync
 
@@ -84,7 +93,7 @@ Set up automatic daily backups:
 
 ```bash
 cd ~/claude-config-sync
-./enable-auto-sync.sh
+claude-sync auto-enable
 ```
 
 **Default schedule:** 9:00 PM daily
@@ -97,33 +106,73 @@ crontab -e
 
 **View logs:**
 ```bash
-tail -f ~/claude-config-sync/auto-sync.log
+tail -f ~/claude-config-sync/logs/auto-sync.log
 ```
 
 **Disable:**
 ```bash
-./disable-auto-sync.sh
+claude-sync auto-disable
 ```
 
-## Shell Aliases
+## Directory Structure
 
-Add to `~/.zshrc` for quick access:
-
-```bash
-# Claude Config Sync
-alias cws='~/claude-config-sync/quick-sync.sh'
-alias ccs='cd ~/claude-config-sync && ./sync.sh'
+```
+claude-config-sync/
+├── bin/                     # User-facing commands
+│   ├── claude-sync          # Main CLI
+│   ├── install              # Install on new machine
+│   └── setup                # Initial setup
+│
+├── lib/                     # Core logic (internal)
+│   ├── common.sh            # Shared utilities
+│   ├── sync.sh              # Sync functions
+│   └── backup.sh            # Backup functions
+│
+├── config/                  # Configuration files
+│   ├── settings.json        # Main settings
+│   ├── .claude.json         # Global Claude config
+│   └── plugins.txt          # Plugin list
+│
+├── content/                 # User content to sync
+│   ├── skills/              # Custom skills
+│   ├── scripts/             # Custom scripts
+│   └── hooks/               # Custom hooks
+│
+├── automation/              # Automation scripts
+│   ├── auto-sync.sh         # Cron job script
+│   └── git-hooks/
+│       └── pre-commit       # Pre-commit hook
+│
+├── logs/                    # Log files (gitignored)
+├── docs/                    # Additional documentation
+├── README.md                # This file
+└── .gitignore               # Git ignore rules
 ```
 
 ## Skills Auto-Detection
 
-The `sync.sh` script automatically:
+The `claude-sync sync` command automatically:
 - ✅ Detects **new skills** created by Claude/claudeception
 - ✅ Detects **updated skills**
 - ✅ Detects **deleted skills**
 - ✅ Syncs all changes to the repo
 
 No manual file management needed!
+
+## Pre-commit Hook
+
+A pre-commit hook is installed that auto-runs sync before every commit, ensuring your config is always up-to-date when you push changes.
+
+## Slack Notifications (Optional)
+
+To receive Slack notifications on auto-sync:
+
+1. Create a Slack Incoming Webhook
+2. Save the webhook URL to `~/.claude-config-sync/.slack-config`:
+
+```bash
+echo "SLACK_WEBHOOK_URL='https://hooks.slack.com/services/YOUR/WEBHOOK/URL'" > ~/.claude-config-sync/.slack-config
+```
 
 ## Example Workflow
 
@@ -132,10 +181,10 @@ No manual file management needed!
 # Claude adds it to ~/.claude/skills/my-new-skill/
 
 # Run quick sync
-cws
+cs-quick
 
 # Output:
-#   [NEW] skills/my-new-skill
+#   [NEW] content/skills/my-new-skill
 #   Total skills: 58
 # === Sync Complete! (1 change(s)) ===
 # === Committing & Pushing ===

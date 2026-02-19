@@ -1,0 +1,94 @@
+#!/bin/bash
+# Clean reinstall - removes symlinks and reinstalls
+
+set -e
+
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found"
+    exit 1
+fi
+
+cs_cd_root
+
+CLAUDE_DIR="$HOME/.claude"
+
+echo -e "${CS_COLOR_YELLOW}=== Claude Config Sync - Clean Reinstall ===${CS_COLOR_RESET}"
+echo ""
+echo "This will:"
+echo "  1. Remove existing symlinks from ~/.claude"
+echo "  2. Run fresh install from $CS_ROOT"
+echo ""
+read -p "Continue? (y/N) " -n 1 -r
+echo
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Cancelled."
+    exit 0
+fi
+
+echo ""
+echo "Removing symlinks..."
+
+# Remove settings.json symlink
+if [[ -L "$CLAUDE_DIR/settings.json" ]]; then
+    rm "$CLAUDE_DIR/settings.json"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed settings.json symlink"
+fi
+
+# Remove .claude.json symlink
+if [[ -L "$HOME/.claude.json" ]]; then
+    rm "$HOME/.claude.json"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed .claude.json symlink"
+fi
+
+# Remove scripts symlinks
+if [[ -L "$CLAUDE_DIR/scripts" ]]; then
+    rm "$CLAUDE_DIR/scripts"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed scripts/ symlink"
+else
+    # Remove individual script symlinks
+    for script in "$CLAUDE_DIR/scripts"/*; do
+        if [[ -L "$script" ]]; then
+            rm "$script"
+            echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed $(basename "$script") symlink"
+        fi
+    done
+fi
+
+# Remove skills symlinks
+if [[ -L "$CLAUDE_DIR/skills" ]]; then
+    rm "$CLAUDE_DIR/skills"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed skills/ symlink"
+else
+    for skill in "$CLAUDE_DIR/skills"/*; do
+        if [[ -L "$skill" ]]; then
+            rm "$skill"
+            echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed $(basename "$skill") symlink"
+        fi
+    done
+fi
+
+# Remove hooks symlinks
+if [[ -L "$CLAUDE_DIR/hooks" ]]; then
+    rm "$CLAUDE_DIR/hooks"
+    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed hooks/ symlink"
+else
+    for hook in "$CLAUDE_DIR/hooks"/*; do
+        if [[ -L "$hook" ]]; then
+            rm "$hook"
+            echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} Removed $(basename "$hook") symlink"
+        fi
+    done
+fi
+
+echo ""
+echo "Running fresh install..."
+echo ""
+
+./bin/install

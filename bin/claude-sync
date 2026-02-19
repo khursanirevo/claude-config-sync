@@ -1,0 +1,266 @@
+#!/bin/bash
+# claude-sync - Unified CLI for Claude Code Config Sync
+
+set -e
+
+# Get the script root directory
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found"
+    echo "Please run this from $CS_ROOT or ensure CS_ROOT is set correctly"
+    exit 1
+fi
+
+# Show help
+cs_show_help() {
+    cat << 'HELP'
+Claude Code Config Sync - Unified CLI
+
+USAGE:
+    claude-sync <command> [options]
+
+COMMANDS:
+    sync           Incremental sync - detects new/changed skills and config
+    quick          Sync + commit + push in one command
+    backup         Force full backup (copy all files from ~/.claude)
+    install        Install symlinks on new machine
+    reinstall      Clean reinstall - removes symlinks and reinstalls
+    setup          Initial setup - create git repo and backup config
+    auto-enable    Enable automatic daily sync (cron)
+    auto-disable   Disable automatic daily sync
+    status         Show current sync status
+    help           Show this help message
+
+EXAMPLES:
+    claude-sync sync              # Sync changes from ~/.claude
+    claude-sync quick             # Sync + commit + push
+    claude-sync backup            # Force full backup
+    claude-sync reinstall         # Clean reinstall symlinks
+    claude-sync auto-enable       # Enable daily auto-sync at 9 PM
+
+For more information, see: https://github.com/yourusername/claude-config-sync
+HELP
+}
+
+# Quick sync - sync + commit + push
+cs_cmd_quick() {
+    cs_cd_root
+    cs_load_slack_config
+
+    echo "=== Quick Sync ==="
+    echo ""
+
+    # Run sync
+    bash "$CS_LIB_DIR/sync.sh"
+
+    echo ""
+    echo "=== Committing & Pushing ==="
+    echo ""
+
+    # Add everything
+    git add -A
+
+    # Check if there's anything to commit
+    if git diff-index --quiet HEAD -- 2>/dev/null; then
+        echo "No changes to commit."
+        exit 0
+    fi
+
+    # Commit with auto-generated message
+    local COMMIT_MSG
+    COMMIT_MSG="Sync: $(date +'%Y-%m-%d %H:%M')"
+
+    git commit -m "$COMMIT_MSG
+
+Auto-synced from ~/.claude"
+
+    # Push
+    git push
+
+    # Get changes count
+    local CHANGES_COUNT
+    CHANGES_COUNT=$(git diff HEAD~1 --name-only | wc -l)
+
+    # Send success notification
+    cs_slack_notify "✅ Manual sync complete!\n\n*Changes:* $CHANGES_COUNT file(s) updated\n*Commit:* $COMMIT_MSG\n*Host:* $(hostname)" "#36a64f"
+
+    echo ""
+    echo "=== Done! ==="
+}
+
+# Sync command
+cs_cmd_sync() {
+    bash "$CS_LIB_DIR/sync.sh"
+}
+
+# Backup command
+cs_cmd_backup() {
+    bash "$CS_LIB_DIR/backup.sh"
+}
+
+# Status command
+cs_cmd_status() {
+    cs_cd_root
+    cs_check_git
+
+    echo "=== Claude Config Sync Status ==="
+    echo ""
+
+    # Show repo info
+    echo "Repository: $CS_ROOT"
+    echo "Git branch: $(git branch --show-current 2>/dev/null || echo 'not a git repo')"
+    echo ""
+
+    # Show file counts
+    echo "Content files:"
+    echo "  Skills:   $(ls -1 "$CS_CONTENT_DIR/skills/" 2>/dev/null | wc -l)"
+    echo "  Scripts:  $(ls -1 "$CS_CONTENT_DIR/scripts/" 2>/dev/null | wc -l)"
+    echo "  Hooks:    $(ls -1 "$CS_CONTENT_DIR/hooks/" 2>/dev/null | wc -l)"
+    echo ""
+
+    # Show plugin info
+    echo "Plugins:"
+    if [[ -f "$CS_ROOT/plugins/manifests/installed_plugins.json" ]]; then
+        echo "  Installed: $(jq -r '.plugins | length' "$CS_ROOT/plugins/manifests/installed_plugins.json" 2>/dev/null || echo "0")"
+    else
+        echo "  Installed: 0 (no manifest found)"
+    fi
+    echo ""
+
+    # Show git status
+    echo "Git status:"
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        if git diff-index --quiet HEAD -- 2>/dev/null; then
+            echo "  Working directory: clean"
+        else
+            echo "  Working directory: has uncommitted changes"
+            echo ""
+            git status --short
+        fi
+    fi
+    echo ""
+
+    # Show auto-sync status
+    echo "Auto-sync status:"
+    if crontab -l 2>/dev/null | grep -q "claude-config-sync-auto"; then
+        echo "  Status: enabled"
+        local CRON_ENTRY
+        CRON_ENTRY=$(crontab -l 2>/dev/null | grep "claude-config-sync-auto" | head -1)
+        echo "  Schedule: $(echo "$CRON_ENTRY" | awk '{print $1, $2, $3, $4, $5}')"
+    else
+        echo "  Status: disabled"
+    fi
+}
+
+# Auto-enable command
+cs_cmd_auto_enable() {
+    cs_cd_root
+
+    local CRON_COMMENT="claude-config-sync-auto"
+
+    echo "=== Enabling Automatic Daily Sync ==="
+    echo ""
+
+    # Remove existing cron job if it exists
+    crontab -l 2>/dev/null | grep -v "$CRON_COMMENT" | crontab -
+
+    # Get current crontab
+    local current_cron
+    current_cron=$(crontab -l 2>/dev/null || true)
+
+    # Add new cron job (runs at 9 PM daily)
+    cat > /tmp/crontab.tmp.$$ << CRON
+# $CRON_COMMENT - Daily sync at 9 PM
+0 21 * * * $CS_ROOT/automation/auto-sync.sh >> $CS_LOG_DIR/auto-sync.log 2>&1
+CRON
+
+    # Append existing cron entries
+    if [[ -n "$current_cron" ]]; then
+        echo "$current_cron" >> /tmp/crontab.tmp.$$
+    fi
+
+    # Install new crontab
+    crontab /tmp/crontab.tmp.$$
+    rm /tmp/crontab.tmp.$$
+
+    cs_success "Auto-sync enabled!"
+    echo ""
+    echo "Schedule: Daily at 9:00 PM"
+    echo "Log file: $CS_LOG_DIR/auto-sync.log"
+    echo ""
+    echo "To view logs:"
+    echo "  tail -f $CS_LOG_DIR/auto-sync.log"
+    echo ""
+    echo "To disable:"
+    echo "  claude-sync auto-disable"
+    echo ""
+    echo "To change schedule, edit crontab:"
+    echo "  crontab -e"
+}
+
+# Auto-disable command
+cs_cmd_auto_disable() {
+    local CRON_COMMENT="claude-config-sync-auto"
+
+    echo "=== Disabling Automatic Daily Sync ==="
+    echo ""
+
+    # Remove cron job if it exists
+    if crontab -l 2>/dev/null | grep -q "$CRON_COMMENT"; then
+        crontab -l 2>/dev/null | grep -v "$CRON_COMMENT" | crontab -
+        cs_success "Auto-sync disabled!"
+    else
+        cs_warn "Auto-sync was not enabled"
+    fi
+}
+
+# Main command dispatcher
+case "${1:-}" in
+    sync)
+        cs_cmd_sync
+        ;;
+    quick)
+        cs_cmd_quick
+        ;;
+    backup)
+        cs_cmd_backup
+        ;;
+    install)
+        exec bash "$CS_BIN_DIR/install"
+        ;;
+    setup)
+        exec bash "$CS_BIN_DIR/setup"
+        ;;
+    auto-enable)
+        cs_cmd_auto_enable
+        ;;
+    auto-disable)
+        cs_cmd_auto_disable
+        ;;
+    status)
+        cs_cmd_status
+        ;;
+    reinstall)
+        exec bash "$CS_BIN_DIR/reinstall"
+        ;;
+    help|--help|-h)
+        cs_show_help
+        ;;
+    "")
+        cs_error "No command specified"
+        echo ""
+        cs_show_help
+        exit 1
+        ;;
+    *)
+        cs_error "Unknown command: $1"
+        echo ""
+        cs_show_help
+        exit 1
+        ;;
+esac

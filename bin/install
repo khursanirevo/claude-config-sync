@@ -1,0 +1,205 @@
+#!/bin/bash
+# Install script - run on new machines to restore config
+
+set -e
+
+# Get the script root directory
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+
+# Source common utilities
+# shellcheck source=lib/common.sh
+if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
+    source "$CS_ROOT/lib/common.sh"
+else
+    echo "Error: lib/common.sh not found"
+    exit 1
+fi
+
+cs_cd_root
+
+CLAUDE_DIR="$HOME/.claude"
+SHELL_RC=$(cs_detect_shell_rc)
+
+echo -e "${CS_COLOR_BLUE}Claude Code Config Sync - Install${CS_COLOR_RESET}"
+echo "========================================"
+echo ""
+echo "This will symlink config files from $CS_ROOT to $CLAUDE_DIR"
+echo ""
+
+# Create .claude directory if it doesn't exist
+mkdir -p "$CLAUDE_DIR"
+
+# Backup existing settings.json if it exists
+if [[ -f "$CLAUDE_DIR/settings.json" && ! -L "$CLAUDE_DIR/settings.json" ]]; then
+    echo -e "${CS_COLOR_YELLOW}[Backup]${CS_COLOR_RESET} Existing settings.json → settings.json.backup"
+    cp "$CLAUDE_DIR/settings.json" "$CLAUDE_DIR/settings.json.backup"
+fi
+
+echo ""
+echo "Installing symlinks..."
+echo ""
+
+# Function to check if symlink already exists
+is_symlinked() {
+    local target="$1"
+    local source="$2"
+    [[ -L "$target" && "$(readlink "$target")" == "$source" ]]
+}
+
+# [1/6] Install settings.json
+if is_symlinked "$CLAUDE_DIR/settings.json" "$CS_ROOT/config/settings.json"; then
+    echo -e "${CS_COLOR_GREEN}[Already linked]${CS_COLOR_RESET} settings.json"
+elif [[ -f "$CS_ROOT/config/settings.json" ]]; then
+    ln -sf "$CS_ROOT/config/settings.json" "$CLAUDE_DIR/settings.json"
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} settings.json"
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} settings.json (not found in repo)"
+fi
+
+# [2/6] Install scripts
+mkdir -p "$CLAUDE_DIR/scripts"
+if [[ -d "$CS_ROOT/content/scripts" ]]; then
+    script_count=$(ls -1 "$CS_ROOT/content/scripts/" 2>/dev/null | wc -l)
+    for script in "$CS_ROOT/content/scripts"/*; do
+        if [[ -f "$script" ]]; then
+            ln -sf "$script" "$CLAUDE_DIR/scripts/$(basename "$script")"
+        fi
+    done
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} scripts/ ($script_count files)"
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} scripts/ (not found in repo)"
+fi
+
+# [3/6] Install skills
+mkdir -p "$CLAUDE_DIR/skills"
+if [[ -d "$CS_ROOT/content/skills" ]]; then
+    skill_count=$(ls -1 "$CS_ROOT/content/skills/" 2>/dev/null | wc -l)
+    for skill in "$CS_ROOT/content/skills"/*/; do
+        if [[ -d "$skill" ]]; then
+            ln -sf "$skill" "$CLAUDE_DIR/skills/$(basename "$skill")"
+        fi
+    done
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} skills/ ($skill_count skills)"
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} skills/ (not found in repo)"
+fi
+
+# [4/6] Install hooks
+mkdir -p "$CLAUDE_DIR/hooks"
+if [[ -d "$CS_ROOT/content/hooks" ]]; then
+    hook_count=$(ls -1 "$CS_ROOT/content/hooks/" 2>/dev/null | wc -l)
+    for hook in "$CS_ROOT/content/hooks"/*; do
+        if [[ -f "$hook" ]]; then
+            ln -sf "$hook" "$CLAUDE_DIR/hooks/$(basename "$hook")"
+        fi
+    done
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} hooks/ ($hook_count files)"
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} hooks/ (not found in repo)"
+fi
+
+# [5/6] Install .claude.json
+if is_symlinked "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"; then
+    echo -e "${CS_COLOR_GREEN}[Already linked]${CS_COLOR_RESET} .claude.json"
+elif [[ -f "$CS_ROOT/config/.claude.json" ]]; then
+    ln -sf "$CS_ROOT/config/.claude.json" "$HOME/.claude.json"
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} .claude.json (MCP servers, plugins)"
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} .claude.json (not found in repo)"
+fi
+
+# [6/6] Install git pre-commit hook
+mkdir -p .git/hooks
+if [[ -f "$CS_ROOT/automation/git-hooks/pre-commit" ]]; then
+    if [[ -f ".git/hooks/pre-commit" ]]; then
+        echo -e "${CS_COLOR_YELLOW}[Already exists]${CS_COLOR_RESET} pre-commit hook"
+    else
+        cp "$CS_ROOT/automation/git-hooks/pre-commit" .git/hooks/pre-commit
+        chmod +x .git/hooks/pre-commit
+        echo -e "${CS_COLOR_GREEN}[Installed]${CS_COLOR_RESET} pre-commit hook"
+    fi
+else
+    echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} pre-commit hook (not found in repo)"
+fi
+
+echo ""
+echo "Installing shell aliases..."
+echo ""
+
+# Aliases marker
+CS_ALIASES_MARKER="# Claude Config Sync aliases"
+CS_FS_MARKER="# Claude --fs shortcut"
+
+# Add to shell config
+if ! grep -q "$CS_ALIASES_MARKER" "$SHELL_RC" 2>/dev/null; then
+    cat >> "$SHELL_RC" << 'EOF'
+
+# Claude Config Sync aliases
+alias cs-sync='$HOME/claude-config-sync/bin/claude-sync sync'
+alias cs-quick='$HOME/claude-config-sync/bin/claude-sync quick'
+alias cs-reinstall='$HOME/claude-config-sync/bin/claude-sync reinstall'
+alias cs-status='$HOME/claude-config-sync/bin/claude-sync status'
+alias cs='$HOME/claude-config-sync/bin/claude-sync'
+EOF
+    echo -e "${CS_COLOR_GREEN}[Added]${CS_COLOR_RESET} Aliases to $SHELL_RC"
+else
+    echo -e "${CS_COLOR_GREEN}[Already configured]${CS_COLOR_RESET} Aliases in $SHELL_RC"
+fi
+
+# Fork session shortcut (like ykdojo's setup)
+if ! grep -q "$CS_FS_MARKER" "$SHELL_RC" 2>/dev/null; then
+    cat >> "$SHELL_RC" << 'EOF'
+
+# Claude --fs shortcut (expands to --fork-session)
+claude() {
+  local args=()
+  for arg in "$@"; do
+    if [[ "$arg" == "--fs" ]]; then
+      args+=("--fork-session")
+    else
+      args+=("$arg")
+    fi
+  done
+  command claude "${args[@]}"
+}
+EOF
+    echo -e "${CS_COLOR_GREEN}[Added]${CS_COLOR_RESET} Fork shortcut (--fs) to $SHELL_RC"
+else
+    echo -e "${CS_COLOR_GREEN}[Already configured]${CS_COLOR_RESET} Fork shortcut in $SHELL_RC"
+fi
+
+echo ""
+echo -e "${CS_COLOR_GREEN}========================================${CS_COLOR_RESET}"
+echo -e "${CS_COLOR_GREEN}Install Complete!${CS_COLOR_RESET}"
+echo -e "${CS_COLOR_GREEN}========================================${CS_COLOR_RESET}"
+echo ""
+echo "Installed symlinks:"
+echo "  settings.json      → $CS_ROOT/config/settings.json"
+echo "  scripts/           → $CS_ROOT/content/scripts/"
+echo "  skills/            → $CS_ROOT/content/skills/"
+echo "  hooks/             → $CS_ROOT/content/hooks/"
+echo "  .claude.json       → $CS_ROOT/config/.claude.json"
+echo ""
+echo "Quick aliases:"
+echo "  cs                  - Show help"
+echo "  cs-sync            - Sync changes"
+echo "  cs-quick           - Sync + commit + push"
+echo "  cs-reinstall       - Clean reinstall symlinks"
+echo "  cs-status          - Show status"
+echo ""
+echo "Fork shortcut:"
+echo "  claude -c --fs     - Same as: claude -c --fork-session"
+echo ""
+if ! grep -q "$CS_ALIASES_MARKER" "$SHELL_RC" 2>/dev/null || ! grep -q "$CS_FS_MARKER" "$SHELL_RC" 2>/dev/null; then
+    echo -e "${CS_COLOR_YELLOW}Run this to apply shell changes:${CS_COLOR_RESET}"
+    echo "  source $SHELL_RC"
+    echo ""
+fi
+echo "Note: These are SYMLINKS. Editing files in $CS_ROOT"
+echo "      will automatically update ~/.claude"
+echo ""
+echo "Plugin Installation:"
+echo "  If you have plugins in the repo, install them with:"
+echo "  $ $CS_ROOT/bin/install-plugins"
+echo ""
+echo "  This will restore marketplaces and install plugins from the synced manifests."

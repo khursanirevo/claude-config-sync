@@ -1,5 +1,12 @@
 # Machine-specific settings
-settings.local.json
+config/settings.local.json
+
+# Sync lock file
+.sync.lock
+
+# Logs
+logs/
+*.log
 
 # Session data (don't sync)
 projects/
@@ -17,9 +24,18 @@ ide/
 stats-cache.json
 
 # Built-in plugins (install via npm)
-plugins/
+# Note: We now sync plugin manifests only
+# Exclude marketplace repos (can be re-registered) and cache (can be re-downloaded)
+plugins/marketplaces/
+plugins/cache/
+
+# Slack webhook config (contains sensitive URL)
+.slack-config
 
 # OS files
 .DS_Store
 Thumbs.db
-.slack-config
+
+# Config examples (use actual files in config/)
+config/*.json.example
+config/*.example

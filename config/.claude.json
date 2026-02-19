@@ -1,10 +1,10 @@
 {
-  "numStartups": 70,
+  "numStartups": 71,
   "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "new-user-warmup": 8,
-    "plan-mode-for-complex-tasks": 38,
+    "plan-mode-for-complex-tasks": 70,
     "terminal-setup": 66,
     "shift-enter-setup": 66,
     "memory-command": 65,
@@ -31,7 +31,8 @@
     "permissions": 65,
     "rename-conversation": 57,
     "custom-commands": 57,
-    "git-worktrees": 65
+    "git-worktrees": 65,
+    "agent-flag": 70
   },
   "promptQueueUseCount": 132,
   "showExpandedTodos": true,
@@ -570,10 +571,69 @@
         "version": null,
         "packageManager": null
       }
+    },
+    "/mnt/data/work/autok": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 1,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "lastCost": 3.3052070000000007,
+      "lastAPIDuration": 564371,
+      "lastAPIDurationWithoutRetries": 564287,
+      "lastToolDuration": 73194,
+      "lastDuration": 1445504,
+      "lastLinesAdded": 131,
+      "lastLinesRemoved": 68,
+      "lastTotalInputTokens": 91817,
+      "lastTotalOutputTokens": 21111,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 4849990,
+      "lastTotalWebSearchRequests": 0,
+      "lastFpsAverage": 0.71,
+      "lastFpsLow1Pct": 4.88,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 17239,
+          "outputTokens": 1576,
+          "cacheReadInputTokens": 15430,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.026662
+        },
+        "claude-sonnet-4-5-20250929": {
+          "inputTokens": 74578,
+          "outputTokens": 19535,
+          "cacheReadInputTokens": 4834560,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 3.2785450000000007
+        }
+      },
+      "lastSessionId": "f49ae2f7-a781-4afa-8f06-8a00af40ac97",
+      "exampleFiles": [
+        "train.py",
+        "datasets.py",
+        "models/emitter.py",
+        "utils/metrics.py",
+        "models/__init__.py"
+      ],
+      "exampleFilesGeneratedAt": 1771471453956,
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      }
     }
   },
   "userID": "a4e3b0e4cb4046c1d35aec74ad4b17a5fc1c1a6927f9f8274cef390ca9ce4bac",
-  "lastReleaseNotesSeen": "2.1.3",
+  "lastReleaseNotesSeen": "2.1.31",
   "officialMarketplaceAutoInstallAttempted": true,
   "officialMarketplaceAutoInstalled": true,
   "hasIdeOnboardingBeenShown": {
@@ -611,5 +671,11 @@
       "type": "http",
       "url": "https://www.kaggle.com/mcp"
     }
-  }
+  },
+  "clientDataCache": {
+    "data": null,
+    "timestamp": 1771471506154
+  },
+  "opusProMigrationComplete": true,
+  "cachedChromeExtensionInstalled": false
 }

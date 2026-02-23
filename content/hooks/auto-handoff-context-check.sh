@@ -8,7 +8,7 @@
 # when auto-compact is enabled.
 
 # Threshold percentage - trigger half-clone when context exceeds this
-THRESHOLD=65
+THRESHOLD=80
 
 # Read hook input (JSON)
 input=$(cat)

@@ -1,12 +1,12 @@
 {
-  "numStartups": 105,
+  "numStartups": 106,
   "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
     "new-user-warmup": 8,
     "plan-mode-for-complex-tasks": 105,
-    "terminal-setup": 96,
-    "shift-enter-setup": 96,
+    "terminal-setup": 106,
+    "shift-enter-setup": 106,
     "memory-command": 95,
     "theme-command": 103,
     "status-line": 28,
@@ -823,39 +823,39 @@
       },
       "exampleFilesGeneratedAt": 1771811563104,
       "hasCompletedProjectOnboarding": true,
-      "lastCost": 5.681671800000001,
-      "lastAPIDuration": 759531,
-      "lastAPIDurationWithoutRetries": 759435,
-      "lastToolDuration": 262684,
-      "lastDuration": 1655536,
-      "lastLinesAdded": 1895,
-      "lastLinesRemoved": 138,
-      "lastTotalInputTokens": 126381,
-      "lastTotalOutputTokens": 34162,
+      "lastCost": 4.384114300000002,
+      "lastAPIDuration": 1120892,
+      "lastAPIDurationWithoutRetries": 1120822,
+      "lastToolDuration": 172428,
+      "lastDuration": 1897852,
+      "lastLinesAdded": 2224,
+      "lastLinesRemoved": 1,
+      "lastTotalInputTokens": 151307,
+      "lastTotalOutputTokens": 37885,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 8578480,
+      "lastTotalCacheReadInputTokens": 5585351,
       "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 11.7,
-      "lastFpsLow1Pct": 13.27,
+      "lastFpsAverage": 9.52,
+      "lastFpsLow1Pct": 9.07,
       "lastModelUsage": {
         "claude-haiku-4-5-20251001": {
-          "inputTokens": 15710,
-          "outputTokens": 1098,
-          "cacheReadInputTokens": 21808,
+          "inputTokens": 19435,
+          "outputTokens": 1290,
+          "cacheReadInputTokens": 21703,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 0.023380799999999997
+          "costUSD": 0.028055300000000005
         },
         "claude-sonnet-4-5-20250929": {
-          "inputTokens": 110671,
-          "outputTokens": 33064,
-          "cacheReadInputTokens": 8556672,
+          "inputTokens": 131872,
+          "outputTokens": 36595,
+          "cacheReadInputTokens": 5563648,
           "cacheCreationInputTokens": 0,
           "webSearchRequests": 0,
-          "costUSD": 5.658290999999998
+          "costUSD": 4.356059000000001
         }
       },
-      "lastSessionId": "da102cce-c26b-4d7f-8c3f-a363ee597c89"
+      "lastSessionId": "c68ae86d-3131-4c86-82a6-29c0e5857c63"
     }
   },
   "userID": "a4e3b0e4cb4046c1d35aec74ad4b17a5fc1c1a6927f9f8274cef390ca9ce4bac",
@@ -894,8 +894,8 @@
       "lastUsedAt": 1771846499876
     },
     "half-clone": {
-      "usageCount": 11,
-      "lastUsedAt": 1771854157345
+      "usageCount": 12,
+      "lastUsedAt": 1771854480415
     },
     "superpowers:brainstorming": {
       "usageCount": 8,
@@ -942,7 +942,7 @@
   },
   "clientDataCache": {
     "data": null,
-    "timestamp": 1771854358339
+    "timestamp": 1771855832578
   },
   "opusProMigrationComplete": true,
   "cachedChromeExtensionInstalled": false,

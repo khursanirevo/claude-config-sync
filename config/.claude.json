@@ -890,8 +890,8 @@
       "lastUsedAt": 1771481490079
     },
     "handoff": {
-      "usageCount": 11,
-      "lastUsedAt": 1771846499876
+      "usageCount": 12,
+      "lastUsedAt": 1771899871842
     },
     "half-clone": {
       "usageCount": 15,
@@ -942,7 +942,7 @@
   },
   "clientDataCache": {
     "data": null,
-    "timestamp": 1771899720339
+    "timestamp": 1771899872614
   },
   "opusProMigrationComplete": true,
   "cachedChromeExtensionInstalled": false,

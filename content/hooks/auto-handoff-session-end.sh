@@ -1,11 +1,10 @@
 #!/bin/bash
 
 # Auto-Handoff Context Check Hook
-# Runs on every UserPromptSubmit to check if context is low.
+# Runs on SessionEnd to check if context is high before saving.
 # If context usage is above threshold, triggers handoff skill.
 #
-# This replaces the PreCompact approach since PreCompact only fires
-# when auto-compact is enabled.
+# This triggers at conversation end instead of on every message.
 
 # Threshold percentage - trigger half-clone when context exceeds this
 THRESHOLD=70

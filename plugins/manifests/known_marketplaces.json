@@ -5,15 +5,7 @@
       "repo": "anthropics/claude-plugins-official"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2025-12-21T06:15:15.587Z"
-  },
-  "zai-coding-plugins": {
-    "source": {
-      "source": "directory",
-      "path": "/home/sani/.npm/_npx/2f024689b4d0d3b0/node_modules/@z_ai/coding-helper/zai-coding-plugins"
-    },
-    "installLocation": "/home/sani/.npm/_npx/2f024689b4d0d3b0/node_modules/@z_ai/coding-helper/zai-coding-plugins",
-    "lastUpdated": "2026-01-10T02:24:18.348Z"
+    "lastUpdated": "2025-12-21T07:29:02.531Z"
   },
   "ykdojo": {
     "source": {
@@ -21,7 +13,7 @@
       "repo": "ykdojo/claude-code-tips"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/ykdojo",
-    "lastUpdated": "2026-02-14T00:25:17.352Z"
+    "lastUpdated": "2026-01-21T05:43:43.582Z"
   },
   "superpowers-marketplace": {
     "source": {
@@ -29,6 +21,6 @@
       "repo": "obra/superpowers-marketplace"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/superpowers-marketplace",
-    "lastUpdated": "2026-02-15T10:26:27.901Z"
+    "lastUpdated": "2026-02-19T03:25:49.394Z"
   }
 }

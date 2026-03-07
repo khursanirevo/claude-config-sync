@@ -1,5 +1,5 @@
 {
-  "numStartups": 116,
+  "numStartups": 117,
   "autoCompactEnabled": false,
   "hasSeenTasksHint": true,
   "tipsHistory": {
@@ -32,7 +32,8 @@
     "rename-conversation": 103,
     "custom-commands": 103,
     "git-worktrees": 115,
-    "agent-flag": 115
+    "agent-flag": 115,
+    "frontend-design-plugin": 117
   },
   "promptQueueUseCount": 142,
   "showExpandedTodos": true,
@@ -856,6 +857,65 @@
         }
       },
       "lastSessionId": "9ce3e0d9-4c16-4d63-860e-79e31be29288"
+    },
+    "/mnt/data/work/chatterbox-vllm": {
+      "allowedTools": [],
+      "mcpContextUris": [],
+      "mcpServers": {},
+      "enabledMcpjsonServers": [],
+      "disabledMcpjsonServers": [],
+      "hasTrustDialogAccepted": false,
+      "projectOnboardingSeenCount": 0,
+      "hasClaudeMdExternalIncludesApproved": false,
+      "hasClaudeMdExternalIncludesWarningShown": false,
+      "lastCost": 0.08125550000000001,
+      "lastAPIDuration": 8637,
+      "lastAPIDurationWithoutRetries": 8633,
+      "lastToolDuration": 1381,
+      "lastDuration": 810120,
+      "lastLinesAdded": 0,
+      "lastLinesRemoved": 0,
+      "lastTotalInputTokens": 7066,
+      "lastTotalOutputTokens": 597,
+      "lastTotalCacheCreationInputTokens": 0,
+      "lastTotalCacheReadInputTokens": 63997,
+      "lastTotalWebSearchRequests": 0,
+      "lastFpsAverage": 2.68,
+      "lastFpsLow1Pct": 179.7,
+      "lastModelUsage": {
+        "claude-haiku-4-5-20251001": {
+          "inputTokens": 37,
+          "outputTokens": 40,
+          "cacheReadInputTokens": 125,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.0002495
+        },
+        "claude-sonnet-4-5-20250929": {
+          "inputTokens": 7029,
+          "outputTokens": 557,
+          "cacheReadInputTokens": 63872,
+          "cacheCreationInputTokens": 0,
+          "webSearchRequests": 0,
+          "costUSD": 0.081006
+        }
+      },
+      "lastSessionId": "220dc229-f579-4e79-81ef-76ee6ce8b40f",
+      "reactVulnerabilityCache": {
+        "detected": false,
+        "package": null,
+        "packageName": null,
+        "version": null,
+        "packageManager": null
+      },
+      "exampleFiles": [
+        "tts_async.py",
+        "s3gen.py",
+        "flow_matching.py",
+        "tts_streaming.py",
+        "__init__.py"
+      ],
+      "exampleFilesGeneratedAt": 1772857949591
     }
   },
   "userID": "a4e3b0e4cb4046c1d35aec74ad4b17a5fc1c1a6927f9f8274cef390ca9ce4bac",
@@ -882,6 +942,9 @@
     ],
     "revolab-sdn-bhd/chatterbox": [
       "/mnt/data/work/ChatterBox"
+    ],
+    "khursanirevo/chatterbox-vllm-1": [
+      "/mnt/data/work/chatterbox-vllm"
     ]
   },
   "skillUsage": {
@@ -942,7 +1005,7 @@
   },
   "clientDataCache": {
     "data": null,
-    "timestamp": 1772857931281
+    "timestamp": 1772858561195
   },
   "opusProMigrationComplete": true,
   "cachedChromeExtensionInstalled": false,

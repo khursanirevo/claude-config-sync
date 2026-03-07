@@ -31,7 +31,8 @@ log "=== Auto-sync started ==="
 cs_slack_notify "🔄 Auto-sync started at $(date '+%Y-%m-%d %H:%M')" "#439FE0"
 
 # Run sync (capture output)
-SYNC_OUTPUT=$(bash "$CS_LIB_DIR/sync.sh" 2>&1)
+# Export environment variables for the subshell
+SYNC_OUTPUT=$(HOME="$HOME" CS_ROOT="$CS_ROOT" CS_CLAUDE_DIR="$CS_CLAUDE_DIR" CS_LIB_DIR="$CS_LIB_DIR" CS_BIN_DIR="$CS_BIN_DIR" CS_CONFIG_DIR="$CS_CONFIG_DIR" CS_CONTENT_DIR="$CS_CONTENT_DIR" CS_LOG_DIR="$CS_LOG_DIR" CS_COLOR_RED="$CS_COLOR_RED" CS_COLOR_GREEN="$CS_COLOR_GREEN" CS_COLOR_YELLOW="$CS_COLOR_YELLOW" CS_COLOR_BLUE="$CS_COLOR_BLUE" CS_COLOR_GRAY="$CS_COLOR_GRAY" CS_COLOR_RESET="$CS_COLOR_RESET" bash "$CS_LIB_DIR/sync.sh" 2>&1)
 echo "$SYNC_OUTPUT" >> "$LOG_FILE"
 
 # Check if there are changes

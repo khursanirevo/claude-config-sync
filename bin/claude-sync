@@ -55,7 +55,22 @@ cs_cmd_quick() {
     echo "=== Quick Sync ==="
     echo ""
 
-    # Run sync
+    # Execute sync.sh with bash to ensure bash-specific features work
+    # Export environment variables for the subshell with their current values
+    HOME="$HOME" \
+    CS_ROOT="$CS_ROOT" \
+    CS_CLAUDE_DIR="$CS_CLAUDE_DIR" \
+    CS_LIB_DIR="$CS_LIB_DIR" \
+    CS_BIN_DIR="$CS_BIN_DIR" \
+    CS_CONFIG_DIR="$CS_CONFIG_DIR" \
+    CS_CONTENT_DIR="$CS_CONTENT_DIR" \
+    CS_LOG_DIR="$CS_LOG_DIR" \
+    CS_COLOR_RED="$CS_COLOR_RED" \
+    CS_COLOR_GREEN="$CS_COLOR_GREEN" \
+    CS_COLOR_YELLOW="$CS_COLOR_YELLOW" \
+    CS_COLOR_BLUE="$CS_COLOR_BLUE" \
+    CS_COLOR_GRAY="$CS_COLOR_GRAY" \
+    CS_COLOR_RESET="$CS_COLOR_RESET" \
     bash "$CS_LIB_DIR/sync.sh"
 
     echo ""
@@ -95,11 +110,43 @@ Auto-synced from ~/.claude"
 
 # Sync command
 cs_cmd_sync() {
+    # Execute sync.sh with bash to ensure bash-specific features work
+    # Export environment variables for the subshell with their current values
+    HOME="$HOME" \
+    CS_ROOT="$CS_ROOT" \
+    CS_CLAUDE_DIR="$CS_CLAUDE_DIR" \
+    CS_LIB_DIR="$CS_LIB_DIR" \
+    CS_BIN_DIR="$CS_BIN_DIR" \
+    CS_CONFIG_DIR="$CS_CONFIG_DIR" \
+    CS_CONTENT_DIR="$CS_CONTENT_DIR" \
+    CS_LOG_DIR="$CS_LOG_DIR" \
+    CS_COLOR_RED="$CS_COLOR_RED" \
+    CS_COLOR_GREEN="$CS_COLOR_GREEN" \
+    CS_COLOR_YELLOW="$CS_COLOR_YELLOW" \
+    CS_COLOR_BLUE="$CS_COLOR_BLUE" \
+    CS_COLOR_GRAY="$CS_COLOR_GRAY" \
+    CS_COLOR_RESET="$CS_COLOR_RESET" \
     bash "$CS_LIB_DIR/sync.sh"
 }
 
 # Backup command
 cs_cmd_backup() {
+    # Execute backup.sh with bash to ensure bash-specific features work
+    # Export environment variables for the subshell with their current values
+    HOME="$HOME" \
+    CS_ROOT="$CS_ROOT" \
+    CS_CLAUDE_DIR="$CS_CLAUDE_DIR" \
+    CS_LIB_DIR="$CS_LIB_DIR" \
+    CS_BIN_DIR="$CS_BIN_DIR" \
+    CS_CONFIG_DIR="$CS_CONFIG_DIR" \
+    CS_CONTENT_DIR="$CS_CONTENT_DIR" \
+    CS_LOG_DIR="$CS_LOG_DIR" \
+    CS_COLOR_RED="$CS_COLOR_RED" \
+    CS_COLOR_GREEN="$CS_COLOR_GREEN" \
+    CS_COLOR_YELLOW="$CS_COLOR_YELLOW" \
+    CS_COLOR_BLUE="$CS_COLOR_BLUE" \
+    CS_COLOR_GRAY="$CS_COLOR_GRAY" \
+    CS_COLOR_RESET="$CS_COLOR_RESET" \
     bash "$CS_LIB_DIR/backup.sh"
 }
 

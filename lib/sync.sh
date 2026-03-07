@@ -37,7 +37,7 @@ backup_if_changed() {
             cp "$source" "$dest"
         fi
         echo "  [NEW] $name"
-        ((CS_CHANGE_COUNT++))
+        ((++CS_CHANGE_COUNT))
         return
     fi
 
@@ -47,13 +47,13 @@ backup_if_changed() {
             rm -rf "$dest"
             cp -r "$source" "$dest"
             echo "  [UPDATED] $name"
-            ((CS_CHANGE_COUNT++))
+            ((++CS_CHANGE_COUNT))
         fi
     else
         if ! diff -q "$source" "$dest" &>/dev/null; then
             cp "$source" "$dest"
             echo "  [UPDATED] $name"
-            ((CS_CHANGE_COUNT++))
+            ((++CS_CHANGE_COUNT))
         fi
     fi
 }
@@ -80,7 +80,7 @@ cs_sync_scripts() {
             if [[ -f "$script" ]] && [[ ! -f "$CS_CLAUDE_DIR/scripts/$(basename "$script")" ]]; then
                 rm "$script"
                 echo "  [DELETED] scripts/$(basename "$script")"
-                ((CS_CHANGE_COUNT++))
+                ((++CS_CHANGE_COUNT))
             fi
         done
     fi
@@ -103,7 +103,7 @@ cs_sync_skills() {
             if [[ -d "$skill" ]] && [[ ! -d "$CS_CLAUDE_DIR/skills/$(basename "$skill")" ]]; then
                 rm -rf "$skill"
                 echo "  [DELETED] skills/$(basename "$skill")"
-                ((CS_CHANGE_COUNT++))
+                ((++CS_CHANGE_COUNT))
             fi
         done
         echo "  Total skills: $(ls -1 "$CS_CONTENT_DIR/skills/" | wc -l)"
@@ -142,7 +142,7 @@ cs_sync_plugins_txt() {
                 if ! diff -q "$CS_ROOT/config/plugins.txt.new" "$CS_ROOT/config/plugins.txt" &>/dev/null 2>/dev/null; then
                     mv "$CS_ROOT/config/plugins.txt.new" "$CS_ROOT/config/plugins.txt"
                     echo "  [UPDATED] plugins.txt"
-                    ((CS_CHANGE_COUNT++))
+                    ((++CS_CHANGE_COUNT))
                 else
                     rm -f "$CS_ROOT/config/plugins.txt.new"
                 fi

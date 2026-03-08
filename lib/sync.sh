@@ -60,13 +60,13 @@ backup_if_changed() {
 
 # Sync settings.json
 cs_sync_settings() {
-    cs_step "[1/7] Checking settings.json..."
+    cs_step "[1/8] Checking settings.json..."
     backup_if_changed "$CS_CLAUDE_DIR/settings.json" "$CS_ROOT/config/settings.json" "settings.json"
 }
 
 # Sync scripts
 cs_sync_scripts() {
-    cs_step "[2/7] Checking scripts..."
+    cs_step "[2/8] Checking scripts..."
     mkdir -p "$CS_CONTENT_DIR/scripts"
 
     if [[ -d "$CS_CLAUDE_DIR/scripts" ]]; then
@@ -88,7 +88,7 @@ cs_sync_scripts() {
 
 # Sync skills
 cs_sync_skills() {
-    cs_step "[3/7] Checking skills..."
+    cs_step "[3/8] Checking skills..."
     mkdir -p "$CS_CONTENT_DIR/skills"
 
     if [[ -d "$CS_CLAUDE_DIR/skills" ]]; then
@@ -112,7 +112,7 @@ cs_sync_skills() {
 
 # Sync hooks
 cs_sync_hooks() {
-    cs_step "[4/7] Checking hooks..."
+    cs_step "[4/8] Checking hooks..."
     mkdir -p "$CS_CONTENT_DIR/hooks"
 
     if [[ -d "$CS_CLAUDE_DIR/hooks" ]]; then
@@ -124,9 +124,24 @@ cs_sync_hooks() {
     fi
 }
 
+# Sync Claude root files (RTK.md, CLAUDE.md, etc.)
+cs_sync_claude_root_files() {
+    cs_step "[5/8] Checking Claude root files..."
+
+    # Sync RTK.md if it exists
+    if [[ -f "$CS_CLAUDE_DIR/RTK.md" ]]; then
+        backup_if_changed "$CS_CLAUDE_DIR/RTK.md" "$CS_CONTENT_DIR/RTK.md" "RTK.md"
+    fi
+
+    # Sync CLAUDE.md if it exists
+    if [[ -f "$CS_CLAUDE_DIR/CLAUDE.md" ]]; then
+        backup_if_changed "$CS_CLAUDE_DIR/CLAUDE.md" "$CS_CONTENT_DIR/CLAUDE.md" "CLAUDE.md"
+    fi
+}
+
 # Sync .claude.json (MCP servers, plugins)
 cs_sync_claude_json() {
-    cs_step "[5/7] Checking .claude.json (MCP servers, plugins)..."
+    cs_step "[6/8] Checking .claude.json (MCP servers, plugins)..."
     backup_if_changed "$HOME/.claude.json" "$CS_ROOT/config/.claude.json" ".claude.json"
 }
 
@@ -153,7 +168,7 @@ cs_sync_plugins_txt() {
 
 # Sync plugin manifests
 cs_sync_plugin_manifests() {
-    cs_step "[6/7] Checking plugin manifests..."
+    cs_step "[7/8] Checking plugin manifests..."
 
     mkdir -p "$CS_ROOT/plugins/manifests"
 
@@ -174,7 +189,7 @@ cs_sync_plugin_manifests() {
 
 # Sync plugin marketplaces
 cs_sync_plugin_marketplaces() {
-    cs_step "[7/7] Checking plugin marketplaces..."
+    cs_step "[8/8] Checking plugin marketplaces..."
 
     # Note: We don't sync the actual marketplace git repos since they can be re-cloned
     # The known_marketplaces.json contains all the info needed to restore them
@@ -213,6 +228,7 @@ cs_sync() {
     cs_sync_scripts
     cs_sync_skills
     cs_sync_hooks
+    cs_sync_claude_root_files
     cs_sync_claude_json
     cs_sync_plugins
 
@@ -239,6 +255,7 @@ export -f cs_sync_settings
 export -f cs_sync_scripts
 export -f cs_sync_skills
 export -f cs_sync_hooks
+export -f cs_sync_claude_root_files
 export -f cs_sync_claude_json
 export -f cs_sync_plugins_txt
 export -f cs_sync_plugin_manifests

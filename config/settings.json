@@ -27,6 +27,17 @@
           }
         ]
       }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/sani/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {

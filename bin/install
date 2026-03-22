@@ -46,7 +46,7 @@ is_symlinked() {
     [[ -L "$target" && "$(readlink "$target")" == "$source" ]]
 }
 
-# [1/6] Install settings.json
+# [1/7] Install settings.json
 if is_symlinked "$CLAUDE_DIR/settings.json" "$CS_ROOT/config/settings.json"; then
     echo -e "${CS_COLOR_GREEN}[Already linked]${CS_COLOR_RESET} settings.json"
 elif [[ -f "$CS_ROOT/config/settings.json" ]]; then
@@ -56,7 +56,7 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} settings.json (not found in repo)"
 fi
 
-# [2/6] Install scripts
+# [2/7] Install scripts
 mkdir -p "$CLAUDE_DIR/scripts"
 if [[ -d "$CS_ROOT/content/scripts" ]]; then
     script_count=$(ls -1 "$CS_ROOT/content/scripts/" 2>/dev/null | wc -l)
@@ -70,7 +70,7 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} scripts/ (not found in repo)"
 fi
 
-# [3/6] Install skills
+# [3/7] Install skills
 mkdir -p "$CLAUDE_DIR/skills"
 if [[ -d "$CS_ROOT/content/skills" ]]; then
     skill_count=$(ls -1 "$CS_ROOT/content/skills/" 2>/dev/null | wc -l)
@@ -84,7 +84,7 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} skills/ (not found in repo)"
 fi
 
-# [4/6] Install hooks
+# [4/7] Install hooks
 mkdir -p "$CLAUDE_DIR/hooks"
 if [[ -d "$CS_ROOT/content/hooks" ]]; then
     hook_count=$(ls -1 "$CS_ROOT/content/hooks/" 2>/dev/null | wc -l)
@@ -98,7 +98,7 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} hooks/ (not found in repo)"
 fi
 
-# [5/6] Install .claude.json
+# [5/7] Install .claude.json
 if is_symlinked "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"; then
     echo -e "${CS_COLOR_GREEN}[Already linked]${CS_COLOR_RESET} .claude.json"
 elif [[ -f "$CS_ROOT/config/.claude.json" ]]; then
@@ -108,7 +108,17 @@ else
     echo -e "${CS_COLOR_GRAY}[Skipped]${CS_COLOR_RESET} .claude.json (not found in repo)"
 fi
 
-# [6/6] Install git pre-commit hook
+# [7/7] Install git pre-commit hook
+
+# [6/7] Install RTK.md and CLAUDE.md reference docs
+if [[ -f "$CS_ROOT/content/RTK.md" ]]; then
+    ln -sf "$CS_ROOT/content/RTK.md" "$CLAUDE_DIR/RTK.md"
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} RTK.md"
+fi
+if [[ -f "$CS_ROOT/content/CLAUDE.md" ]]; then
+    ln -sf "$CS_ROOT/content/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
+    echo -e "${CS_COLOR_GREEN}[Linked]${CS_COLOR_RESET} CLAUDE.md"
+fi
 mkdir -p .git/hooks
 if [[ -f "$CS_ROOT/automation/git-hooks/pre-commit" ]]; then
     if [[ -f ".git/hooks/pre-commit" ]]; then
@@ -174,6 +184,7 @@ echo -e "${CS_COLOR_GREEN}Install Complete!${CS_COLOR_RESET}"
 echo -e "${CS_COLOR_GREEN}========================================${CS_COLOR_RESET}"
 echo ""
 echo "Installed symlinks:"
+echo "  RTK.md, CLAUDE.md  → $CS_ROOT/content/"
 echo "  settings.json      → $CS_ROOT/config/settings.json"
 echo "  scripts/           → $CS_ROOT/content/scripts/"
 echo "  skills/            → $CS_ROOT/content/skills/"

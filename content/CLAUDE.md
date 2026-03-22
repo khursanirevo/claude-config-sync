@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Critical Development Rule
+
+- Never use mock data, placeholder content, or fake/stub implementations unless the user explicitly requests it.
+- Prefer real, complete, production-ready implementations and concrete values at all times.
+
+
 ## Project Overview
 
 Claude Code Config Sync is a Bash-based CLI tool that syncs Claude Code configuration across multiple machines via Git. It automatically detects new/changed/deleted skills, scripts, hooks, and configuration files from `~/.claude/` and maintains them in a git repository for easy synchronization.

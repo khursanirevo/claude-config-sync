@@ -221,9 +221,10 @@ cs_cmd_auto_enable() {
     current_cron=$(crontab -l 2>/dev/null || true)
 
     # Add new cron job (runs at 9 PM daily)
+    # Export variables at runtime for portability across machines
     cat > /tmp/crontab.tmp.$$ << CRON
 # $CRON_COMMENT - Daily sync at 9 PM
-0 21 * * * $CS_ROOT/automation/auto-sync.sh >> $CS_LOG_DIR/auto-sync.log 2>&1
+0 21 * * * export CS_ROOT="\${CS_ROOT:-\$HOME/claude-config-sync}" && export CS_LOG_DIR="\$CS_ROOT/logs" && bash "\$CS_ROOT/automation/auto-sync.sh" >> "\$CS_LOG_DIR/auto-sync.log" 2>&1
 CRON
 
     # Append existing cron entries

@@ -34,6 +34,103 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
+migrate_to_mnt_data() {
+    local mnt_claude="/mnt/data/.claude"
+
+    # Check if /mnt/data exists
+    if [[ ! -d "/mnt/data" ]]; then
+        cs_warn "/mnt/data does not exist, falling back to default ~/.claude location"
+        return 0
+    fi
+
+    # Handle existing ~/.claude directory
+    if [[ -e "$HOME/.claude" && ! -L "$HOME/.claude" ]]; then
+        cs_info "Migrating existing ~/.claude to /mnt/data/.claude..."
+
+        # Check disk space (require 2x current size)
+        local current_size=$(du -sk "$HOME/.claude" 2>/dev/null | cut -f1)
+        local available_space=$(df -k "/mnt/data" 2>/dev/null | awk 'NR==2 {print $4}')
+
+        if [[ -n "$current_size" && -n "$available_space" && $available_space -lt $((current_size * 2)) ]]; then
+            cs_error "Insufficient space on /mnt/data (need ~$((current_size * 2)) KB, have $available_space KB)"
+            return 1
+        fi
+
+        # Create /mnt/data/.claude if needed
+        if [[ ! -d "$mnt_claude" ]]; then
+            mkdir -p "$mnt_claude" || {
+                cs_error "Failed to create $mnt_claude"
+                return 1
+            }
+        fi
+
+        # Copy contents preserving attributes
+        cp -a "$HOME/.claude"/ "$mnt_claude/" || {
+            cs_error "Failed to copy files to $mnt_claude"
+            return 1
+        }
+
+        # Verify copy succeeded by comparing file counts
+        local src_count=$(find "$HOME/.claude" -type f 2>/dev/null | wc -l)
+        local dst_count=$(find "$mnt_claude" -type f 2>/dev/null | wc -l)
+
+        if [[ $src_count -ne $dst_count ]]; then
+            cs_error "Migration verification failed: source has $src_count files, destination has $dst_count files"
+            return 1
+        fi
+
+        cs_success "Copied $src_count files to /mnt/data/.claude"
+
+        # Rename old directory to temporary location (safer than immediate deletion)
+        local temp_backup="$HOME/.claude.migration.backup"
+        rm -rf "$temp_backup" 2>/dev/null  # Clean up any previous failed migration
+        mv "$HOME/.claude" "$temp_backup" || {
+            cs_error "Failed to move old ~/.claude to temporary location"
+            cs_error "Manual cleanup may be required"
+            return 1
+        }
+    fi
+
+    # Check if ~/.claude is already a symlink
+    if [[ -L "$HOME/.claude" ]]; then
+        local current_target=$(readlink "$HOME/.claude")
+        if [[ "$current_target" == "$mnt_claude" ]]; then
+            cs_info "Symlink already configured correctly: ~/.claude → /mnt/data/.claude"
+            return 0
+        else
+            cs_error "~/.claude is already a symlink to '$current_target' (not '$mnt_claude')"
+            cs_error "Please remove the existing symlink manually and try again"
+            return 1
+        fi
+    fi
+
+    # Create symlink
+    local temp_backup="$HOME/.claude.migration.backup"
+    ln -s "$mnt_claude" "$HOME/.claude" || {
+        cs_error "Failed to create symlink ~/.claude → $mnt_claude"
+        # Attempt to restore from backup if it exists
+        if [[ -d "$temp_backup" ]]; then
+            cs_info "Attempting to restore from backup..."
+            mv "$temp_backup" "$HOME/.claude" || {
+                cs_error "Failed to restore backup. Your config is in $temp_backup"
+                return 1
+            }
+            cs_success "Restored from $temp_backup"
+        fi
+        return 1
+    }
+
+    # Symlink created successfully, clean up backup
+    if [[ -d "$temp_backup" ]]; then
+        rm -rf "$temp_backup" || {
+            cs_warn "Failed to remove backup $temp_backup (can be removed manually)"
+        }
+    fi
+
+    cs_success "Created symlink: ~/.claude → /mnt/data/.claude"
+    return 0
+}
+
 cs_cd_root
 
 CLAUDE_DIR="$HOME/.claude"

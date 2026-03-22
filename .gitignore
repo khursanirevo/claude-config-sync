@@ -16,12 +16,15 @@ file-history/
 session-env/
 shell-snapshots/
 paste-cache/
+# Claude Code session data (in ~/.claude/)
 plans/
 tasks/
 todos/
 statsig/
 ide/
 stats-cache.json
+# But allow project documentation
+!docs/plans/
 
 # Built-in plugins (install via npm)
 # Note: We now sync plugin manifests only

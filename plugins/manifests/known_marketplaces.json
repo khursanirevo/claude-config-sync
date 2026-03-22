@@ -1,11 +1,11 @@
 {
-  "claude-plugins-official": {
+  "superpowers-marketplace": {
     "source": {
       "source": "github",
-      "repo": "anthropics/claude-plugins-official"
+      "repo": "obra/superpowers-marketplace"
     },
-    "installLocation": "/home/sani/.claude/plugins/marketplaces/claude-plugins-official",
-    "lastUpdated": "2025-12-21T07:29:02.531Z"
+    "installLocation": "/home/sani/.claude/plugins/marketplaces/superpowers-marketplace",
+    "lastUpdated": "2026-03-22T02:12:27.757Z"
   },
   "ykdojo": {
     "source": {
@@ -13,14 +13,6 @@
       "repo": "ykdojo/claude-code-tips"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/ykdojo",
-    "lastUpdated": "2026-01-21T05:43:43.582Z"
-  },
-  "superpowers-marketplace": {
-    "source": {
-      "source": "github",
-      "repo": "obra/superpowers-marketplace"
-    },
-    "installLocation": "/home/sani/.claude/plugins/marketplaces/superpowers-marketplace",
-    "lastUpdated": "2026-02-19T03:25:49.394Z"
+    "lastUpdated": "2026-03-22T02:12:31.358Z"
   }
 }

@@ -4,20 +4,21 @@
     "dx@ykdojo": [
       {
         "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/ykdojo/dx/0.3.0",
-        "version": "0.3.0",
-        "installedAt": "2026-01-21T05:43:50.402Z",
-        "lastUpdated": "2026-01-21T05:43:50.402Z"
+        "installPath": "/home/sani/.claude/plugins/cache/ykdojo/dx/0.14.11",
+        "version": "0.14.11",
+        "installedAt": "2026-03-22T02:12:59.578Z",
+        "lastUpdated": "2026-03-22T02:12:59.578Z",
+        "gitCommitSha": "3b593693f0d579d88ff13ab0f41d45ad1677bb6f"
       }
     ],
     "superpowers@superpowers-marketplace": [
       {
         "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/superpowers-marketplace/superpowers/4.3.0",
-        "version": "4.3.0",
-        "installedAt": "2026-02-19T03:25:54.824Z",
-        "lastUpdated": "2026-02-19T03:25:54.824Z",
-        "gitCommitSha": "a0b9ecce2b25aa7d703138f17650540c2e8b2cde"
+        "installPath": "/home/sani/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.5",
+        "version": "5.0.5",
+        "installedAt": "2026-03-22T02:13:09.303Z",
+        "lastUpdated": "2026-03-22T02:13:09.303Z",
+        "gitCommitSha": "8ea39819eed74fe2a0338e71789f06b30e953041"
       }
     ]
   }

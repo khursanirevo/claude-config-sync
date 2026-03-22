@@ -22,7 +22,7 @@
     "feedback-command": 7,
     "status-line": 8
   },
-  "promptQueueUseCount": 3,
+  "promptQueueUseCount": 4,
   "showExpandedTodos": true,
   "firstStartTime": "2026-03-21T23:55:33.500Z",
   "opusProMigrationComplete": true,
@@ -184,6 +184,10 @@
     "superpowers:subagent-driven-development": {
       "usageCount": 1,
       "lastUsedAt": 1774139905181
+    },
+    "dx:handoff": {
+      "usageCount": 1,
+      "lastUsedAt": 1774146985570
     }
   },
   "showSpinnerTree": false

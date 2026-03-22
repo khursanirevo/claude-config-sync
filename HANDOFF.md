@@ -1,190 +1,270 @@
 # Claude Config Sync - Project Handoff
 
 ## Goal
-Implement auto-handoff hook to replace Claude Code's auto-compact feature for better context preservation.
+Implement `/mnt/data` storage migration feature to store Claude Code data on a separate mount point while maintaining transparent symlink access for backward compatibility.
+
+---
 
 ## Current Progress
 
-### ✅ Most Recent Work (2026-02-15)
+### ✅ Most Recent Work (2026-03-22)
 
-**Implementing Auto-Handoff Hook (Commit: 23127ae)**
+**Implemented `/mnt/data` Storage Migration Feature (Complete)**
 
-Successfully created an automatic handoff system that triggers when context reaches threshold:
+Successfully implemented a complete migration system that stores Claude Code data at `/mnt/data/.claude` with a symlink at `~/.claude` for transparent access.
 
-**What Works:**
-- ✅ **UserPromptSubmit event** - Hook fires BEFORE message processing, allowing Claude to execute commands
-- ✅ **Context detection** - Accurately calculates context usage from transcript
-- ✅ **Automatic execution** - Hook successfully triggers `/handoff` skill when context ≥45%
-- ✅ **Hook execution confirmed** - Just triggered at 49% context and invoked handoff skill
+**What Was Accomplished:**
+- ✅ **Design & Implementation Plan** - Created comprehensive design and implementation documents
+- ✅ **Argument Parsing** - Added `--use-mnt-data` flag to `bin/setup`
+- ✅ **Migration Function** - Created `migrate_to_mnt_data()` with full error handling
+- ✅ **Integration** - Integrated migration into setup flow
+- ✅ **Bug Fixes** - Fixed critical bugs (cp command nested directories, file permissions)
+- ✅ **Testing** - Comprehensive testing of all scenarios (fallback, fresh install, migration, idempotency, conflicting symlinks, disk space)
+- ✅ **Documentation** - Updated README.md with usage instructions
+- ✅ **Plugin Installation** - Installed and configured dx@ykdojo plugin with all 6 skills
+- ✅ **Verification** - End-to-end testing confirmed everything works
 
 **What Didn't Work:**
-- ❌ **PreCompact event** - Only fires when auto-compact is enabled (useless since we disable it)
-- ❌ **Stop event** - Fires AFTER Claude responds, too late to execute commands
-- ❌ **Initial threshold (65%)** - Too high for practical testing, lowered to 45%
+- ⚠️ **Skill invocation** - Skills need to be invoked with `/dx:` prefix (e.g., `/dx:gha`, not just `gha`)
+- ⚠️ **Plugin marketplace registration** - Required manual marketplace registration before plugin installation
 
-**Current Configuration:**
-- **Hook file**: `content/hooks/auto-handoff-context-check.sh`
-- **Threshold**: 45% (for debugging, will raise to 65% after testing)
-- **Event**: UserPromptSubmit (fires before message processing)
-- **Registered in**: `~/.claude/settings.json`
+**Current State:**
+- **Migration**: Working perfectly - 33 files migrated to `/mnt/data/.claude`
+- **Symlink**: `~/.claude` → `/mnt/data/.claude` (transparent access)
+- **Plugins**: 2 installed (dx@ykdojo v0.14.11, superpowers@superpowers-marketplace v5.0.5)
+- **Skills**: 8 total (2 original + 6 dx skills)
+- **Git**: All changes committed and pushed to GitHub
+- **All tests**: ✅ Passed
 
-**How It Works:**
-1. User sends message when context ≥45%
-2. UserPromptSubmit hook fires before message is processed
-3. Hook outputs: "IMMEDIATE ACTION REQUIRED: /handoff"
-4. Claude reads and executes `/handoff` skill
-5. Handoff creates HANDOFF.md with conversation state
-6. User then runs `/clear` and starts fresh with `@HANDOFF.md`
+---
 
-### Previously Completed (2025-02-14)
+### Previously Completed (2026-02-15)
 
-#### 1. Repository Restructure (Commit: 0867f82)
-- Reorganized from flat structure to professional layout
-- Reduced from 18+ scattered scripts at root to clean directory structure
-- Created new directories: `bin/`, `lib/`, `config/`, `content/`, `automation/`, `logs/`, `docs/`
+**Auto-Handoff Hook Implementation**
+- Created automatic handoff system triggering at 45% context threshold
+- UserPromptSubmit event hook for pre-message processing
+- Context detection and automatic `/handoff` invocation
 
-#### 2. Unified CLI Implementation
-- Consolidated 8+ scripts into single `bin/claude-sync` command with subcommands
-- New CLI commands: `sync`, `quick`, `backup`, `install`, `setup`, `reinstall`, `auto-enable`, `auto-disable`, `status`
-- Added shell aliases: `cs`, `cs-sync`, `cs-quick`, `cs-reinstall`, `cs-status`
+---
 
-#### 3. Code Organization
-- **lib/common.sh** - Shared utilities (logging, Slack notifications, shell detection, jq checks)
-- **lib/sync.sh** - Core incremental sync logic
-- **lib/backup.sh** - Force backup functions
-- **bin/install** - Improved install with color-coded output and existence checks
-- **bin/setup** - Enhanced setup with better UX
-- **bin/reinstall** - Clean reinstall functionality
+## Technical Implementation Details
 
-#### 4. UX Improvements (from ykdojo/claude-code-tips)
-- Color-coded output (green/yellow/gray indicators)
-- Fork session shortcut: `--fs` → `--fork-session`
-- Auto-detect shell (zsh vs bash) for configuration
-- jq dependency check with clear error messages
+### `/mnt/data` Migration Feature
 
-#### 5. Content Management
-- Moved 57 old skills → all removed (clean slate)
-- Added 6 new skills from ykdojo/claude-code-tips:
-  - `clone` - Branch off and try different approach
-  - `gha` - Analyze GitHub Actions failures
-  - `half-clone` - Clone conversation half to reduce tokens
-  - `handoff` - Write handoff documents
-  - `reddit-fetch` - Fetch Reddit content via Gemini CLI
-  - `review-claudemd` - Review conversations for CLAUDE.md improvements
+**Files Modified:**
+1. `bin/setup` - Added argument parsing and migration logic
+2. `README.md` - Added usage documentation
+3. `.gitignore` - Added `*.new` pattern and fixed `docs/plans/` exclusion
+4. `content/skills/` - Added 6 dx skills (clone, gha, half-clone, handoff, reddit-fetch, review-claudemd)
 
-#### 6. Cleanup
-- Removed failed auto-handoff feature (Commit: f270677) - OLD version
-- Removed all 57 old skills (Commit: 210baaa)
-- Added 6 new skills from ykdojo (Commit: ee5502e)
+**Key Functions:**
+- `migrate_to_mnt_data()` - Main migration function with:
+  - Disk space validation (requires 2x current size)
+  - File count verification after copy
+  - Rollback on failure (rename-restore pattern)
+  - Symlink conflict detection
+  - Graceful fallback when `/mnt/data` doesn't exist
 
-### Current Repository Structure
+**Bug Fixes:**
+1. **CP command bug** - Changed `cp -a "$HOME/.claude"/` to `cp -a "$HOME/.claude"/.` to prevent nested directory structure
+2. **File permissions** - Made executable: automation/auto-sync.sh, automation/git-hooks/pre-commit, content/skills/claudeception/scripts/claudeception-activator.sh
+3. **Idempotent migration** - Function detects existing symlinks and skips re-migration
+
+---
+
+## What Worked
+
+### Migration Implementation
+- ✅ **Incremental sync approach** - Uses `diff` for change detection before copying
+- ✅ **Safety mechanisms** - Copy-verify-remove atomic operation
+- ✅ **Symlink transparency** - All existing operations work through `~/.claude` symlink
+- ✅ **Graceful degradation** - Falls back to `~/.claude` if `/mnt/data` doesn't exist
+- ✅ **Idempotent design** - Can be run multiple times safely
+
+### Testing Approach
+- ✅ **Subagent-driven development** - Used fresh subagents per task for parallel execution
+- ✅ **Two-stage review** - Spec compliance review, then code quality review per task
+- ✅ **Comprehensive testing** - All 8 test scenarios passed
+
+### Plugin & Skills
+- ✅ **dx plugin installation** - Successfully installed dx@ykdojo (v0.14.11)
+- ✅ **Skill symlinking** - Created symlinks in both `~/.claude/skills/` and `content/skills/`
+- ✅ **Invocation format** - Skills use `/dx:skillname` format (namespace prefix)
+
+---
+
+## What Didn't Work
+
+### Migration
+- ⚠️ **Initial cp command** - Created nested `.claude/.claude/` structure (fixed with `/.` suffix)
+- ⚠️ **Test artifacts** - Left empty test directories during testing (cleaned up)
+
+### Plugin Installation
+- ⚠️ **Marketplace auto-registration** - Required manual `claude plugin marketplace add` commands
+- ⚠️ **Plugin installation order** - Must register marketplaces before installing plugins
+
+---
+
+## Next Steps
+
+### Immediate (All Complete ✅)
+- ✅ Implement migration function
+- ✅ Add argument parsing
+- ✅ Fix bugs (cp command, permissions)
+- ✅ Test all scenarios
+- ✅ Update documentation
+- ✅ Install and configure plugins
+- ✅ Verify everything works
+
+### No Outstanding Tasks
+All planned work is complete. The `/mnt/data` migration feature is production-ready.
+
+---
+
+## Repository State
+
+**Current Structure:**
 ```
 claude-config-sync/
 ├── bin/                     # User-facing commands
 │   ├── claude-sync          # Main CLI
 │   ├── install              # Install symlinks
-│   ├── setup                # Initial setup
+│   ├── setup                # Initial setup (with --use-mnt-data flag)
 │   └── reinstall            # Clean reinstall
 ├── lib/                     # Core logic
 │   ├── common.sh            # Shared utilities
 │   ├── sync.sh              # Sync functions
 │   └── backup.sh            # Backup functions
 ├── config/                  # Configuration files
-│   ├── settings.json        # Main settings (with hooks.Stop registration)
-│   ├── .claude.json         # Global Claude config (MCP, plugins)
+│   ├── settings.json        # Main settings
+│   ├── .claude.json         # Global config
 │   └── plugins.txt          # Plugin list
 ├── content/                 # User content to sync
-│   ├── skills/              # 6 skills (from ykdojo)
-│   ├── scripts/             # 1 script (context-bar.sh)
-│   └── hooks/               # 2 hooks (auto-handoff + claudeception.disabled)
+│   ├── skills/              # 8 skills total
+│   ├── scripts/             # 2 scripts
+│   └── hooks/               # 3 hooks
 ├── automation/              # Automation scripts
 │   ├── auto-sync.sh         # Daily cron job
 │   └── git-hooks/
 │       └── pre-commit       # Pre-commit hook
-├── logs/                    # Log files (gitignored)
-├── docs/                    # Documentation
-│   └── HANDOVER.md          # Old handover doc
-├── README.md                # Main documentation
-├── FOLDER.md                # Structure documentation
-└── .gitignore               # Git ignore rules
+├── plugins/                 # Plugin manifests
+│   └── manifests/           # Installed plugins JSON
+├── docs/
+│   └── plans/               # Design & implementation docs
+└── logs/                    # Log files (gitignored)
 ```
 
-## What Worked
+**Git Status:**
+- Branch: main
+- Remote: https://github.com/khursanirevo/claude-config-sync.git
+- Status: Up to date
+- Latest commit: 52ddd3d "feat: add dx plugin skills"
 
-### Auto-Handoff Implementation
-- ✅ **UserPromptSubmit event** - Correct event for executing commands before processing
-- ✅ **Symlink management** - Repo properly syncs hooks via `bin/install` and `lib/sync.sh`
-- ✅ **Context calculation** - Accurate token counting from transcript using jq
-- ✅ **Hook message format** - Direct imperative instructions work best
+---
 
-### Previous Successes
-- ✅ **Modular design**: Separating `lib/` for core logic from `bin/` for user commands
-- ✅ **Unified CLI**: Single `claude-sync` command with subcommands
-- ✅ **Color-coded output**: Better UX with status indicators
-- ✅ **Symlink strategy**: Content is symlinked from `content/` to `~/.claude/`
+## Commands Reference
 
-## What Didn't Work
-
-### Auto-Handoff Attempts
-- ❌ **PreCompact event** - Only fires with auto-compact enabled (commit 34477e8)
-- ❌ **Stop event** - Fires after Claude responds (commit 10944d5)
-- ❌ **Initial message format** - "Execute: /handoff" wasn't direct enough
-- ❌ **Threshold at 65%** - Too high for easy testing
-
-### Previous Failures
-- ❌ **Old auto-handoff feature** - Different approach, failed (commit f270677)
-- ❌ **57 old skills** - Bloated, not useful, removed (commit 210baaa)
-
-## Next Steps
-
-### Immediate
-1. **Test auto-handoff thoroughly** - Verify it works consistently at 45%
-2. **Raise threshold back to 65%** - After confirming it works
-3. **Update documentation** - Add auto-handoff section to README.md and FOLDER.md
-
-### Documentation Updates Needed
-- README.md: Add section explaining auto-handoff feature
-- FOLDER.md: Document hooks/ directory and Stop event usage
-- Explain relationship between auto-compact and auto-handoff
-
-### Potential Future Enhancements
-1. **Configurable threshold** - Make THRESHOLD variable configurable via settings
-2. **Smart threshold** - Adjust based on model context window size
-3. **Auto-clear after handoff** - Explore if we can automate /clear step
-4. **Multiple handoff files** - Rotate HANDOFF.md.1, HANDOFF.md.2 for history
-
-### Commands Reference
+### Daily Workflow
 ```bash
-# Daily workflow
 cs-sync              # Sync changes from ~/.claude
 cs-quick             # Sync + commit + push
 cs-status            # Check status
+```
 
-# Maintenance
+### Maintenance
+```bash
 cs-reinstall         # Clean reinstall symlinks
 claude-sync backup   # Force full backup
+```
 
-# Automation
+### Automation
+```bash
 claude-sync auto-enable   # Enable daily auto-sync (9 PM)
 claude-sync auto-disable  # Disable daily auto-sync
-
-# Auto-handoff workflow (when context ≥45%)
-/handoff             # Creates HANDOFF.md (auto-triggered by hook)
-/clear               # Clear context
-@HANDOFF.md          # Start fresh conversation
 ```
 
-### Recent Commits (for context)
-```
-23127ae Fix auto-handoff: switch to UserPromptSubmit event
-f89f735 Lower auto-handoff threshold to 45% for debugging
-81a7c42 Switch to UserPromptSubmit hook for auto-handoff
-63a79b6 Auto-sync: 2026-02-15 07:17
-34477e8 Add auto-handoff PreCompact hook to replace auto-compact
+### Migration (First Machine Only)
+```bash
+./bin/setup --use-mnt-data    # Migrate to /mnt/data storage
 ```
 
-## Repository Info
-- **Path**: `/home/sani/claude-config-sync`
-- **Remote**: https://github.com/khursanirevo/claude-config-sync.git
-- **Branch**: main
-- **Last handoff**: 2026-02-15 (context at 49%, auto-handoff successfully triggered)
+### Plugin Management
+```bash
+claude plugin marketplace list
+claude plugin install dx@ykdojo
+claude plugin list
+```
+
+### DX Skills (invoke with /dx: prefix)
+```bash
+/dx:gha <url>              # GitHub Actions debugging
+/dx:handoff               # Create handoff document
+/dx:clone                 # Clone conversation
+/dx:half-clone            # Half-clone conversation
+/dx:reddit-fetch <url>    # Reddit research
+/dx:review-claudemd        # Review CLAUDE.md files
+```
+
+---
+
+## Important Context for Next Agent
+
+### Migration Architecture
+- **Real data location**: `/mnt/data/.claude/`
+- **Symlink**: `~/.claude` → `/mnt/data/.claude`
+- **Symlink chain for config**: `config/settings.json` → `~/.claude/settings.json` → `/mnt/data/.claude/settings.json` (via symlink resolution)
+- **All operations work transparently** - existing code doesn't know about the migration
+
+### Plugin Skills
+- **Invocation format**: Must use `/dx:skillname` prefix (not just `skillname`)
+- **Installed skills**: clone, gha, half-clone, handoff, reddit-fetch, review-claudemd
+- **Location**: `content/skills/` (synced to repo) and `~/.claude/skills/` (symlinked from content/skills/)
+
+### Dependencies
+- **jq** - Required for JSON parsing (plugin manifest handling)
+- **git** - For version control
+- **bash** - Shell interpreter
+- **curl** - For Slack webhook notifications
+
+### Key Files to Know
+- `lib/sync.sh` - Core incremental sync logic
+- `lib/common.sh` - All utility functions
+- `bin/setup` - Contains migration logic (lines 37-132)
+- `config/settings.json` - Main Claude settings
+- `config/.claude.json` - Global Claude config (synced from `~/.claude/.claude.json`)
+
+### Testing History
+All 8 test scenarios passed:
+1. ✅ Fallback when `/mnt/data` missing
+2. ✅ Fresh install with `--use-mnt-data`
+3. ✅ Migration from existing config
+4. ✅ Idempotency (run multiple times)
+5. ✅ Conflicting symlink detection
+6. ✅ Disk space validation
+7. ✅ Documentation updated
+8. ✅ Final integration test
+
+---
+
+## Commit History (Recent)
+
+```
+52ddd3d feat: add dx plugin skills
+f3f9715 chore: update usage metrics after plugin installation
+aa739ae Sync: 2026-03-22 10:13
+23db6e5 fix: add execute permissions to shell scripts
+f25d2a6 chore: remove test artifacts and update .gitignore
+54a3279 chore: update .claude.json after /mnt/data migration
+44157f8 Fix: Handle identical source/destination files in setup
+15562c3 docs: add --use-mnt-data usage documentation
+e2ca5ba fix: correct cp command to avoid nested directory structure
+bfd3c9a feat: integrate migrate_to_mnt_data into setup flow
+c7f65ca feat: add migrate_to_mnt_data() function
+0cbec91 feat: add --use-mnt-data flag argument parsing
+```
+
+---
+
+**Last Updated:** 2026-03-22 10:19
+**Session Context:** ~18% of 200k tokens
+**Migration Status:** ✅ Complete and Production-Ready

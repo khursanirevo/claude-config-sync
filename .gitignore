@@ -1,5 +1,6 @@
 # Machine-specific settings
 config/settings.local.json
+config/.claude.json
 
 # Sync lock file
 .sync.lock

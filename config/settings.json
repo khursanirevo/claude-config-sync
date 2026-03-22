@@ -23,7 +23,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/sani/claude-config-sync/content/hooks/auto-handoff-context-check.sh"
+            "command": "~/.claude/hooks/auto-handoff-context-check.sh"
           }
         ]
       }
@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/sani/.claude/hooks/rtk-rewrite.sh"
+            "command": "~/.claude/hooks/rtk-rewrite.sh"
           }
         ]
       }

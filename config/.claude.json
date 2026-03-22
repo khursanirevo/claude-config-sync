@@ -1,60 +1,37 @@
 {
-  "numStartups": 160,
-  "autoCompactEnabled": false,
-  "hasSeenTasksHint": true,
+  "numStartups": 8,
   "tipsHistory": {
     "new-user-warmup": 8,
-    "plan-mode-for-complex-tasks": 116,
-    "terminal-setup": 160,
-    "shift-enter-setup": 160,
-    "memory-command": 157,
-    "theme-command": 144,
-    "status-line": 28,
-    "stickers-command": 63,
-    "prompt-queue": 3,
-    "enter-to-steer-in-relatime": 144,
-    "todo-list": 144,
-    "install-github-app": 153,
-    "install-slack-app": 153,
-    "drag-and-drop-images": 69,
-    "double-esc-code-restore": 153,
-    "continue": 153,
-    "shift-tab": 154,
-    "image-paste": 145,
-    "config-thinking-mode": 25,
-    "ultrathink-keyword": 70,
-    "btw-side-question": 33,
-    "web-app": 159,
-    "mobile-app": 159,
-    "default-permission-mode-config": 153,
-    "custom-agents": 149,
-    "permissions": 155,
-    "rename-conversation": 149,
-    "custom-commands": 149,
-    "git-worktrees": 155,
-    "agent-flag": 149,
-    "frontend-design-plugin": 139
+    "plan-mode-for-complex-tasks": 7,
+    "memory-command": 2,
+    "theme-command": 2,
+    "prompt-queue": 7,
+    "enter-to-steer-in-relatime": 2,
+    "todo-list": 3,
+    "install-github-app": 3,
+    "install-slack-app": 3,
+    "double-esc-code-restore": 3,
+    "continue": 3,
+    "shift-tab": 3,
+    "image-paste": 3,
+    "web-app": 3,
+    "mobile-app": 3,
+    "shift-enter": 5,
+    "custom-agents": 7,
+    "agent-flag": 7,
+    "feedback-command": 7,
+    "status-line": 8
   },
-  "promptQueueUseCount": 157,
+  "promptQueueUseCount": 2,
   "showExpandedTodos": true,
-  "cachedStatsigGates": {
-    "tengu_prompt_suggestion": false,
-    "tengu_year_end_2025_campaign_promo": false,
-    "tengu_vscode_review_upsell": false
-  },
-  "cachedDynamicConfigs": {
-    "tengu-top-of-feed-tip": {
-      "tip": "",
-      "color": "dim"
-    }
-  },
+  "firstStartTime": "2026-03-21T23:55:33.500Z",
+  "opusProMigrationComplete": true,
+  "sonnet1m45MigrationComplete": true,
+  "shiftEnterKeyBindingInstalled": true,
   "hasCompletedOnboarding": true,
-  "firstStartTime": "2025-12-21T06:15:08.927Z",
-  "sonnet45MigrationComplete": true,
-  "opus45MigrationComplete": true,
-  "thinkingMigrationComplete": true,
+  "lastOnboardingVersion": "2.1.72",
   "projects": {
-    "/home/sani/work/csiro2": {
+    "/mnt/data/work/.k/distillird": {
       "allowedTools": [],
       "mcpContextUris": [],
       "mcpServers": {},
@@ -64,388 +41,38 @@
       "projectOnboardingSeenCount": 1,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 0.3620528,
-      "lastAPIDuration": 105174,
-      "lastAPIDurationWithoutRetries": 105159,
-      "lastToolDuration": 203,
-      "lastDuration": 429298,
-      "lastLinesAdded": 11,
-      "lastLinesRemoved": 3,
-      "lastTotalInputTokens": 50367,
-      "lastTotalOutputTokens": 1737,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 633870,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 726,
-          "outputTokens": 196,
-          "cacheReadInputTokens": 9261,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.0026320999999999996
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 49641,
-          "outputTokens": 1541,
-          "cacheReadInputTokens": 624609,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.3594207
-        }
-      },
-      "lastSessionId": "c977b74a-6d5d-4078-912c-80d660ab5b1d"
-    },
-    "/home/sani/work/csiro": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [
-        "train.py",
-        "config.py",
-        "model.py",
-        "MEMORY.md",
-        "TODO.md"
-      ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "exampleFilesGeneratedAt": 1766311042985,
-      "lastCost": 6.213252799999998,
-      "lastAPIDuration": 1110007,
-      "lastAPIDurationWithoutRetries": 1109855,
-      "lastToolDuration": 250560,
-      "lastDuration": 2225744,
-      "lastLinesAdded": 671,
-      "lastLinesRemoved": 72,
-      "lastTotalInputTokens": 1229860,
-      "lastTotalOutputTokens": 38094,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 7899256,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 154545,
-          "outputTokens": 10069,
-          "cacheReadInputTokens": 38670,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.208757
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 1075315,
-          "outputTokens": 28025,
-          "cacheReadInputTokens": 7860586,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 6.004495799999998
-        }
-      },
-      "lastSessionId": "d39da944-553a-4356-a731-d179ace3621f"
-    },
-    "/home/sani/work/mmm": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 8.791944899999999,
-      "lastAPIDuration": 1367341,
-      "lastAPIDurationWithoutRetries": 1367194,
-      "lastToolDuration": 964392,
-      "lastDuration": 8504647,
-      "lastLinesAdded": 2753,
-      "lastLinesRemoved": 493,
-      "lastTotalInputTokens": 1366662,
-      "lastTotalOutputTokens": 75814,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 12200803,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 38443,
-          "outputTokens": 2375,
-          "cacheReadInputTokens": 24280,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.05274600000000001
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 1328219,
-          "outputTokens": 73439,
-          "cacheReadInputTokens": 12176523,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 8.739198900000002
-        }
-      },
-      "lastSessionId": "fa887746-8fad-4ee9-8680-bfe10ae9e7cb"
-    },
-    "/home/sani": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 0.9165432999999998,
-      "lastAPIDuration": 501358,
-      "lastAPIDurationWithoutRetries": 501321,
-      "lastToolDuration": 303239,
-      "lastDuration": 4205928,
-      "lastLinesAdded": 0,
-      "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 334959,
-      "lastTotalOutputTokens": 14941,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 1229021,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 236677,
-          "outputTokens": 6816,
-          "cacheReadInputTokens": 698205,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.34057750000000003
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 98282,
-          "outputTokens": 8125,
-          "cacheReadInputTokens": 530816,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.5759658000000001
-        }
-      },
-      "lastSessionId": "690dead0-a16f-4ff9-a5fd-a637a8d047e3"
-    },
-    "/home/sani/work/bio": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [
-        "train.py",
-        "model.py",
-        "data.py",
-        "inference.py",
-        "config.py"
-      ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "exampleFilesGeneratedAt": 1766500333680,
-      "lastCost": 0.0167616,
-      "lastAPIDuration": 9695,
-      "lastAPIDurationWithoutRetries": 9694,
+      "lastCost": 0,
+      "lastAPIDuration": 0,
+      "lastAPIDurationWithoutRetries": 0,
       "lastToolDuration": 0,
-      "lastDuration": 10023,
+      "lastDuration": 14924,
       "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 16080,
-      "lastTotalOutputTokens": 117,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 966,
+      "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 16080,
-          "outputTokens": 117,
-          "cacheReadInputTokens": 966,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.0167616
-        }
-      },
-      "lastSessionId": "68d6ddab-94a6-43cd-904b-717c1e9e1ec3"
-    },
-    "/home/sani/work/pca": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
+      "lastFpsAverage": 8.41,
+      "lastFpsLow1Pct": 34.98,
+      "lastModelUsage": {},
+      "lastSessionId": "d6ac3f8f-2c69-4f4b-a701-9c5fd56a9c63",
+      "lastSessionMetrics": {
+        "frame_duration_ms_count": 5,
+        "frame_duration_ms_min": 0.38923699999998007,
+        "frame_duration_ms_max": 8.232384000000025,
+        "frame_duration_ms_avg": 4.056747400000029,
+        "frame_duration_ms_p50": 4.884416000000044,
+        "frame_duration_ms_p95": 7.622931400000038,
+        "frame_duration_ms_p99": 8.110493480000027,
+        "hook_duration_ms_count": 1,
+        "hook_duration_ms_min": 184,
+        "hook_duration_ms_max": 184,
+        "hook_duration_ms_avg": 184,
+        "hook_duration_ms_p50": 184,
+        "hook_duration_ms_p95": 184,
+        "hook_duration_ms_p99": 184
       }
-    },
-    "/home/sani/work/aud-sep": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": true,
-      "projectOnboardingSeenCount": 1,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 0.16424219999999995,
-      "lastAPIDuration": 84856,
-      "lastAPIDurationWithoutRetries": 84847,
-      "lastToolDuration": 54,
-      "lastDuration": 6168426,
-      "lastLinesAdded": 39,
-      "lastLinesRemoved": 1,
-      "lastTotalInputTokens": 42785,
-      "lastTotalOutputTokens": 1655,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 148418,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 27818,
-          "outputTokens": 1393,
-          "cacheReadInputTokens": 143872,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.1475106
-        },
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 14967,
-          "outputTokens": 262,
-          "cacheReadInputTokens": 4546,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.016731600000000003
-        }
-      },
-      "lastSessionId": "0d20aed5-ebad-4eb6-8f17-32aba36c2a6d"
-    },
-    "/home/sani/clawd": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": true,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      }
-    },
-    "/home/sani/work/jigsaw": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "hasCompletedProjectOnboarding": true,
-      "lastCost": 5.839813199999998,
-      "lastAPIDuration": 1973799,
-      "lastAPIDurationWithoutRetries": 1973762,
-      "lastToolDuration": 623927,
-      "lastDuration": 43966777,
-      "lastLinesAdded": 380,
-      "lastLinesRemoved": 263,
-      "lastTotalInputTokens": 865339,
-      "lastTotalOutputTokens": 39528,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 10145474,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 692959,
-          "outputTokens": 36138,
-          "cacheReadInputTokens": 10074944,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 5.643430199999998
-        },
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 172380,
-          "outputTokens": 3390,
-          "cacheReadInputTokens": 70530,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.19638299999999995
-        }
-      },
-      "lastSessionId": "78e02e3f-69c9-4e01-af51-2f21e79f38ea"
     },
     "/home/sani/claude-config-sync": {
       "allowedTools": [],
@@ -453,680 +80,111 @@
       "mcpServers": {},
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
+      "hasTrustDialogAccepted": true,
       "projectOnboardingSeenCount": 0,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
       "exampleFiles": [
+        ".claude.json",
         "auto-sync.log",
-        "handoff.log",
-        "context-bar.sh",
-        "auto-sync.sh",
-        "quick-sync.sh"
+        "auto-handoff-context-check.sh",
+        "sync.sh",
+        "claude-sync"
       ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "exampleFilesGeneratedAt": 1771028539699,
-      "lastCost": 4.160614000000002,
-      "lastAPIDuration": 543399,
-      "lastAPIDurationWithoutRetries": 543231,
-      "lastToolDuration": 17952,
-      "lastDuration": 1437654,
-      "lastLinesAdded": 87,
-      "lastLinesRemoved": 39,
-      "lastTotalInputTokens": 77392,
-      "lastTotalOutputTokens": 34066,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 6388496,
-      "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 30323,
-          "outputTokens": 5530,
-          "cacheReadInputTokens": 100880,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.06806100000000002
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 47069,
-          "outputTokens": 28536,
-          "cacheReadInputTokens": 6287616,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 4.092553000000001
-        }
-      },
-      "lastSessionId": "4b152a9b-0536-42b8-b4b0-ee21331e4804",
-      "hasCompletedProjectOnboarding": true,
-      "lastFpsAverage": 8.3,
-      "lastFpsLow1Pct": 13.45
+      "exampleFilesGeneratedAt": 1774137910037,
+      "hasCompletedProjectOnboarding": true
     },
-    "/home/sani/work/clef": {
+    "/mnt/data/work/LuxTTS": {
       "allowedTools": [],
       "mcpContextUris": [],
       "mcpServers": {},
       "enabledMcpjsonServers": [],
       "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
+      "hasTrustDialogAccepted": true,
       "projectOnboardingSeenCount": 0,
       "hasClaudeMdExternalIncludesApproved": false,
       "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      }
-    },
-    "/home/sani/work/eedi": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 3.5115628,
-      "lastAPIDuration": 853636,
-      "lastAPIDurationWithoutRetries": 853596,
-      "lastToolDuration": 6264149,
-      "lastDuration": 12557192,
-      "lastLinesAdded": 1590,
+      "lastCost": 0,
+      "lastAPIDuration": 0,
+      "lastAPIDurationWithoutRetries": 0,
+      "lastToolDuration": 0,
+      "lastDuration": 2586574,
+      "lastLinesAdded": 0,
       "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 1368986,
-      "lastTotalOutputTokens": 25370,
+      "lastTotalInputTokens": 0,
+      "lastTotalOutputTokens": 0,
       "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 2863552,
+      "lastTotalCacheReadInputTokens": 0,
       "lastTotalWebSearchRequests": 0,
-      "lastModelUsage": {
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 470377,
-          "outputTokens": 22296,
-          "cacheReadInputTokens": 2828288,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 2.5940573999999996
-        },
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 898609,
-          "outputTokens": 3074,
-          "cacheReadInputTokens": 35264,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.9175053999999999
-        }
-      },
-      "lastSessionId": "eb053af7-c612-431e-9444-4955dac46989",
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      }
-    },
-    "/mnt/data/work/autok": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 1,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 1.3559650999999997,
-      "lastAPIDuration": 1955921,
-      "lastAPIDurationWithoutRetries": 1955873,
-      "lastToolDuration": 376376,
-      "lastDuration": 15266486,
-      "lastLinesAdded": 75,
-      "lastLinesRemoved": 42,
-      "lastTotalInputTokens": 98853,
-      "lastTotalOutputTokens": 14118,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 1217557,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 0.39,
-      "lastFpsLow1Pct": 19.43,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 18516,
-          "outputTokens": 1093,
-          "cacheReadInputTokens": 10261,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.025007100000000004
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 80337,
-          "outputTokens": 13025,
-          "cacheReadInputTokens": 1207296,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 1.330958
-        }
-      },
-      "lastSessionId": "4f45736f-0cdb-49c0-9091-33a617060656",
-      "exampleFiles": [
-        "train.py",
-        "datasets.py",
-        "models/emitter.py",
-        "utils/metrics.py",
-        "models/__init__.py"
-      ],
-      "exampleFilesGeneratedAt": 1771471453956,
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      }
-    },
-    "/mnt/data/work/MioCodec": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [
-        "model.py",
-        "README.md",
-        "istft_head.py",
-        "transformer.py",
-        "pipeline.py"
-      ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "exampleFilesGeneratedAt": 1771481450109,
-      "hasCompletedProjectOnboarding": true,
-      "lastCost": 13.972228899999996,
-      "lastAPIDuration": 2607201,
-      "lastAPIDurationWithoutRetries": 2606656,
-      "lastToolDuration": 1403050,
-      "lastDuration": 26959963,
-      "lastLinesAdded": 518,
-      "lastLinesRemoved": 121,
-      "lastTotalInputTokens": 1231563,
-      "lastTotalOutputTokens": 57639,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 16418621,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 2.21,
-      "lastFpsLow1Pct": 8.78,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 398379,
-          "outputTokens": 9362,
-          "cacheReadInputTokens": 137789,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.45896789999999993
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 833184,
-          "outputTokens": 48277,
-          "cacheReadInputTokens": 16280832,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 13.513260999999995
-        }
-      },
-      "lastSessionId": "23a9f931-b1e8-43c4-9b7c-86a82a6eb774"
-    },
-    "/mnt/data/work/.k/akka": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 19.62219720000002,
-      "lastAPIDuration": 3087812,
-      "lastAPIDurationWithoutRetries": 3087257,
-      "lastToolDuration": 1430183,
-      "lastDuration": 90699272,
-      "lastLinesAdded": 2598,
-      "lastLinesRemoved": 412,
-      "lastTotalInputTokens": 789317,
-      "lastTotalOutputTokens": 124999,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 26377636,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 0.32,
-      "lastFpsLow1Pct": 5.07,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 82863,
-          "outputTokens": 13001,
-          "cacheReadInputTokens": 116772,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.15954520000000005
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 706454,
-          "outputTokens": 111998,
-          "cacheReadInputTokens": 26260864,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 19.46265200000001
-        }
-      },
-      "lastSessionId": "2e071a97-ecfa-427b-b445-c3c68a0ae88c"
-    },
-    "/mnt/data/work/.k/akka/exp/001_starter": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 10.012245200000004,
-      "lastAPIDuration": 1439067,
-      "lastAPIDurationWithoutRetries": 1438881,
-      "lastToolDuration": 23243,
-      "lastDuration": 22486163,
-      "lastLinesAdded": 1510,
-      "lastLinesRemoved": 4,
-      "lastTotalInputTokens": 695149,
-      "lastTotalOutputTokens": 56190,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 10480534,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 1.72,
-      "lastFpsLow1Pct": 6.18,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 11392,
-          "outputTokens": 2443,
-          "cacheReadInputTokens": 35222,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.02712920000000001
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 683757,
-          "outputTokens": 53747,
-          "cacheReadInputTokens": 10445312,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 9.985116000000007
-        }
-      },
-      "lastSessionId": "c2c9ce60-89aa-4d2d-b956-ed8cb6e2b1ef"
-    },
-    "/mnt/data/work/ChatterBox": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [
-        "main.py",
-        "StreamingAudioPlayer.tsx",
-        "streaming_service.py",
-        "chatter_service.py",
-        "TTSTab.tsx"
-      ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "exampleFilesGeneratedAt": 1771811563104,
-      "hasCompletedProjectOnboarding": true,
-      "lastCost": 2.1990237000000006,
-      "lastAPIDuration": 709726,
-      "lastAPIDurationWithoutRetries": 709666,
-      "lastToolDuration": 2847,
-      "lastDuration": 2451522,
-      "lastLinesAdded": 1943,
-      "lastLinesRemoved": 0,
-      "lastTotalInputTokens": 48684,
-      "lastTotalOutputTokens": 29847,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 2476847,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 5.59,
-      "lastFpsLow1Pct": 25.7,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 1361,
-          "outputTokens": 1023,
-          "cacheReadInputTokens": 7727,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.007248699999999999
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 47323,
-          "outputTokens": 28824,
-          "cacheReadInputTokens": 2469120,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 2.191775
-        }
-      },
-      "lastSessionId": "9ce3e0d9-4c16-4d63-860e-79e31be29288"
-    },
-    "/mnt/data/work/chatterbox-vllm": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 2.3099214,
-      "lastAPIDuration": 301483,
-      "lastAPIDurationWithoutRetries": 301423,
-      "lastToolDuration": 198022,
-      "lastDuration": 1132131,
-      "lastLinesAdded": 223,
-      "lastLinesRemoved": 25,
-      "lastTotalInputTokens": 128501,
-      "lastTotalOutputTokens": 17963,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 2601142,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 6.41,
-      "lastFpsLow1Pct": 19.27,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 15794,
-          "outputTokens": 798,
-          "cacheReadInputTokens": 7734,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.020557399999999997
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 112707,
-          "outputTokens": 17165,
-          "cacheReadInputTokens": 2593408,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 2.289364
-        }
-      },
-      "lastSessionId": "339d82e9-f367-49af-8a5d-fd360a15728f",
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
+      "lastFpsAverage": 0.02,
+      "lastFpsLow1Pct": 55.45,
+      "lastModelUsage": {},
+      "lastSessionId": "848c2a60-75d3-4f27-bcde-91af924cda3e",
+      "lastSessionMetrics": {
+        "frame_duration_ms_count": 45,
+        "frame_duration_ms_min": 0.10245500000019092,
+        "frame_duration_ms_max": 18.034248999785632,
+        "frame_duration_ms_avg": 2.7221301111022287,
+        "frame_duration_ms_p50": 1.3920800000196323,
+        "frame_duration_ms_p95": 9.416136400000184,
+        "frame_duration_ms_p99": 17.338876079870392,
+        "hook_duration_ms_count": 1,
+        "hook_duration_ms_min": 28,
+        "hook_duration_ms_max": 28,
+        "hook_duration_ms_avg": 28,
+        "hook_duration_ms_p50": 28,
+        "hook_duration_ms_p95": 28,
+        "hook_duration_ms_p99": 28
       },
       "exampleFiles": [
-        "tts_async.py",
-        "s3gen.py",
-        "flow_matching.py",
-        "tts_streaming.py",
-        "__init__.py"
+        "train_zipvoice.py",
+        "luxvoice.py",
+        "requirements.txt",
+        "train_japanese.sh",
+        "scaling.py"
       ],
-      "exampleFilesGeneratedAt": 1772857949591
-    },
-    "/mnt/data/work/godamsoq": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "exampleFiles": [
-        "02_layout_extraction.py",
-        "01_convert_img.py",
-        "03_ocr_extraction.py",
-        "04_visualize_text.py",
-        "MEMORY.md"
-      ],
-      "reactVulnerabilityCache": {
-        "detected": false,
-        "package": null,
-        "packageName": null,
-        "version": null,
-        "packageManager": null
-      },
-      "lastCost": 1.4207923000000007,
-      "lastAPIDuration": 300595,
-      "lastAPIDurationWithoutRetries": 300533,
-      "lastToolDuration": 144304,
-      "lastDuration": 44496628,
-      "lastLinesAdded": 1521,
-      "lastLinesRemoved": 1,
-      "lastTotalInputTokens": 73697,
-      "lastTotalOutputTokens": 18044,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 1457129,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 0.11,
-      "lastFpsLow1Pct": 4.41,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 25055,
-          "outputTokens": 789,
-          "cacheReadInputTokens": 28393,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.0318393
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 48642,
-          "outputTokens": 17255,
-          "cacheReadInputTokens": 1428736,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 1.388953
-        }
-      },
-      "lastSessionId": "107f4541-acd2-490e-b559-5a3e3d8bb191",
-      "exampleFilesGeneratedAt": 1772878599916
-    },
-    "/mnt/data/work/revobox": {
-      "allowedTools": [],
-      "mcpContextUris": [],
-      "mcpServers": {},
-      "enabledMcpjsonServers": [],
-      "disabledMcpjsonServers": [],
-      "hasTrustDialogAccepted": false,
-      "projectOnboardingSeenCount": 0,
-      "hasClaudeMdExternalIncludesApproved": false,
-      "hasClaudeMdExternalIncludesWarningShown": false,
-      "lastCost": 0.7342364,
-      "lastAPIDuration": 97381,
-      "lastAPIDurationWithoutRetries": 97330,
-      "lastToolDuration": 4547,
-      "lastDuration": 31653554,
-      "lastLinesAdded": 56,
-      "lastLinesRemoved": 41,
-      "lastTotalInputTokens": 38887,
-      "lastTotalOutputTokens": 7142,
-      "lastTotalCacheCreationInputTokens": 0,
-      "lastTotalCacheReadInputTokens": 807434,
-      "lastTotalWebSearchRequests": 0,
-      "lastFpsAverage": 2.41,
-      "lastFpsLow1Pct": 14.32,
-      "lastModelUsage": {
-        "claude-haiku-4-5-20251001": {
-          "inputTokens": 5320,
-          "outputTokens": 757,
-          "cacheReadInputTokens": 15114,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.010616400000000002
-        },
-        "claude-sonnet-4-5-20250929": {
-          "inputTokens": 33567,
-          "outputTokens": 6385,
-          "cacheReadInputTokens": 792320,
-          "cacheCreationInputTokens": 0,
-          "webSearchRequests": 0,
-          "costUSD": 0.7236199999999999
-        }
-      },
-      "lastSessionId": "0cccf4b3-ff3c-4106-a417-fec17095fe31"
+      "exampleFilesGeneratedAt": 1774139912975,
+      "hasCompletedProjectOnboarding": true
     }
   },
-  "userID": "a4e3b0e4cb4046c1d35aec74ad4b17a5fc1c1a6927f9f8274cef390ca9ce4bac",
-  "lastReleaseNotesSeen": "2.1.31",
+  "userID": "4048a8ee6fc5f72deef0223ba407e3585c404e2c15a53b96dfd3aba5642e36c9",
+  "clientDataCache": {
+    "data": null,
+    "timestamp": 1774137337374
+  },
+  "lastReleaseNotesSeen": "2.1.72",
   "officialMarketplaceAutoInstallAttempted": true,
   "officialMarketplaceAutoInstalled": true,
-  "hasIdeOnboardingBeenShown": {
-    "vscode": true
+  "metricsStatusCache": {
+    "enabled": false,
+    "vcsAccountLinkingEnabled": false,
+    "timestamp": 1774137341104
   },
-  "bypassPermissionsModeAccepted": true,
-  "lastPlanModeUse": 1772930846758,
   "githubRepoPaths": {
-    "khursanirevo/bio": [
-      "/home/sani/work/bio"
-    ],
     "khursanirevo/claude-config-sync": [
       "/home/sani/claude-config-sync"
     ],
-    "khursanirevo/eedi": [
-      "/home/sani/work/eedi"
-    ],
-    "aratako/miocodec": [
-      "/mnt/data/work/MioCodec"
-    ],
-    "revolab-sdn-bhd/chatterbox": [
-      "/mnt/data/work/ChatterBox"
-    ],
-    "khursanirevo/chatterbox-vllm-1": [
-      "/mnt/data/work/chatterbox-vllm"
+    "ayutaz/luxtts": [
+      "/mnt/data/work/LuxTTS"
     ]
   },
   "skillUsage": {
-    "init": {
-      "usageCount": 3,
-      "lastUsedAt": 1771481490079
-    },
-    "handoff": {
-      "usageCount": 12,
-      "lastUsedAt": 1771899871842
-    },
-    "half-clone": {
-      "usageCount": 15,
-      "lastUsedAt": 1771893154750
+    "superpowers:dispatching-parallel-agents": {
+      "usageCount": 1,
+      "lastUsedAt": 1774137918430
     },
     "superpowers:brainstorming": {
-      "usageCount": 19,
-      "lastUsedAt": 1772943227977
-    },
-    "superpowers:writing-skills": {
-      "usageCount": 2,
-      "lastUsedAt": 1771807277829
+      "usageCount": 1,
+      "lastUsedAt": 1774138135097
     },
     "superpowers:writing-plans": {
-      "usageCount": 11,
-      "lastUsedAt": 1772943630390
-    },
-    "superpowers:executing-plans": {
-      "usageCount": 4,
-      "lastUsedAt": 1771895726846
-    },
-    "superpowers:finishing-a-development-branch": {
-      "usageCount": 5,
-      "lastUsedAt": 1772939841580
-    },
-    "superpowers:systematic-debugging": {
-      "usageCount": 6,
-      "lastUsedAt": 1772927415750
-    },
-    "kaggle-api-401-unauthorized-fix": {
       "usageCount": 1,
-      "lastUsedAt": 1771550398199
-    },
-    "superpowers:using-git-worktrees": {
-      "usageCount": 1,
-      "lastUsedAt": 1771795609766
+      "lastUsedAt": 1774138834566
     },
     "superpowers:subagent-driven-development": {
-      "usageCount": 5,
-      "lastUsedAt": 1772935681716
-    },
-    "critical-thinking-when-coding": {
       "usageCount": 1,
-      "lastUsedAt": 1772860510393
-    },
-    "using-superpowers": {
-      "usageCount": 1,
-      "lastUsedAt": 1772931130737
-    },
-    "executing-plans": {
-      "usageCount": 1,
-      "lastUsedAt": 1772938511189
-    },
-    "superpowers:critical-thinking-when-coding": {
-      "usageCount": 1,
-      "lastUsedAt": 1772942218587
+      "lastUsedAt": 1774139905181
     }
   },
-  "mcpServers": {
-    "kaggle-companion": {
-      "type": "http",
-      "url": "https://www.kaggle.com/mcp"
-    }
-  },
-  "clientDataCache": {
-    "data": null,
-    "timestamp": 1772943721156
-  },
-  "opusProMigrationComplete": true,
-  "cachedChromeExtensionInstalled": false,
-  "hasUsedBackslashReturn": true
+  "showSpinnerTree": false
 }

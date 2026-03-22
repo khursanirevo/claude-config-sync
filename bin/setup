@@ -189,8 +189,13 @@ fi
 
 # Copy .claude.json (MCP servers, plugins)
 if [[ -f "$HOME/.claude.json" ]]; then
-    cp "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"
-    echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} .claude.json (MCP servers)"
+    # Check if source and destination are the same file (avoid cp error)
+    if [[ "$HOME/.claude.json" -ef "$CS_ROOT/config/.claude.json" ]]; then
+        echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} .claude.json already in place (skipping copy)"
+    else
+        cp "$HOME/.claude.json" "$CS_ROOT/config/.claude.json"
+        echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} .claude.json (MCP servers)"
+    fi
 else
     echo -e "  ${CS_COLOR_GRAY}ℹ${CS_COLOR_RESET} .claude.json not found"
 fi

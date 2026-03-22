@@ -42,3 +42,4 @@ Thumbs.db
 # Config examples (use actual files in config/)
 config/*.json.example
 config/*.example
+*.new

@@ -131,6 +131,11 @@ migrate_to_mnt_data() {
     return 0
 }
 
+# Handle optional /mnt/data migration
+if [[ "$USE_MNT_DATA" == "true" ]]; then
+    migrate_to_mnt_data || exit 1
+fi
+
 cs_cd_root
 
 CLAUDE_DIR="$HOME/.claude"

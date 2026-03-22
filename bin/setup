@@ -6,6 +6,10 @@ set -e
 # Get the script root directory
 CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
 
+# Use /mnt/data storage (default: false)
+# Note: Variable name USE_MNT_DATA (not CS_USE_MNT_DATA) per spec requirement
+USE_MNT_DATA="false"
+
 # Source common utilities
 # shellcheck source=lib/common.sh
 if [[ -f "$CS_ROOT/lib/common.sh" ]]; then
@@ -14,6 +18,21 @@ else
     echo "Error: lib/common.sh not found"
     exit 1
 fi
+
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --use-mnt-data)
+            USE_MNT_DATA="true"
+            ;;
+        *)
+            echo "Error: Unknown argument: $1"
+            echo "Usage: $0 [--use-mnt-data]"
+            exit 1
+            ;;
+    esac
+    shift
+done
 
 cs_cd_root
 

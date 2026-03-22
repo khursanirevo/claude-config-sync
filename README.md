@@ -35,6 +35,23 @@ git remote add origin <your-repo-url>
 git push -u origin main
 ```
 
+#### Using Alternative Storage Location
+
+To store Claude Code data on a separate mount point (e.g., `/mnt/data`), use the `--use-mnt-data` flag during setup:
+
+```bash
+./bin/setup --use-mnt-data
+```
+
+This will:
+- Move existing `~/.claude` data to `/mnt/data/.claude`
+- Create a symlink `~/.claude` → `/mnt/data/.claude`
+- All operations continue working transparently
+
+If `/mnt/data` doesn't exist, the script will fall back to the default `~/.claude` location with a warning.
+
+**Note:** This flag is only available during initial setup (`bin/setup`). It is not available in `bin/install` which is used for restoring configuration on new machines.
+
 ### New Machine (Restore)
 
 ```bash

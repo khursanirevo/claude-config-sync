@@ -65,7 +65,7 @@ migrate_to_mnt_data() {
         fi
 
         # Copy contents preserving attributes
-        cp -a "$HOME/.claude"/ "$mnt_claude/" || {
+        cp -a "$HOME/.claude"/. "$mnt_claude/" || {
             cs_error "Failed to copy files to $mnt_claude"
             return 1
         }

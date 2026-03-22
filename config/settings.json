@@ -62,5 +62,6 @@
         "repo": "ykdojo/claude-code-tips"
       }
     }
-  }
+  },
+  "skipDangerousModePermissionPrompt": true
 }

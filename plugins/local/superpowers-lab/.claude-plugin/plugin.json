@@ -1,0 +1,20 @@
+{
+  "name": "superpowers-lab",
+  "version": "1.0.0",
+  "description": "Disciplined experimentation workflow for AI/ML research",
+  "author": "Superpowers Lab Contributors",
+  "license": "MIT",
+  "skills": [
+    "skills/experiment-planning",
+    "skills/experiment-execution",
+    "skills/experiment-analysis",
+    "skills/ablation-study",
+    "skills/hyperparameter-sweep",
+    "skills/baseline-comparison",
+    "skills/reproducibility-check",
+    "skills/verification-before-completion"
+  ],
+  "hooks": {
+    "SessionStart": "hooks/session-start"
+  }
+}

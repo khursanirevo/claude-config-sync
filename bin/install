@@ -216,11 +216,43 @@ if [[ -d "$CS_ROOT/plugins/local" ]]; then
         if [[ -d "$plugin_dir" && -f "$plugin_dir/.claude-plugin/plugin.json" ]]; then
             plugin_name=$(basename "$plugin_dir")
             echo "  Installing: $plugin_name"
-            if claude plugin install "$plugin_dir" >/dev/null 2>&1; then
-                echo "    ✓ Installed $plugin_name"
-            else
-                echo "    ✗ Failed to install $plugin_name"
+
+            # Read plugin.json to get skills and hooks
+            plugin_json="$plugin_dir/.claude-plugin/plugin.json"
+
+            # Install skills
+            if command -v jq >/dev/null 2>&1; then
+                skills=$(jq -r '.skills[]' "$plugin_json" 2>/dev/null || echo "")
+                if [[ -n "$skills" ]]; then
+                    while IFS= read -r skill_path; do
+                        if [[ -n "$skill_path" ]]; then
+                            skill_dir="$plugin_dir/$skill_path"
+                            skill_name=$(basename "$skill_path")
+                            if [[ -d "$skill_dir" ]]; then
+                                ln -sf "$skill_dir" "$CLAUDE_DIR/skills/$skill_name" 2>/dev/null && echo "    ✓ Skill: $skill_name" || echo "    ✗ Failed to link skill: $skill_name"
+                            fi
+                        fi
+                    done <<< "$skills"
+                fi
             fi
+
+            # Install hooks
+            if command -v jq >/dev/null 2>&1; then
+                hooks=$(jq -r '.hooks | to_entries[] | .value' "$plugin_json" 2>/dev/null || echo "")
+                if [[ -n "$hooks" ]]; then
+                    while IFS= read -r hook_path; do
+                        if [[ -n "$hook_path" ]]; then
+                            hook_file="$plugin_dir/$hook_path"
+                            hook_name=$(basename "$hook_path")
+                            if [[ -f "$hook_file" ]]; then
+                                ln -sf "$hook_file" "$CLAUDE_DIR/hooks/$hook_name" 2>/dev/null && echo "    ✓ Hook: $hook_name" || echo "    ✗ Failed to link hook: $hook_name"
+                            fi
+                        fi
+                    done <<< "$hooks"
+                fi
+            fi
+
+            echo "    ✓ Installed $plugin_name"
         fi
     done
     echo ""

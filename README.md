@@ -10,7 +10,7 @@ Sync your Claude Code configuration across machines via Git.
 - `content/scripts/` - Custom scripts (context-bar.sh, etc.)
 - `content/skills/` - Custom skills (**incremental auto-detection**)
 - `content/hooks/` - Custom hooks
-- `plugins/local/` - Local path plugins (git submodules, **auto-installed**)
+- `plugins/local/` - Embedded plugins (developed alongside this repo, **auto-installed**)
   - Example: `superpowers-lab` - Disciplined ML experimentation workflow
 - `plugins/manifests/` - Plugin installation manifests (**NEW**)
   - `installed_plugins.json` - List of installed plugins with versions
@@ -59,7 +59,6 @@ If `/mnt/data` doesn't exist, the script will fall back to the default `~/.claud
 ```bash
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
-git submodule update --init --recursive  # Initialize local plugins
 ./bin/install        # Symlink config files + install local plugins
 ./bin/install-plugins  # Restore marketplace plugins (optional)
 source ~/.zshrc       # or source ~/.bashrc
@@ -159,8 +158,8 @@ claude-config-sync/
 │   └── hooks/               # Custom hooks
 │
 ├── plugins/                 # Plugin management
-│   ├── local/               # Local path plugins (git submodules)
-│   │   └── superpowers-lab  # Example: ML experimentation workflow
+│   ├── local/               # Embedded plugins (developed alongside repo)
+│   │   └── superpowers-lab  # ML experimentation workflow
 │   └── manifests/           # Plugin installation manifests
 │       ├── installed_plugins.json
 │       └── known_marketplaces.json
@@ -199,6 +198,36 @@ To receive Slack notifications on auto-sync:
 
 ```bash
 echo "SLACK_WEBHOOK_URL='https://hooks.slack.com/services/YOUR/WEBHOOK/URL'" > ~/.claude-config-sync/.slack-config
+```
+
+## Embedded Plugins
+
+Plugins in `plugins/local/` are embedded directly in the repo (not git submodules). This allows you to:
+
+- **Develop alongside**: Modify and improve plugins in sync with your config
+- **Version control**: Plugin changes are tracked with your config commits
+- **Simplify setup**: No submodule initialization needed
+
+### Updating embedded plugins
+
+When you make changes to embedded plugins:
+
+```bash
+# The plugin changes are part of your repo
+cd ~/claude-config-sync
+git add plugins/local/
+git commit -m "feat: improve superpowers-lab workflow"
+cs-quick  # Sync and push
+```
+
+### Adding new embedded plugins
+
+```bash
+# Copy or develop plugin in plugins/local/
+cp -r /path/to/plugin ~/claude-config-sync/plugins/local/my-plugin
+cd ~/claude-config-sync
+git add plugins/local/my-plugin
+git commit -m "feat: add my-plugin"
 ```
 
 ## Example Workflow

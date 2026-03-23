@@ -209,8 +209,24 @@ fi
 echo "Note: These are SYMLINKS. Editing files in $CS_ROOT"
 echo "      will automatically update ~/.claude"
 echo ""
-echo "Plugin Installation:"
-echo "  If you have plugins in the repo, install them with:"
+echo "Local Plugin Installation:"
+if [[ -d "$CS_ROOT/plugins/local" ]]; then
+    echo "  Installing local plugins..."
+    for plugin_dir in "$CS_ROOT/plugins/local"/*; do
+        if [[ -d "$plugin_dir" && -f "$plugin_dir/.claude-plugin/plugin.json" ]]; then
+            plugin_name=$(basename "$plugin_dir")
+            echo "  Installing: $plugin_name"
+            if claude plugin install "$plugin_dir" >/dev/null 2>&1; then
+                echo "    ✓ Installed $plugin_name"
+            else
+                echo "    ✗ Failed to install $plugin_name"
+            fi
+        fi
+    done
+    echo ""
+fi
+echo "Marketplace Plugin Installation:"
+echo "  If you have marketplace plugins in the repo, install them with:"
 echo "  $ $CS_ROOT/bin/install-plugins"
 echo ""
 echo "  This will restore marketplaces and install plugins from the synced manifests."

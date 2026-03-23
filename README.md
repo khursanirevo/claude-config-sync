@@ -10,6 +10,8 @@ Sync your Claude Code configuration across machines via Git.
 - `content/scripts/` - Custom scripts (context-bar.sh, etc.)
 - `content/skills/` - Custom skills (**incremental auto-detection**)
 - `content/hooks/` - Custom hooks
+- `plugins/local/` - Local path plugins (git submodules, **auto-installed**)
+  - Example: `superpowers-lab` - Disciplined ML experimentation workflow
 - `plugins/manifests/` - Plugin installation manifests (**NEW**)
   - `installed_plugins.json` - List of installed plugins with versions
   - `known_marketplaces.json` - Registered plugin marketplaces
@@ -57,8 +59,9 @@ If `/mnt/data` doesn't exist, the script will fall back to the default `~/.claud
 ```bash
 git clone <your-repo-url> ~/claude-config-sync
 cd ~/claude-config-sync
-./bin/install        # Symlink config files to ~/.claude
-./bin/install-plugins  # Restore plugin marketplaces and plugins (optional)
+git submodule update --init --recursive  # Initialize local plugins
+./bin/install        # Symlink config files + install local plugins
+./bin/install-plugins  # Restore marketplace plugins (optional)
 source ~/.zshrc       # or source ~/.bashrc
 ```
 
@@ -154,6 +157,13 @@ claude-config-sync/
 │   ├── skills/              # Custom skills
 │   ├── scripts/             # Custom scripts
 │   └── hooks/               # Custom hooks
+│
+├── plugins/                 # Plugin management
+│   ├── local/               # Local path plugins (git submodules)
+│   │   └── superpowers-lab  # Example: ML experimentation workflow
+│   └── manifests/           # Plugin installation manifests
+│       ├── installed_plugins.json
+│       └── known_marketplaces.json
 │
 ├── automation/              # Automation scripts
 │   ├── auto-sync.sh         # Cron job script

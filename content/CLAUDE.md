@@ -1,207 +1,282 @@
-# Global Operating Instructions
+# CLAUDE.md — Global Operating Instructions
 
-## 1) Core Rules (Non-Negotiable)
+This file defines **how Claude should work by default** across tasks.
+If a direct user instruction conflicts with this file, follow this order:
 
-- Never use mocks, placeholders, stub functions, TODO logic, or fake API responses.
-- Never use mock data.
-- Always provide real, concrete, working implementations.
-- If a real implementation is impossible due to missing details, explicitly state what is missing instead of faking behavior.
+1. System rules
+2. Direct user instruction
+3. This CLAUDE.md
 
-### Preferred failure mode
+---
 
-It is better to say:
-"I cannot implement this yet because [specific missing detail]."
-than to produce placeholder logic.
+## 1) Primary Mission
 
-## 2) Persistence & Breakthrough Mindset (Non-Negotiable)
+- Execute the user's requested goal exactly.
+- Stay within the user's constraints (stack, architecture, infra, scale, parameters).
+- Do not downgrade scope, change approach, or "simplify" unless the user explicitly asks.
+- Maintain momentum: if blocked, identify the blocker and ask one focused unblock question.
 
-**Never give up. Never suggest the user stop or abandon their goal.**
+---
 
-When encountering obstacles, bugs, or apparent dead ends:
-- **Debug systematically**: Gather evidence, form hypotheses, test them rigorously
-- **Analyze patterns**: Look for recurring issues, hidden dependencies, environmental factors
-- **Uncover root causes**: Don't treat symptoms; dig deeper until you find the actual source
-- **Propose alternative approaches**: If one path fails, suggest 2-3 different angles to try
-- **Learn from failures**: Each failed attempt is data that informs the next attempt
+## 1.5) Mandatory Plan-First Protocol (No Missing Steps)
 
-**Forbidden behaviors:**
-- Never say "this might not be possible" without exhaustive investigation
-- Never suggest "maybe we should stop" or "perhaps this isn't worth pursuing"
-- Never express doubt about the user's commitment or capability
-- Never discourage continued investigation or experimentation
+Before taking action, always create an explicit task plan/checklist.
 
-**Required behaviors:**
-- Always propose next steps when stuck
-- Always frame challenges as puzzles to solve, not reasons to quit
-- Always maintain momentum toward the user's stated objective
-- Always believe there is a solution if we keep digging
+Requirements:
 
-The user will persist until the goal is achieved. Match that energy.
+1. List all major steps before implementation.
+2. Map each applicable instruction in this file to at least one checklist item.
+3. Ensure no instruction-relevant work is left out.
+4. Mark progress as you execute (`[ ]` -> `[x]`).
+5. Before final output, run a final checklist pass to confirm nothing is missing.
 
-## 3) Design & Correctness Guardrails
+If any instruction point is not represented in the plan, revise the plan first, then execute.
 
-- Do not assume system architecture or unspecified design decisions.
-- If a key architectural detail is missing, stop and ask one focused clarifying question.
-- Before writing code, mentally execute the program end-to-end:
-  - validate imports,
-  - validate runtime flow,
-  - check dependencies,
-  - check likely failure points.
+---
 
-## 4) Implementation Preferences
+## 2) Non-Negotiable Implementation Rules
 
-- Prefer functional patterns when practical.
-- Use PostgreSQL, not SQLite, unless I explicitly request otherwise.
+1. **No fake implementations**
+   - Never use mocks, placeholders, stub logic, TODO behavior, or fabricated API responses.
+   - Never use mock data unless the user explicitly asks for it.
 
-## 5) Response Style
+2. **No silent failure**
+   - Never swallow exceptions (`except: pass`).
+   - Always surface full error context with traceback (`logging.exception(...)` or equivalent).
 
-- Be concise and direct.
-- Ask questions only when required to unblock a real implementation.
-- Do not ask unnecessary questions.
+3. **Real execution over paper correctness**
+   - Validate by actually running code when feasible.
+   - If execution is blocked, state exactly why.
 
-## 6) Code Output Requirements
+4. **No repeated dead-end loops**
+   - Do not keep retrying the same failed approach without a new hypothesis.
+   - Use evidence-driven debugging.
 
-- If you introduce new code, clearly highlight where the changes are.
-- Provide complete code for changed sections (no partial placeholders).
+---
 
-## 7) Visualization Preference
+## 3) Missing Information Protocol
 
-- If visualization is needed, use Seaborn.
-- If visualization is not needed, do not force it.
+When details are missing:
 
-## 8) Personalization Preference
+- State exactly what is missing.
+- Explain why it blocks a real implementation.
+- Ask the **minimum single question** needed to proceed.
 
-- Use relevant memory/context about my interests when it adds value.
-- Where useful, connect explanations to key terminology and concepts that help me learn more deeply.
+Preferred failure mode:
 
-## 9) Missing-Information Protocol
+> "I cannot implement this yet because [specific missing detail]."
 
-If something is unknown or missing, fail loudly and clearly:
-- state exactly what is missing,
-- explain why it blocks a real implementation,
-- request the minimum detail needed to proceed.
+Never fake behavior to hide missing inputs.
 
-## 10) Experimentation Protocol (Required for ML/Training Work)
+---
 
-When running experiments, follow a disciplined, reproducible process:
+## 4) Persistence & Problem-Solving Standard
 
-- Define a clear objective and hypothesis before running anything.
-- Define primary metric(s), secondary metric(s), and acceptance criteria up front.
-- Always compare against a real baseline (current best stable model/config).
-- Change one meaningful variable at a time unless explicitly running a designed multi-factor study.
-- Keep data splits consistent and versioned; do not mix or leak validation/test data.
-- Record full reproducibility metadata for every run:
-  - exact command,
-  - config file + resolved hyperparameters,
-  - random seed(s),
-  - dataset/version,
-  - code commit hash.
-- Prefer multiple seeds for important claims; report mean ± std, not only the best run.
-- Report both absolute and relative deltas vs baseline.
-- Save artifacts for each run: logs, checkpoints, metrics tables, and evaluation outputs.
-- Never cherry-pick results; include failed/negative outcomes when summarizing.
-- End each experiment summary with:
-  - what changed,
-  - what improved/regressed,
-  - why it likely happened,
-  - the next best experiment.
+- Treat obstacles as solvable engineering problems.
+- Investigate root cause, not just symptoms.
+- Use a disciplined loop: observe -> hypothesize -> test -> analyze -> iterate.
+- Never suggest quitting or abandoning the goal.
+- Only propose alternatives/workarounds if the user explicitly requests alternatives.
 
-### Practical Deep Transfer Learning Playbook (Use this order unless there is a strong reason not to)
+---
 
-1. **Start with a fast, complete baseline**
-   - Build a full end-to-end pipeline first (train/validate/infer/export metrics).
-   - Use a smaller backbone + input size to reduce iteration time.
-   - Goal: establish a trustworthy baseline before adding complexity.
+## 5) Planning Before Coding
 
-2. **Tune high-impact training dynamics first**
-   - Prioritize learning rate, epochs, and fine-tuning schedule (freeze/unfreeze strategy).
-   - Run short controlled sweeps, then confirm with full training.
-   - In many transfer-learning setups, this gives larger gains than changing architecture too early.
+Before editing:
 
-3. **Add regularization/augmentations after baseline is learning**
-   - Introduce augmentations (e.g., MixUp/CutMix, geometric/color transforms) to improve generalization.
-   - Expect training loss to look harder/worse in some cases; trust validation/test metrics.
+- Confirm architecture assumptions are explicit.
+- Mentally trace runtime flow end-to-end.
+- Check imports, dependency compatibility, failure points, and environment constraints.
+- Choose the smallest set of changes that solves the real problem.
 
-4. **Scale complexity only after process is stable**
-   - Increase input resolution and/or model capacity once core training is tuned.
-   - Re-check compute cost vs metric gain (quality-per-GPU-hour).
+If a key design decision is ambiguous, pause and ask one focused question.
 
-5. **Use model diversity for final gains**
-   - Train diverse strong models (different architectures/seeds/augment policies).
-   - Blend/ensemble predictions for final performance boosts.
-   - Do not ensemble weak or highly correlated models just for quantity.
+---
 
-6. **Treat experimentation as iterative hypothesis testing**
-   - For each round: propose hypothesis → run controlled test → analyze deltas → choose next step.
-   - Keep a visible experiment ladder (Baseline → Tuning → Augment → Scale → Ensemble).
+## 6) Code Quality Standards
 
-### Experiment Tracking & Memory Format (Mandatory)
+### 6.1 Linting (Required)
 
-To avoid repeating failed ideas and to preserve what works, maintain a structured experiment log.
+- Run `ruff check` before considering Python code complete.
+- Fix all errors and warnings relevant to changed code.
+- Treat lint failures as blocking.
 
-- Keep a single source of truth (e.g., `EXPERIMENT_LOG.md` or `experiments/ledger.csv`).
-- Every run must have a unique Experiment ID: `EXP-YYYYMMDD-XX`.
-- Log runs immediately after completion (or failure), not later from memory.
-- Each entry must explicitly state:
-  - what was tested,
-  - what changed vs baseline,
-  - what worked,
-  - what did not work,
-  - confidence level in the conclusion.
-- Mark outcome using one of: `WIN`, `LOSS`, `NEUTRAL`, `INVALID`.
-- If `INVALID`, state the reason clearly (bug, data leak, crashed run, wrong config, etc.).
-- Link all artifacts: logs, checkpoints, predictions, plots, and evaluation reports.
-- For any claimed improvement, include baseline metric, new metric, and delta.
-- Never close an experiment entry without a clear next action.
+### 6.2 Logging (Required)
 
-#### Required Experiment Entry Template
+- Use `logging`, not `print`, for persistent runtime output.
+- Use appropriate levels: DEBUG / INFO / WARNING / ERROR / CRITICAL.
+- Include exception context with traceback for failures.
 
-```md
-## EXP-YYYYMMDD-XX — <short title>
+Minimal baseline:
 
-- Date/Time:
-- Owner:
-- Status: Planned | Running | Completed | Failed
-- Objective:
-- Hypothesis:
-- Baseline Reference (ID + metric):
-- Dataset Version/Split:
-- Code Commit Hash:
-- Config Path:
-- Exact Command:
-- Seed(s):
+```python
+import logging
 
-### Change(s) from Baseline
-- 
-
-### Results
-- Primary metric: <baseline> -> <new> (delta: <+/->)
-- Secondary metrics:
-- Runtime/Cost:
-
-### Outcome
-- Label: WIN | LOSS | NEUTRAL | INVALID
-- What worked:
-- What did not work:
-- Why (most likely explanation):
-- Confidence: Low | Medium | High
-
-### Artifacts
-- Train log:
-- Checkpoint(s):
-- Predictions:
-- Evaluation report:
-
-### Next Action
-- 
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger(__name__)
 ```
 
-#### Weekly Roll-up (to keep long-term memory)
+### 6.3 Data/DB Preference
 
-- Keep a short weekly summary with:
-  - top validated wins,
-  - repeated failures/pitfalls,
-  - open hypotheses,
-  - next highest-ROI experiments.
+- Prefer PostgreSQL over SQLite unless the user requests otherwise.
 
-@RTK.md
+### 6.4 Style Preference
+
+- Prefer functional patterns when practical and readable.
+
+---
+
+## 7) File Change Discipline
+
+Default behavior: **edit existing files**.
+
+Create new files only when:
+
+- Introducing truly new functionality,
+- The structure clearly requires a new module,
+- Or the user explicitly asks for a new file.
+
+Avoid:
+
+- `*_v2`, `*_new`, `*_fixed`, `backup_*`, and duplicate variant files.
+- Creating a new script file for each iteration instead of updating the existing script.
+
+Guidelines:
+
+- Make minimal, targeted edits.
+- Preserve project style and structure.
+- Avoid unnecessary file proliferation.
+
+### 7.1 Script Iteration Rule (Strict)
+
+When improving/debugging an existing script:
+
+- **Always update the same script file incrementally**.
+- **Do not create replacement script variants** (for example: `script_v2.py`, `script_new.py`, `script_fixed.py`).
+- Create a new script only if:
+  1. The original script does not exist, or
+  2. The user explicitly asks for a separate new script.
+
+Before creating any new script, run this decision check:
+
+1. "Does an existing script already cover this purpose?"
+2. If yes -> edit that existing script.
+3. If no -> create one new script with a clear canonical name.
+
+If unsure, default to editing the existing file and ask one focused clarification question.
+
+---
+
+## 8) Response Contract
+
+Keep responses concise and operational.
+
+When making changes, include:
+
+1. What changed.
+2. Why it changed.
+3. Files touched.
+4. Validation performed (commands/run results).
+5. Next action (only if needed).
+
+Do not ask unnecessary questions.
+Ask questions only when required to unblock real implementation.
+
+---
+
+## 9) Testing Philosophy for This Environment
+
+- Prioritize real runtime verification over writing dedicated unit tests.
+- Do not create test files unless the user asks.
+- Validate behavior by executing actual code paths.
+
+### 9.1 Critical Measurement & Benchmark Skepticism (Required)
+
+When performance results look surprisingly good, assume they may be incomplete until proven otherwise.
+
+Rules:
+
+- Be explicitly skeptical of "too-good-to-be-true" speedups.
+- Verify **what is actually being timed** and **where timing starts/stops**.
+- Prefer true **end-to-end (E2E)** measurement for user-visible performance claims.
+- Do not benchmark only an internal sub-step if the claim is about full pipeline latency.
+- Ensure benchmark instrumentation is placed at the correct boundaries (real input -> full processing -> real output).
+- Report what is included/excluded in timing (I/O, serialization, warmup, model load, network, post-processing).
+- Cross-check with at least one independent timing method when possible.
+
+Required benchmark report fields:
+
+1. Exact timed scope (E2E or component-only)
+2. Timer boundary locations in code
+3. Warmup policy
+4. Number of runs + aggregation (mean/p50/p95)
+5. Environment details (hardware, software versions)
+6. Known exclusions/limitations
+
+Never present partial timing as full-system performance.
+
+---
+
+## 10) Visualization Preference
+
+- If visualization is needed, use Seaborn.
+- If no visualization is needed, do not add one.
+
+---
+
+## 11) ML / Training Experiment Protocol (When Applicable)
+
+Use a reproducible, hypothesis-driven loop.
+
+### Required per experiment
+
+- Objective and hypothesis
+- Baseline reference
+- Primary/secondary metrics and acceptance criteria
+- Exact command + resolved config
+- Seed(s)
+- Dataset/split version
+- Code commit hash
+- Artifacts (logs, checkpoints, reports)
+- Result classification: WIN / LOSS / NEUTRAL / INVALID
+- Next action
+
+### Operating principles
+
+- Compare against a real baseline.
+- Change one meaningful variable at a time unless running designed multi-factor studies.
+- Do not leak validation/test data.
+- Prefer multiple seeds for important claims; report mean ± std.
+- Report absolute and relative deltas.
+- Include negative outcomes; no cherry-picking.
+
+### Recommended transfer-learning order
+
+1. Fast, complete baseline
+2. Tune LR/epochs/freeze strategy
+3. Add augmentations/regularization
+4. Scale model or resolution
+5. Ensemble diverse strong models
+
+---
+
+## 12) Personalization
+
+When useful, connect explanations to the user's known interests and preferred terminology to improve learning and retention.
+
+---
+
+## 13) Quick Compliance Checklist (Self-check before finalizing)
+
+- Did I create an explicit upfront plan/checklist and cover all applicable instruction points?
+- Did I follow the user's exact request and constraints?
+- Did I avoid fake logic/mock data?
+- Did I avoid silent exception handling?
+- Did I ask only necessary unblock questions?
+- Did I make minimal, targeted edits to existing files?
+- Did I run appropriate real validation (and ruff for Python)?
+- Did I critically validate any benchmark/performance claims with correct E2E measurement boundaries?
+- Did I report what changed and evidence it works?

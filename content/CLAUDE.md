@@ -123,9 +123,57 @@ logger = logging.getLogger(__name__)
 
 - Prefer PostgreSQL over SQLite unless the user requests otherwise.
 
-### 6.4 Style Preference
+  ### 6.4 Style Preference
 
 - Prefer functional patterns when practical and readable.
+
+### 6.5 Python Execution Standard (Strict - Non-Negotiable)
+
+**NEVER execute Python code inline.** All Python code must be written to physical script files.
+
+#### Required Behavior:
+
+1. **No Inline Execution**
+   - Do NOT use Jupyter notebook cells for production code
+   - Do NOT use `python -c "..."` commands
+   - Do NOT execute Python code snippets in any REPL or inline context
+   - Do NOT suggest or demonstrate inline execution patterns
+
+2. **Always Write Physical Scripts**
+   - All Python code MUST be written to `.py` files
+   - Scripts must be complete, runnable, and standalone
+   - Include proper imports, logging setup, error handling
+   - Use meaningful filenames that reflect their purpose
+
+3. **Experimentation Protocol (tmp.py Pattern)**
+   - When exploring ideas or testing code, create `tmp.py` in the working directory
+   - Use `tmp.py` for playaround, prototyping, and experimentation
+   - Test, iterate, and refine code in `tmp.py`
+   - Once code is finalized, move it to the appropriate final script file
+   - **Remove `tmp.py` after finalization** (add to .gitignore if needed)
+
+4. **File Management**
+   - Production code belongs in properly named, versioned files
+   - `tmp.py` is explicitly for temporary exploration only
+   - Never commit `tmp.py` to version control
+   - Always clean up temporary files before finalizing work
+
+5. **Execution Pattern**
+   ```bash
+   # CORRECT:
+   # Write to script_file.py first
+   python script_file.py
+
+   # WRONG:
+   # python -c "print('hello')"  # NEVER do this
+   ```
+
+6. **Verification**
+   - Always verify code by running the physical script file
+   - Check script output, errors, and behavior
+   - Ensure scripts can be reproduced by running the file
+
+**Rationale**: Physical scripts ensure traceability, reproducibility, proper error handling, logging, and maintainability. Inline execution makes debugging, version control, and long-term maintenance impossible.
 
 ---
 
@@ -277,6 +325,7 @@ When useful, connect explanations to the user's known interests and preferred te
 - Did I avoid silent exception handling?
 - Did I ask only necessary unblock questions?
 - Did I make minimal, targeted edits to existing files?
+- **Did I write all Python code to physical script files (no inline execution)?**
 - Did I run appropriate real validation (and ruff for Python)?
 - Did I critically validate any benchmark/performance claims with correct E2E measurement boundaries?
 - Did I report what changed and evidence it works?

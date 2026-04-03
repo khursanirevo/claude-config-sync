@@ -47,7 +47,8 @@
   "enabledPlugins": {
     "glm-plan-usage@zai-coding-plugins": true,
     "dx@ykdojo": true,
-    "superpowers@superpowers-marketplace": true
+    "superpowers@superpowers-marketplace": true,
+    "oh-my-claude@oh-my-claude": true
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -60,6 +61,12 @@
       "source": {
         "source": "github",
         "repo": "ykdojo/claude-code-tips"
+      }
+    },
+    "oh-my-claude": {
+      "source": {
+        "source": "github",
+        "repo": "TechDufus/oh-my-claude"
       }
     }
   },

@@ -20,6 +20,16 @@
         "lastUpdated": "2026-03-22T02:13:09.303Z",
         "gitCommitSha": "8ea39819eed74fe2a0338e71789f06b30e953041"
       }
+    ],
+    "oh-my-claude@oh-my-claude": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/oh-my-claude/oh-my-claude/0.13.0",
+        "version": "0.13.0",
+        "installedAt": "2026-04-02T14:44:48.470Z",
+        "lastUpdated": "2026-04-02T14:44:48.470Z",
+        "gitCommitSha": "de130ea7ef8c28294a1148ade1c684e77d31654f"
+      }
     ]
   }
 }

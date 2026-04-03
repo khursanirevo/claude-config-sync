@@ -14,5 +14,13 @@
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/ykdojo",
     "lastUpdated": "2026-03-22T02:12:31.358Z"
+  },
+  "oh-my-claude": {
+    "source": {
+      "source": "github",
+      "repo": "TechDufus/oh-my-claude"
+    },
+    "installLocation": "/home/sani/.claude/plugins/marketplaces/oh-my-claude",
+    "lastUpdated": "2026-04-02T14:44:46.200Z"
   }
 }

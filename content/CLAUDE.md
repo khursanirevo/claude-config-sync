@@ -177,6 +177,367 @@ logger = logging.getLogger(__name__)
 
 ---
 
+## 6.6 Data Persistence & Resumability (Strict - Non-Negotiable)
+
+**NEVER store results in memory when working with large datasets or long-running processes.** Always write results directly to physical files incrementally. Code MUST be resumable and continuable.
+
+#### Core Principles:
+
+1. **Write Directly to Files**
+   - Do NOT accumulate results in memory lists/dictionaries/arrays
+   - Do NOT process entire datasets before writing output
+   - Write each result immediately after processing to ensure persistence
+   - Use atomic writes or append mode to prevent data loss
+
+2. **Resumable & Continuable**
+   - Code can be stopped at any time and restarted
+   - Already-processed items are automatically skipped
+   - Progress state is preserved across runs
+   - No manual intervention needed for continuation
+
+3. **Structured Checkpointing**
+   - Maintain separate checkpoint files for state management
+   - Store processing metadata (timestamps, counts, status)
+   - Enable easy inspection of progress state
+   - Support rollback if needed
+
+---
+
+### Pattern 1: Simple Line-Based Output (Basic Resumability)
+
+Use for simple text-based outputs where each line is independent.
+
+```python
+import os
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+output_file = "results.txt"
+
+def process_simple_dataset(items):
+    """
+    Process items with simple line-based output.
+    Resumable: checks output file for existing lines.
+    """
+    # Load already processed item IDs
+    processed_ids = set()
+    if os.path.exists(output_file):
+        with open(output_file, "r") as f:
+            for line in f:
+                # Assumes format: "item_id\tresult"
+                if line.strip():
+                    item_id = line.split("\t")[0]
+                    processed_ids.add(item_id)
+    
+    logger.info(f"Found {len(processed_ids)} already processed items")
+    
+    # Process only unprocessed items
+    with open(output_file, "a") as f:
+        for item_id, data in items:
+            if item_id in processed_ids:
+                logger.info(f"Skipping {item_id} - already processed")
+                continue
+            
+            try:
+                result = process_item(data)
+                f.write(f"{item_id}\t{result}\n")
+                f.flush()  # Ensure immediate write
+                processed_ids.add(item_id)
+                logger.info(f"Processed {item_id}")
+            except Exception as e:
+                logger.error(f"Failed to process {item_id}: {e}")
+                # Continue with next item - data is already safe
+```
+
+---
+
+### Pattern 2: Structured JSON Output (Full State Tracking)
+
+Use for complex outputs requiring rich metadata and precise progress tracking.
+
+```python
+import json
+import os
+from datetime import datetime
+
+output_file = "results.jsonl"
+checkpoint_file = "checkpoint.json"
+
+def process_structured_dataset(items):
+    """
+    Process items with JSON output and comprehensive checkpointing.
+    Fully resumable and continuable with rich state tracking.
+    """
+    # Load checkpoint if exists
+    checkpoint = {
+        "start_time": datetime.now().isoformat(),
+        "processed_ids": [],
+        "failed_ids": [],
+        "total_count": 0,
+        "success_count": 0,
+        "error_count": 0,
+        "last_processed_id": None,
+    }
+    
+    if os.path.exists(checkpoint_file):
+        with open(checkpoint_file, "r") as f:
+            checkpoint = json.load(f)
+        logger.info(f"Resuming from checkpoint: {len(checkpoint['processed_ids'])} items done")
+    
+    processed_ids = set(checkpoint["processed_ids"])
+    
+    # Process only unprocessed items
+    with open(output_file, "a") as out_f:
+        for item_id, data in items:
+            if item_id in processed_ids:
+                logger.debug(f"Skipping {item_id} - already processed")
+                continue
+            
+            try:
+                result = process_item(data)
+                
+                # Write result immediately
+                output_entry = {
+                    "item_id": item_id,
+                    "result": result,
+                    "timestamp": datetime.now().isoformat(),
+                    "status": "success"
+                }
+                out_f.write(json.dumps(output_entry) + "\n")
+                out_f.flush()
+                
+                # Update checkpoint
+                checkpoint["processed_ids"].append(item_id)
+                checkpoint["success_count"] += 1
+                checkpoint["last_processed_id"] = item_id
+                
+                # Save checkpoint periodically
+                if checkpoint["success_count"] % 10 == 0:
+                    save_checkpoint(checkpoint, checkpoint_file)
+                    logger.info(f"Progress: {checkpoint['success_count']} items completed")
+                
+                logger.info(f"Processed {item_id}")
+                
+            except Exception as e:
+                logger.error(f"Failed to process {item_id}: {e}")
+                checkpoint["failed_ids"].append({
+                    "item_id": item_id,
+                    "error": str(e),
+                    "timestamp": datetime.now().isoformat()
+                })
+                checkpoint["error_count"] += 1
+    
+    # Final checkpoint save
+    checkpoint["end_time"] = datetime.now().isoformat()
+    checkpoint["total_count"] = len(items)
+    save_checkpoint(checkpoint, checkpoint_file)
+    logger.info(f"Completed: {checkpoint['success_count']} success, {checkpoint['error_count']} failed")
+
+def save_checkpoint(checkpoint, filepath):
+    """Atomically save checkpoint file."""
+    temp_path = f"{filepath}.tmp"
+    with open(temp_path, "w") as f:
+        json.dump(checkpoint, f, indent=2)
+    os.rename(temp_path, filepath)
+```
+
+---
+
+### Pattern 3: Multi-Stage Pipeline with State Management
+
+Use for complex workflows with multiple processing stages.
+
+```python
+import json
+import os
+from pathlib import Path
+
+class PipelineState:
+    """
+    Manage state for multi-stage resumable pipelines.
+    Each stage can be resumed independently.
+    """
+    
+    def __init__(self, state_file="pipeline_state.json"):
+        self.state_file = state_file
+        self.state = self._load_state()
+    
+    def _load_state(self):
+        """Load existing state or create new."""
+        if os.path.exists(self.state_file):
+            with open(self.state_file, "r") as f:
+                return json.load(f)
+        
+        return {
+            "stages": {
+                "stage1": {"completed": [], "failed": []},
+                "stage2": {"completed": [], "failed": []},
+                "stage3": {"completed": [], "failed": []},
+            },
+            "global_status": "initialized"
+        }
+    
+    def save_state(self):
+        """Atomically save current state."""
+        temp_path = f"{self.state_file}.tmp"
+        with open(temp_path, "w") as f:
+            json.dump(self.state, f, indent=2)
+        os.rename(temp_path, self.state_file)
+    
+    def is_completed(self, stage, item_id):
+        """Check if item completed in given stage."""
+        return item_id in self.state["stages"][stage]["completed"]
+    
+    def mark_completed(self, stage, item_id):
+        """Mark item as completed in stage."""
+        self.state["stages"][stage]["completed"].append(item_id)
+        self.save_state()
+    
+    def mark_failed(self, stage, item_id, error):
+        """Mark item as failed in stage."""
+        self.state["stages"][stage]["failed"].append({
+            "item_id": item_id,
+            "error": error,
+            "timestamp": datetime.now().isoformat()
+        })
+        self.save_state()
+
+def run_resumable_pipeline(items):
+    """
+    Multi-stage pipeline with full resumability.
+    Each stage can be resumed independently.
+    """
+    state = PipelineState()
+    
+    for item_id, data in items:
+        # Stage 1: Data preprocessing
+        if not state.is_completed("stage1", item_id):
+            try:
+                preprocessed = preprocess(data)
+                save_stage_output("stage1_output.jsonl", item_id, preprocessed)
+                state.mark_completed("stage1", item_id)
+                logger.info(f"Stage 1 completed for {item_id}")
+            except Exception as e:
+                state.mark_failed("stage1", item_id, str(e))
+                logger.error(f"Stage 1 failed for {item_id}: {e}")
+                continue
+        
+        # Stage 2: Processing (only runs if stage1 succeeded)
+        if not state.is_completed("stage2", item_id):
+            try:
+                processed = process(preprocessed)
+                save_stage_output("stage2_output.jsonl", item_id, processed)
+                state.mark_completed("stage2", item_id)
+                logger.info(f"Stage 2 completed for {item_id}")
+            except Exception as e:
+                state.mark_failed("stage2", item_id, str(e))
+                logger.error(f"Stage 2 failed for {item_id}: {e}")
+                continue
+        
+        # Stage 3: Post-processing
+        if not state.is_completed("stage3", item_id):
+            try:
+                final = postprocess(processed)
+                save_stage_output("stage3_output.jsonl", item_id, final)
+                state.mark_completed("stage3", item_id)
+                logger.info(f"Stage 3 completed for {item_id}")
+            except Exception as e:
+                state.mark_failed("stage3", item_id, str(e))
+                logger.error(f"Stage 3 failed for {item_id}: {e}")
+    
+    logger.info("Pipeline completed - check pipeline_state.json for details")
+```
+
+---
+
+### Pattern 4: Batch Processing with Progress Reporting
+
+Use for large batches where progress visibility is critical.
+
+```python
+import time
+
+def process_large_batch(items, output_file="batch_results.jsonl"):
+    """
+    Batch processing with progress reporting and resumability.
+    """
+    checkpoint_file = f"{output_file}.checkpoint"
+    
+    # Load checkpoint
+    checkpoint = load_checkpoint(checkpoint_file)
+    processed_ids = set(checkpoint["processed_ids"])
+    
+    total_items = len(items)
+    start_time = checkpoint.get("start_time", time.time())
+    last_log_time = time.time()
+    
+    with open(output_file, "a") as f:
+        for idx, (item_id, data) in enumerate(items, 1):
+            if item_id in processed_ids:
+                continue
+            
+            try:
+                result = process_item(data)
+                f.write(json.dumps({"id": item_id, "result": result}) + "\n")
+                f.flush()
+                
+                processed_ids.add(item_id)
+                
+                # Update checkpoint periodically
+                checkpoint["processed_ids"] = list(processed_ids)
+                checkpoint["last_processed"] = item_id
+                
+                # Log progress every 10 items or every 60 seconds
+                current_time = time.time()
+                if idx % 10 == 0 or (current_time - last_log_time) > 60:
+                    progress_pct = (len(processed_ids) / total_items) * 100
+                    elapsed = current_time - start_time
+                    rate = len(processed_ids) / elapsed if elapsed > 0 else 0
+                    eta = (total_items - len(processed_ids)) / rate if rate > 0 else 0
+                    
+                    logger.info(
+                        f"Progress: {len(processed_ids)}/{total_items} "
+                        f"({progress_pct:.1f}%) | "
+                        f"Rate: {rate:.2f} items/sec | "
+                        f"ETA: {eta/60:.1f} min"
+                    )
+                    save_checkpoint(checkpoint, checkpoint_file)
+                    last_log_time = current_time
+                
+            except Exception as e:
+                logger.error(f"Error processing {item_id}: {e}")
+                continue
+    
+    # Final summary
+    elapsed = time.time() - start_time
+    logger.info(
+        f"Batch complete: {len(processed_ids)}/{total_items} items "
+        f"in {elapsed/60:.1f} minutes"
+    )
+    save_checkpoint(checkpoint, checkpoint_file)
+```
+
+---
+
+### Best Practices Summary
+
+1. **Always write incrementally**: Never accumulate in memory
+2. **Use atomic writes**: Write to temp file, then rename
+3. **Maintain checkpoints**: Track what's been done
+4. **Log progress**: Regular updates on processing status
+5. **Handle failures gracefully**: Continue processing next item
+6. **Enable resumption**: Check existing state before processing
+7. **Flush frequently**: Ensure data is written to disk
+8. **Structure output**: Use JSON/JSONL for rich metadata
+9. **Save state often**: Update checkpoint files periodically
+10. **Provide summaries**: Include timing, counts, and status in logs
+
+**Rationale**: These patterns ensure data is never lost, processes can be stopped and resumed without manual intervention, progress is transparent, and failures don't require restarting from the beginning. This is critical for large-scale data processing and long-running tasks.
+
+---
+
 ## 7) File Change Discipline
 
 Default behavior: **edit existing files**.
@@ -326,6 +687,8 @@ When useful, connect explanations to the user's known interests and preferred te
 - Did I ask only necessary unblock questions?
 - Did I make minimal, targeted edits to existing files?
 - **Did I write all Python code to physical script files (no inline execution)?**
+- **Did I write results directly to files incrementally (not stored in memory)?**
+- **Did I implement file existence checking for resumability?**
 - Did I run appropriate real validation (and ruff for Python)?
 - Did I critically validate any benchmark/performance claims with correct E2E measurement boundaries?
 - Did I report what changed and evidence it works?

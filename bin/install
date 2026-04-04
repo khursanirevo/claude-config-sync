@@ -262,7 +262,14 @@ echo "  If you have marketplace plugins in the repo, install them with:"
 echo "  $ $CS_ROOT/bin/install-plugins"
 echo ""
 echo "  This will restore marketplaces and install plugins from the synced manifests."
-echo ""
-echo -e "${CS_COLOR_YELLOW}Recommended: Install oh-my-claude plugin${CS_COLOR_RESET}"
-echo "  oh-my-claude adds ultrawork mode, context protection, and quality gates"
-echo "  Install with: $CS_ROOT/bin/install-oh-my-claude"
+
+	# Auto-install oh-my-claude
+	if [[ -f "$CS_ROOT/bin/install-oh-my-claude" ]]; then
+		echo ""
+		echo -e "${CS_COLOR_BLUE}[Auto-install]${CS_COLOR_RESET} Installing oh-my-claude plugin..."
+		if bash "$CS_ROOT/bin/install-oh-my-claude" 2>&1; then
+			echo -e "  ${CS_COLOR_GREEN}✓${CS_COLOR_RESET} oh-my-claude installed successfully"
+		else
+			echo -e "  ${CS_COLOR_YELLOW}⚠${CS_COLOR_RESET} oh-my-claude installation failed (optional)"
+		fi
+	fi

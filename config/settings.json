@@ -28,7 +28,17 @@
         ]
       }
     ],
-    "PreToolUse": []
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "command": "~/.claude/hooks/rtk-rewrite.sh",
+            "type": "command"
+          }
+        ]
+      }
+    ]
   },
   "statusLine": {
     "type": "command",

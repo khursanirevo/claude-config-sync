@@ -1,0 +1,461 @@
+#!/bin/bash
+# Comprehensive test suite for rtk-rewrite.sh
+# Tests edge cases, filtering logic, and integration scenarios
+
+set -e
+
+CS_ROOT="${CS_ROOT:-$HOME/claude-config-sync}"
+HOOK="$CS_ROOT/content/hooks/rtk-rewrite.sh"
+TOTAL_TESTS=0
+PASSED_TESTS=0
+FAILED_TESTS=0
+SKIPPED_TESTS=0
+
+# Colors
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}RTK Hook Test Suite${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo ""
+
+# Test helper functions
+test_case() {
+  local name="$1"
+  local command="$2"
+  local should_rewrite="$3"  # "yes", "no", or "skip"
+  local description="$4"
+
+  TOTAL_TESTS=$((TOTAL_TESTS + 1))
+
+  echo -e "${BLUE}Test $TOTAL_TESTS:${NC} $name"
+  echo "  Command: $command"
+  echo "  Expected: $should_rewrite"
+  echo "  Description: $description"
+
+  # Run the hook
+  local input=$(echo "{\"tool_input\":{\"command\":\"$command\"}}")
+  local output
+  output=$(echo "$input" | bash "$HOOK" 2>&1)
+  local exit_code=$?
+
+  # Analyze result
+  if [ $exit_code -eq 0 ] && [ -z "$output" ]; then
+    # Hook exited with no output - command was skipped
+    result="skipped"
+  elif [ $exit_code -eq 0 ] && echo "$output" | jq -e '.hookSpecificOutput.updatedInput' >/dev/null 2>&1; then
+    # Hook returned updated input - command was rewritten
+    result="rewritten"
+    rewritten_cmd=$(echo "$output" | jq -r '.hookSpecificOutput.updatedInput.command')
+    echo "  Rewritten to: $rewritten_cmd"
+  else
+    # Hook had an error
+    result="error"
+    echo "  ${RED}Error output:${NC} $output"
+  fi
+
+  # Validate result
+  local passed=false
+  case "$should_rewrite" in
+    "yes")
+      if [ "$result" = "rewritten" ]; then
+        passed=true
+      else
+        echo "  ${RED}✗ FAILED:${NC} Expected rewrite but got: $result"
+      fi
+      ;;
+    "no")
+      if [ "$result" = "skipped" ]; then
+        passed=true
+      else
+        echo "  ${RED}✗ FAILED:${NC} Expected skip but got: $result"
+      fi
+      ;;
+    "skip")
+      if [ "$result" = "skipped" ] || [ "$result" = "rewritten" ]; then
+        passed=true
+      else
+        echo "  ${RED}✗ FAILED:${NC} Expected skip or rewrite but got: $result"
+      fi
+      ;;
+  esac
+
+  if $passed; then
+    PASSED_TESTS=$((PASSED_TESTS + 1))
+    echo "  ${GREEN}✓ PASSED${NC}"
+  else
+    FAILED_TESTS=$((FAILED_TESTS + 1))
+  fi
+
+  echo ""
+}
+
+# ========================================================================
+# CATEGORY 1: Edge Cases - Numeric Flags
+# ========================================================================
+echo -e "${YELLOW}=== Category 1: Edge Cases - Numeric Flags ===${NC}"
+echo ""
+
+test_case "tail with single digit" \
+  "tail -5 /etc/hostname" \
+  "no" \
+  "Should filter out tail with numeric flag"
+
+test_case "head with double digit" \
+  "head -20 /var/log/syslog" \
+  "no" \
+  "Should filter out head with numeric flag"
+
+test_case "wc with line count" \
+  "wc -l file.txt" \
+  "no" \
+  "Should filter out wc with numeric flag"
+
+test_case "cut with byte flag" \
+  "cut -c1-10 file.txt" \
+  "no" \
+  "Should filter out cut with numeric range"
+
+test_case "sed with numeric expression" \
+  "sed -n '1,10p' file.txt" \
+  "no" \
+  "Should filter out sed with numeric range"
+
+# ========================================================================
+# CATEGORY 2: Edge Cases - Multiple Flags
+# ========================================================================
+echo -e "${YELLOW}=== Category 2: Edge Cases - Multiple Flags ===${NC}"
+echo ""
+
+test_case "tail with multiple flags" \
+  "tail -n 5 -f /var/log/syslog" \
+  "no" \
+  "Should filter out tail with -n flag"
+
+test_case "grep with count and pattern" \
+  "grep -c 'error' log.txt" \
+  "no" \
+  "Should filter out grep with -c flag"
+
+test_case "awk with field and pattern" \
+  "awk -F: '{print \$1}' /etc/passwd" \
+  "no" \
+  "Should filter out awk with -F flag"
+
+test_case "ls with long format and count" \
+  "ls -la | head -5" \
+  "no" \
+  "Should filter out piped commands with numeric flags"
+
+# ========================================================================
+# CATEGORY 3: Edge Cases - Whitespace and Quoting
+# ========================================================================
+echo -e "${YELLOW}=== Category 3: Edge Cases - Whitespace and Quoting ===${NC}"
+echo ""
+
+test_case "command with extra spaces" \
+  "tail    -5    file.txt" \
+  "no" \
+  "Should handle multiple spaces"
+
+test_case "command with tabs" \
+  "tail\t-5\tfile.txt" \
+  "no" \
+  "Should handle tabs (if supported)"
+
+test_case "quoted filename with spaces" \
+  "tail -5 '/path/to/my file.txt'" \
+  "no" \
+  "Should handle quoted filenames"
+
+test_case "command with pipe and spaces" \
+  "cat file.txt | grep 'test' | head -3" \
+  "no" \
+  "Should filter piped commands with numeric flags"
+
+# ========================================================================
+# CATEGORY 4: Edge Cases - Special Characters
+# ========================================================================
+echo -e "${YELLOW}=== Category 4: Edge Cases - Special Characters ===${NC}"
+echo ""
+
+test_case "filename with special chars" \
+  "tail -5 /path/to/file@2024.txt" \
+  "no" \
+  "Should handle @ in filename"
+
+test_case "filename with brackets" \
+  "tail -5 /path/to/file[1].txt" \
+  "no" \
+  "Should handle brackets in filename"
+
+test_case "command with variables" \
+  "tail -n \$LINES /var/log/syslog" \
+  "skip" \
+  "Variable expansion - behavior depends on shell"
+
+test_case "command with backticks" \
+  "tail -n \`wc -l file.txt\` log.txt" \
+  "skip" \
+  "Command substitution - complex case"
+
+# ========================================================================
+# CATEGORY 5: Edge Cases - Empty and Null Inputs
+# ========================================================================
+echo -e "${YELLOW}=== Category 5: Edge Cases - Empty and Null Inputs ===${NC}"
+echo ""
+
+test_case "empty command" \
+  "" \
+  "no" \
+  "Should handle empty command gracefully"
+
+test_case "whitespace only" \
+  "   " \
+  "no" \
+  "Should handle whitespace-only command"
+
+test_case "null input" \
+  "null" \
+  "skip" \
+  "Should handle null input"
+
+# ========================================================================
+# CATEGORY 6: Edge Cases - Already RTK Commands
+# ========================================================================
+echo -e "${YELLOW}=== Category 6: Edge Cases - Already RTK Commands ===${NC}"
+echo ""
+
+test_case "rtk read command" \
+  "rtk read file.txt" \
+  "no" \
+  "Should skip already-rtk commands"
+
+test_case "rtk gain command" \
+  "rtk gain --history" \
+  "no" \
+  "Should skip rtk gain"
+
+test_case "rtk discover" \
+  "rtk discover" \
+  "no" \
+  "Should skip rtk discover"
+
+test_case "rtk rewrite" \
+  "rtk rewrite 'git status'" \
+  "no" \
+  "Should skip rtk rewrite"
+
+# ========================================================================
+# CATEGORY 7: Integration - File Operations
+# ========================================================================
+echo -e "${YELLOW}=== Category 7: Integration - File Operations ===${NC}"
+echo ""
+
+test_case "simple cat" \
+  "cat file.txt" \
+  "no" \
+  "Should skip cat - no benefit from rtk"
+
+test_case "less with line number" \
+  "less -N file.txt" \
+  "no" \
+  "Should skip less"
+
+test_case "bat with theme" \
+  "bat --theme GitHub file.txt" \
+  "no" \
+  "Should skip bat (modern cat)"
+
+test_case "zless compressed" \
+  "zless file.txt.gz" \
+  "no" \
+  "Should skip zless"
+
+# ========================================================================
+# CATEGORY 8: Integration - Text Processing
+# ========================================================================
+echo -e "${YELLOW}=== Category 8: Integration - Text Processing ===${NC}"
+echo ""
+
+test_case "sort reverse" \
+  "sort -r file.txt" \
+  "no" \
+  "Should skip sort"
+
+test_case "uniq count" \
+  "uniq -c file.txt" \
+  "no" \
+  "Should skip uniq"
+
+test_case "tr lowercase" \
+  "tr 'A-Z' 'a-z' < file.txt" \
+  "no" \
+  "Should skip tr"
+
+test_case "tee with output" \
+  "cat file.txt | tee output.txt | head -3" \
+  "no" \
+  "Should skip piped tee"
+
+# ========================================================================
+# CATEGORY 9: Integration - System Commands
+# ========================================================================
+echo -e "${YELLOW}=== Category 9: Integration - System Commands ===${NC}"
+echo ""
+
+test_case "ls with options" \
+  "ls -lah /tmp" \
+  "no" \
+  "Should skip ls"
+
+test_case "pwd" \
+  "pwd" \
+  "no" \
+  "Should skip pwd"
+
+test_case "date with format" \
+  "date '+%Y-%m-%d'" \
+  "no" \
+  "Should skip date"
+
+test_case "whoami" \
+  "whoami" \
+  "no" \
+  "Should skip whoami"
+
+# ========================================================================
+# CATEGORY 10: Integration - Test Commands
+# ========================================================================
+echo -e "${YELLOW}=== Category 10: Integration - Test Commands ===${NC}"
+echo ""
+
+test_case "echo with text" \
+  "echo 'hello world'" \
+  "no" \
+  "Should skip echo"
+
+test_case "printf formatted" \
+  "printf 'Name: %s\n' 'John'" \
+  "no" \
+  "Should skip printf"
+
+test_case "test command" \
+  "test -f file.txt" \
+  "no" \
+  "Should skip test"
+
+test_case "bracket test" \
+  "[ -f file.txt ]" \
+  "no" \
+  "Should skip bracket test"
+
+# ========================================================================
+# CATEGORY 11: Integration - Package Managers
+# ========================================================================
+echo -e "${YELLOW}=== Category 11: Integration - Package Managers ===${NC}"
+echo ""
+
+test_case "npm install" \
+  "npm install package" \
+  "no" \
+  "Should skip npm commands"
+
+test_case "yarn add" \
+  "yarn add package" \
+  "no" \
+  "Should skip yarn commands"
+
+test_case "pip install" \
+  "pip install package" \
+  "no" \
+  "Should skip pip commands"
+
+test_case "cargo build" \
+  "cargo build" \
+  "no" \
+  "Should skip cargo commands"
+
+# ========================================================================
+# CATEGORY 12: Integration - Git Commands
+# ========================================================================
+echo -e "${YELLOW}=== Category 12: Integration - Git Commands ===${NC}"
+echo ""
+
+test_case "git status" \
+  "git status" \
+  "no" \
+  "Should skip git status (currently filtered)"
+
+test_case "git log with limit" \
+  "git log -5 --oneline" \
+  "no" \
+  "Should skip git log (currently filtered)"
+
+test_case "git diff" \
+  "git diff HEAD~1" \
+  "no" \
+  "Should skip git diff (currently filtered)"
+
+test_case "git commit" \
+  "git commit -m 'message'" \
+  "no" \
+  "Should skip git commit (currently filtered)"
+
+# ========================================================================
+# CATEGORY 13: Performance - Long Commands
+# ========================================================================
+echo -e "${YELLOW}=== Category 13: Performance - Long Commands ===${NC}"
+echo ""
+
+test_case "very long command" \
+  "tail -5 /very/long/path/to/some/file/with/many/directories/that/goes/on/and/on/file.txt" \
+  "no" \
+  "Should handle long paths"
+
+test_case "command with many arguments" \
+  "grep 'pattern' file1.txt file2.txt file3.txt file4.txt file5.txt" \
+  "yes" \
+  "Should rewrite grep to rtk grep"
+
+# ========================================================================
+# CATEGORY 14: Security - Potentially Dangerous
+# ========================================================================
+echo -e "${YELLOW}=== Category 14: Security - Potentially Dangerous ===${NC}"
+echo ""
+
+test_case "command with rm" \
+  "rm -rf /tmp/test" \
+  "skip" \
+  "Should not rewrite dangerous commands"
+
+test_case "command with sudo" \
+  "sudo tail -5 /var/log/syslog" \
+  "no" \
+  "Should filter even with sudo"
+
+# ========================================================================
+# SUMMARY
+# ========================================================================
+echo ""
+echo -e "${BLUE}========================================${NC}"
+echo -e "${BLUE}Test Summary${NC}"
+echo -e "${BLUE}========================================${NC}"
+echo ""
+echo "Total Tests:  $TOTAL_TESTS"
+echo -e "${GREEN}Passed:${NC}       $PASSED_TESTS"
+echo -e "${RED}Failed:${NC}       $FAILED_TESTS"
+echo -e "${YELLOW}Skipped:${NC}      $SKIPPED_TESTS"
+echo ""
+
+if [ $FAILED_TESTS -eq 0 ]; then
+  echo -e "${GREEN}✓ All tests passed!${NC}"
+  exit 0
+else
+  echo -e "${RED}✗ Some tests failed${NC}"
+  exit 1
+fi

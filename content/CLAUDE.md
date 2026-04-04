@@ -629,6 +629,149 @@ Never present partial timing as full-system performance.
 
 ---
 
+### 9.2 Benchmarking Implementation Patterns (Required)
+
+All performance measurements MUST follow these patterns to ensure accuracy and reproducibility.
+
+#### Core Principles
+
+1. **Always warm up** (3+ runs before timing) - eliminates cold-start bias, JIT overhead, cache effects
+2. **Multiple runs** (10+ timed iterations) - ensures statistical significance
+3. **E2E timing** - time full flow for performance claims
+4. **Timer placement** - start immediately before operation, stop immediately after completion
+5. **Async handling** - always `await` to get actual execution time, not coroutine creation
+6. **Statistics** - report mean, median, stdev, min, max, P50, P95, P99
+7. **Context** - report what's included/excluded, warmup policy, runs, environment
+
+#### Pattern 1: Synchronous Benchmarking
+
+```python
+import time, statistics
+
+def benchmark_sync(func, *args, warmup_runs=3, benchmark_runs=10, **kwargs):
+    # Warmup - NOT timed
+    for _ in range(warmup_runs):
+        func(*args, **kwargs)
+    
+    # Benchmark - full E2E timing
+    timings = []
+    for _ in range(benchmark_runs):
+        start = time.perf_counter()
+        result = func(*args, **kwargs)  # CRITICAL: timer around actual work
+        end = time.perf_counter()
+        timings.append(end - start)
+    
+    return {
+        "mean": statistics.mean(timings),
+        "median": statistics.median(timings),
+        "stdev": statistics.stdev(timings) if len(timings) > 1 else 0,
+        "min": min(timings),
+        "max": max(timings),
+        "p95": timings[int(len(timings) * 0.95)],
+    }
+```
+
+#### Pattern 2: Asynchronous Benchmarking
+
+```python
+import time, statistics, asyncio
+
+async def benchmark_async(func, *args, warmup_runs=3, benchmark_runs=10, **kwargs):
+    # Warmup - NOT timed
+    for _ in range(warmup_runs):
+        await func(*args, **kwargs)  # CRITICAL: await in warmup too
+    
+    # Benchmark - full E2E timing
+    timings = []
+    for _ in range(benchmark_runs):
+        start = time.perf_counter()
+        result = await func(*args, **kwargs)  # CRITICAL: await, not just coroutine creation
+        end = time.perf_counter()
+        timings.append(end - start)
+    
+    return {
+        "mean": statistics.mean(timings),
+        "median": statistics.median(timings),
+        "stdev": statistics.stdev(timings) if len(timings) > 1 else 0,
+    }
+```
+
+#### Pattern 3: E2E Pipeline Benchmarking
+
+```python
+import time, statistics
+
+def benchmark_e2e(setup_func, process_func, teardown_func, 
+                  warmup_runs=2, benchmark_runs=5, **setup_kwargs):
+    # Warmup - NOT timed
+    for _ in range(warmup_runs):
+        ctx = setup_func(**setup_kwargs)
+        result = process_func(ctx)
+        teardown_func(ctx, result)
+    
+    # Benchmark - full pipeline timing
+    timings = []
+    for _ in range(benchmark_runs):
+        start = time.perf_counter()  # CRITICAL: before setup
+        ctx = setup_func(**setup_kwargs)
+        result = process_func(ctx)
+        teardown_func(ctx, result)
+        end = time.perf_counter()  # CRITICAL: after teardown
+        timings.append(end - start)
+    
+    return {"mean": statistics.mean(timings), "timed_scope": "E2E (setup+process+teardown)"}
+```
+
+#### Pattern 4: Memory Tracking Benchmarking
+
+```python
+import time, statistics, tracemalloc, psutil, os
+
+def benchmark_with_memory(func, *args, warmup_runs=3, benchmark_runs=10, **kwargs):
+    process = psutil.Process(os.getpid())
+    
+    # Warmup - NOT timed
+    for _ in range(warmup_runs):
+        func(*args, **kwargs)
+    
+    # Benchmark with memory tracking
+    timings, memory_usage, peak_memory = [], [], []
+    for _ in range(benchmark_runs):
+        start = time.perf_counter()
+        tracemalloc.start()
+        mem_before = process.memory_info().rss / 1024 / 1024
+        
+        result = func(*args, **kwargs)
+        
+        mem_after = process.memory_info().rss / 1024 / 1024
+        current, peak = tracemalloc.get_traced_memory()
+        tracemalloc.stop()
+        end = time.perf_counter()
+        
+        timings.append(end - start)
+        memory_usage.append(mem_after - mem_before)
+        peak_memory.append(peak / 1024 / 1024)
+    
+    return {
+        "mean_seconds": statistics.mean(timings),
+        "mean_memory_mb": statistics.mean(memory_usage),
+        "mean_peak_memory_mb": statistics.mean(peak_memory),
+    }
+```
+
+#### Common Pitfalls (Avoid These)
+
+- ❌ No warmup (cold-start bias)
+- ❌ Timing only inner loop, not full pipeline
+- ❌ Not awaiting async functions (measures coroutine creation, not execution)
+- ❌ Including unrelated setup/teardown in timing
+- ❌ Running only 1-2 iterations (insufficient statistics)
+- ❌ Using `time.time()` instead of `time.perf_counter()`
+- ❌ Measuring mock data instead of real workloads
+- ❌ Not reporting what's included/excluded in timing
+
+---
+
 ## 10) Visualization Preference
 
 - If visualization is needed, use Seaborn.

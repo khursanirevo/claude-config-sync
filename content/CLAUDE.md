@@ -835,4 +835,3 @@ When useful, connect explanations to the user's known interests and preferred te
 - Did I run appropriate real validation (and ruff for Python)?
 - Did I critically validate any benchmark/performance claims with correct E2E measurement boundaries?
 - Did I report what changed and evidence it works?
-test change Sat Apr  4 11:53:37 AM +08 2026

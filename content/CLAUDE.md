@@ -16,9 +16,51 @@ If a direct user instruction conflicts with this file, follow this order:
 - Do not downgrade scope, change approach, or "simplify" unless the user explicitly asks.
 - Maintain momentum: if blocked, identify the blocker and ask one focused unblock question.
 
----
+  ---
 
-## 1.5) Mandatory Plan-First Protocol (No Missing Steps)
+  ## 1.2) ⚠️ CRITICAL WARNING: Result Trustworthiness Indicators (Mandatory)
+
+  **ALL results, performance claims, and examples MUST be clearly labeled with their trustworthiness level.** Users must be able to instantly distinguish between:
+
+  ### Trustworthiness Levels (Use These Markers):
+
+  - ✅ **VERIFIED REAL RESULT** - Actually measured, executed, and confirmed
+  - ⚠️ **WARNING: MOCK/FAKE DATA** - Not real, demonstration/placeholder only
+  - ⚠️ **WARNING: EXPECTED/PROJECTED** - Not yet measured, theoretical estimate
+  - ⚠️ **WARNING: THEORETICAL CALCULATION** - Calculated but not empirically verified
+  - ⚠️ **WARNING: PLACEHOLDER EXAMPLE** - Simplified for illustration, not production-ready
+
+  ### Mandatory Usage Rules:
+
+  1. **ALWAYS prepend these markers** at the very start of any result presentation
+  2. **Use ALL CAPS for warnings** when presenting fake/mock/expected results
+  3. **Never mix trust levels** - clearly separate real vs. unrealized results
+  4. **Explicitly state what is NOT included** in mock/fake examples
+  5. **If result is NOT verified**, must use a ⚠️ WARNING marker
+
+  ### Examples of Correct Usage:
+
+  ✅ **VERIFIED REAL RESULT**: Processed 10,000 items in 45.2 seconds (measured with `time perf_counter`)
+
+  ⚠️ **WARNING: EXPECTED/PROJECTED**: Should process ~10,000 items in ~45 seconds (not yet measured, based on theoretical model)
+
+  ⚠️ **WARNING: MOCK/FAKE DATA**: This example uses fake data for demonstration only - do not trust these results for production decisions
+
+  ⚠️ **WARNING: PLACEHOLDER EXAMPLE**: Simplified code example - missing error handling, logging, and production safeguards
+
+  ### Forbidden Practices:
+
+  - ❌ Presenting expected/projected results without ⚠️ WARNING marker
+  - ❌ Mixing mock data examples with real results without clear separation
+  - ❌ Using theoretical calculations as verified performance claims
+  - ❌ Omitting trustworthiness indicators in any result presentation
+  - ❌ Using subtle or ambiguous language (e.g., "should", "might", "likely") without explicit WARNING marker
+
+  **Rationale**: Users must be able to trust that they can distinguish between what has been actually verified vs. what is speculative, mocked, or not yet realized. Confusion here can lead to incorrect technical decisions based on fake information.
+
+  ---
+
+  ## 1.5) Mandatory Plan-First Protocol (No Missing Steps)
 
 Before taking action, always create an explicit task plan/checklist.
 
@@ -770,6 +812,66 @@ def benchmark_with_memory(func, *args, warmup_runs=3, benchmark_runs=10, **kwarg
 - ❌ Measuring mock data instead of real workloads
 - ❌ Not reporting what's included/excluded in timing
 
+#### Pattern 5: Mock Data Warning Template (Required When Using Fake Data)
+
+⚠️ **WARNING: MOCK/FAKE DATA TEMPLATE** - Use this template whenever you present examples or results using fake/mock data. This is MANDATORY.
+
+```python
+# ⚠️ WARNING: MOCK/FAKE DATA - DO NOT TRUST THESE RESULTS FOR PRODUCTION DECISIONS
+# 
+# This example uses synthetic/mock data for demonstration purposes only.
+# The following aspects are NOT representative of real-world performance:
+#   - Data volume: [state fake data size, e.g., "100 items" vs real production millions]
+#   - Data complexity: [describe missing real-world complexity]
+#   - I/O patterns: [describe missing real I/O overhead]
+#   - Network latency: [describe missing network calls]
+#   - Concurrency: [describe missing real concurrency patterns]
+#   - Resource constraints: [describe missing real resource limits]
+#
+# For accurate performance measurements, run with real production data and conditions.
+#
+# Expected accuracy of this mock data: [e.g., "0%" - completely fake]
+
+def example_with_mock_data():
+    """
+    ⚠️ WARNING: MOCK/FAKE DATA EXAMPLE
+    This function demonstrates the pattern but uses fake data.
+    DO NOT use the timing/results from this example for production decisions.
+    """
+    # Fake data for demonstration
+    fake_items = [{"id": i, "data": f"fake_{i}"} for i in range(100)]
+    
+    # Processing logic (real, but operating on fake data)
+    results = process_items(fake_items)
+    
+    return results
+
+# Real benchmarking would look like:
+# ⚠️ WARNING: THEORETICAL CALCULATION
+# Based on the pattern above, estimated performance with real data:
+#   - Throughput: ~X items/second (NOT MEASURED - theoretical only)
+#   - Memory: ~Y MB (NOT MEASURED - theoretical only)
+# 
+# ACTUAL VERIFIED PERFORMANCE: Not yet measured. Run with real data to get real results.
+```
+
+**CRITICAL RULES for Mock Data Examples:**
+
+1. **ALWAYS start with ⚠️ WARNING: MOCK/FAKE DATA marker** - must be visible immediately
+2. **List ALL ways this differs from real production** - what's missing, simplified, or fake
+3. **Explicitly state "DO NOT TRUST"** for production decisions
+4. **If presenting theoretical expectations**, use ⚠️ WARNING: THEORETICAL CALCULATION marker
+5. **If you have NO real measurements yet**, must state: "ACTUAL VERIFIED PERFORMANCE: Not yet measured"
+6. **Never present mock data timing as if it were real** - this is deception
+
+**Examples of CORRECT presentation:**
+
+✅ **VERIFIED REAL RESULT**: Processed 1,000,000 items in 12.5 seconds using `benchmark_sync()` with real production data
+
+⚠️ **WARNING: MOCK/FAKE DATA**: This example processes 100 fake items in 0.5 seconds. DO NOT trust this for production - real data with millions of items, network I/O, and real resource constraints will perform differently.
+
+⚠️ **WARNING: THEORETICAL CALCULATION**: Based on the pattern above, we estimate ~80,000 items/second with optimal conditions. NOT VERIFIED - run real benchmarks before making decisions.
+
 ---
 
 ## 10) Visualization Preference
@@ -834,4 +936,8 @@ When useful, connect explanations to the user's known interests and preferred te
 - **Did I implement file existence checking for resumability?**
 - Did I run appropriate real validation (and ruff for Python)?
 - Did I critically validate any benchmark/performance claims with correct E2E measurement boundaries?
+- **Did I use proper trustworthiness indicators (✅ VERIFIED REAL vs ⚠️ WARNING: MOCK/FAKE/EXPECTED)?**
+- **If using mock/fake data, did I clearly mark it with ⚠️ WARNING and explain what's missing?**
+- **If presenting expected/projected results, did I use ⚠️ WARNING: EXPECTED/PROJECTED marker?**
+- **Did I avoid presenting theoretical calculations as verified performance without proper warnings?**
 - Did I report what changed and evidence it works?

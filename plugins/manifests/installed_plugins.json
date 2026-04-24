@@ -30,6 +30,16 @@
         "lastUpdated": "2026-04-04T03:55:28.335Z",
         "gitCommitSha": "de130ea7ef8c28294a1148ade1c684e77d31654f"
       }
+    ],
+    "oh-my-claudecode@omc": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/omc/oh-my-claudecode/4.13.2",
+        "version": "4.13.2",
+        "installedAt": "2026-04-23T14:31:52.381Z",
+        "lastUpdated": "2026-04-23T14:31:52.381Z",
+        "gitCommitSha": "0ac52cdaa093d6c41763e47055e995adaa4f8987"
+      }
     ]
   }
 }

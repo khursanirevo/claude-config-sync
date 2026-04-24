@@ -8,7 +8,8 @@
     "ENABLE_TOOL_SEARCH": "true",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.5-air",
     "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.1",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1"
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "attribution": {
     "commit": "",
@@ -26,8 +27,8 @@
         "matcher": "Bash",
         "hooks": [
           {
-            "command": "~/.claude/hooks/rtk-rewrite.sh",
-            "type": "command"
+            "type": "command",
+            "command": "~/.claude/hooks/rtk-rewrite.sh"
           }
         ]
       }
@@ -35,13 +36,14 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/scripts/context-bar.sh"
+    "command": "node ${CLAUDE_CONFIG_DIR:-$HOME/.claude}/hud/omc-hud.mjs"
   },
   "enabledPlugins": {
     "glm-plan-usage@zai-coding-plugins": true,
     "dx@ykdojo": true,
     "superpowers@superpowers-marketplace": true,
-    "oh-my-claude@oh-my-claude": true
+    "oh-my-claude@oh-my-claude": true,
+    "oh-my-claudecode@omc": true
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -60,6 +62,12 @@
       "source": {
         "source": "github",
         "repo": "TechDufus/oh-my-claude"
+      }
+    },
+    "omc": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
       }
     }
   },

@@ -22,5 +22,13 @@
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/oh-my-claude",
     "lastUpdated": "2026-04-02T14:44:46.200Z"
+  },
+  "omc": {
+    "source": {
+      "source": "git",
+      "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
+    },
+    "installLocation": "/home/sani/.claude/plugins/marketplaces/omc",
+    "lastUpdated": "2026-04-23T14:31:43.919Z"
   }
 }

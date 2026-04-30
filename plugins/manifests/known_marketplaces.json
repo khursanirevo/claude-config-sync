@@ -1,11 +1,19 @@
 {
+  "oh-my-claude": {
+    "source": {
+      "source": "github",
+      "repo": "TechDufus/oh-my-claude"
+    },
+    "installLocation": "/home/sani/.claude/plugins/marketplaces/oh-my-claude",
+    "lastUpdated": "2026-04-30T02:50:12.396Z"
+  },
   "superpowers-marketplace": {
     "source": {
       "source": "github",
       "repo": "obra/superpowers-marketplace"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/superpowers-marketplace",
-    "lastUpdated": "2026-03-22T02:12:27.757Z"
+    "lastUpdated": "2026-04-30T03:07:30.346Z"
   },
   "ykdojo": {
     "source": {
@@ -13,15 +21,7 @@
       "repo": "ykdojo/claude-code-tips"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/ykdojo",
-    "lastUpdated": "2026-03-22T02:12:31.358Z"
-  },
-  "oh-my-claude": {
-    "source": {
-      "source": "github",
-      "repo": "TechDufus/oh-my-claude"
-    },
-    "installLocation": "/home/sani/.claude/plugins/marketplaces/oh-my-claude",
-    "lastUpdated": "2026-04-02T14:44:46.200Z"
+    "lastUpdated": "2026-04-30T03:07:34.012Z"
   },
   "omc": {
     "source": {
@@ -29,6 +29,6 @@
       "url": "https://github.com/Yeachan-Heo/oh-my-claudecode.git"
     },
     "installLocation": "/home/sani/.claude/plugins/marketplaces/omc",
-    "lastUpdated": "2026-04-23T14:31:43.919Z"
+    "lastUpdated": "2026-04-30T03:07:37.190Z"
   }
 }

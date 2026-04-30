@@ -1,44 +1,34 @@
 {
   "version": 2,
   "plugins": {
-    "dx@ykdojo": [
-      {
-        "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/ykdojo/dx/0.14.11",
-        "version": "0.14.11",
-        "installedAt": "2026-03-22T02:12:59.578Z",
-        "lastUpdated": "2026-03-22T02:12:59.578Z",
-        "gitCommitSha": "3b593693f0d579d88ff13ab0f41d45ad1677bb6f"
-      }
-    ],
-    "superpowers@superpowers-marketplace": [
-      {
-        "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/superpowers-marketplace/superpowers/5.0.5",
-        "version": "5.0.5",
-        "installedAt": "2026-03-22T02:13:09.303Z",
-        "lastUpdated": "2026-03-22T02:13:09.303Z",
-        "gitCommitSha": "8ea39819eed74fe2a0338e71789f06b30e953041"
-      }
-    ],
     "oh-my-claude@oh-my-claude": [
       {
         "scope": "user",
         "installPath": "/home/sani/.claude/plugins/cache/oh-my-claude/oh-my-claude/0.13.0",
         "version": "0.13.0",
-        "installedAt": "2026-04-04T03:55:28.335Z",
-        "lastUpdated": "2026-04-04T03:55:28.335Z",
-        "gitCommitSha": "de130ea7ef8c28294a1148ade1c684e77d31654f"
+        "installedAt": "2026-04-30T02:50:12.948Z",
+        "lastUpdated": "2026-04-30T03:42:08.572Z",
+        "gitCommitSha": "ae5b5546c35ce79d534f79b067c1607bbad08b50"
+      }
+    ],
+    "dx@ykdojo": [
+      {
+        "scope": "user",
+        "installPath": "/home/sani/.claude/plugins/cache/ykdojo/dx/0.14.12",
+        "version": "0.14.12",
+        "installedAt": "2026-04-30T03:09:34.308Z",
+        "lastUpdated": "2026-04-30T03:42:08.572Z",
+        "gitCommitSha": "9ec1885bf32f1714c47c143346eac467424d6bf2"
       }
     ],
     "oh-my-claudecode@omc": [
       {
         "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/omc/oh-my-claudecode/4.13.2",
-        "version": "4.13.2",
-        "installedAt": "2026-04-23T14:31:52.381Z",
-        "lastUpdated": "2026-04-23T14:31:52.381Z",
-        "gitCommitSha": "0ac52cdaa093d6c41763e47055e995adaa4f8987"
+        "installPath": "/home/sani/.claude/plugins/cache/omc/oh-my-claudecode/4.13.5",
+        "version": "4.13.5",
+        "installedAt": "2026-04-30T03:09:34.308Z",
+        "lastUpdated": "2026-04-30T03:42:08.572Z",
+        "gitCommitSha": "1e9f197bcc85602da87ad35b18d908a0575b8583"
       }
     ]
   }

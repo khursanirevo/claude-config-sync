@@ -4,10 +4,10 @@
     "oh-my-claude@oh-my-claude": [
       {
         "scope": "user",
-        "installPath": "/home/sani/.claude/plugins/cache/oh-my-claude/oh-my-claude/0.13.0",
-        "version": "0.13.0",
+        "installPath": "/home/sani/.claude/plugins/cache/oh-my-claude/oh-my-claude/0.13.1",
+        "version": "0.13.1",
         "installedAt": "2026-04-30T02:50:12.948Z",
-        "lastUpdated": "2026-05-06T07:32:15.888Z",
+        "lastUpdated": "2026-05-19T00:02:54.226Z",
         "gitCommitSha": "ae5b5546c35ce79d534f79b067c1607bbad08b50"
       }
     ],
